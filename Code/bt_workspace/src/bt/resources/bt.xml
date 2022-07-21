@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence name="RootSequence">
+            <Fallback name="LidarFallback">
+                <Condition ID="ExecutionCheck" name="is_lidar_running"/>
+                <Sequence name="LidarSequence">
+                    <Action ID="decel_to_min_driving_speed"/>
+                    <Action ID="restart_lidar"/>
+                </Sequence>
+                <Action ID="complete_stop"/>
+            </Fallback>
+            <Fallback name="OdomFallback">
+                <Condition ID="ExecutionCheck" name="is_odometry_running"/>
+                <Sequence name="OdomSequence">
+                    <Action ID="decel_to_min_driving_speed"/>
+                    <RetryUntilSuccessful num_attempts="5">
+                        <Action ID="restart_odom"/>
+                    </RetryUntilSuccessful>
+                </Sequence>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Condition ID="ExecutionCheck"/>
+        <Action ID="complete_stop"/>
+        <Action ID="decel_to_min_driving_speed"/>
+        <Action ID="is_odometry_running"/>
+        <Action ID="restart_lidar"/>
+        <Action ID="restart_odom"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+
