@@ -4,32 +4,84 @@
     <BehaviorTree ID="BehaviorTree">
         <Sequence name="RootSequence">
             <Fallback name="LidarFallback">
-                <Condition ID="ExecutionCheck" name="is_lidar_running"/>
+                <Condition ID="LidarExecutionCheck" name="IsLidarRunning"/>
                 <Sequence name="LidarSequence">
-                    <Action ID="decel_to_min_driving_speed"/>
-                    <Action ID="restart_lidar"/>
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <Action ID="RestartLidar"/>
                 </Sequence>
-                <Action ID="complete_stop"/>
+                <Action ID="CompleteStop" name="complete_stop"/>
             </Fallback>
             <Fallback name="OdomFallback">
-                <Condition ID="ExecutionCheck" name="is_odometry_running"/>
+                <Condition ID="OdomExecutionCheck" name="IsOdomRunning"/>
                 <Sequence name="OdomSequence">
-                    <Action ID="decel_to_min_driving_speed"/>
+                    <Action ID="DecelToMinDrivingSpeed"/>
                     <RetryUntilSuccessful num_attempts="5">
-                        <Action ID="restart_odom"/>
+                        <Action ID="RestartOdom"/>
                     </RetryUntilSuccessful>
                 </Sequence>
+                <Action ID="StartNode" name="start_laser_odometry"/>
+                <Action ID="CompleteStop" name="complete_stop"/>
+            </Fallback>
+            <Fallback name="CollisionFallback">
+                <Condition ID="CollisionCheck" name="is_robot_in_collision"/>
+                <Fallback>
+                    <Condition ID="OrientationCheck" name="wheels_still_on_the_ground"/>
+                    <Action ID="CompleteStop" name="complete_stop"/>
+                </Fallback>
+                <Sequence name="ReverseOutOfCollisionSequence">
+                    <Action ID="CompleteStop" name="complete_stop"/>
+                    <Action ID="ReverseCmdVel" name="reverse_cmd_vel"/>
+                    <Sequence name="ResetLocalisationSequence">
+                        <Action ID="RevertOdom" name="revert_odom_for_3s"/>
+                        <Action ID="PositionEstimate" name="set_position_estimate_before_crash"/>
+                    </Sequence>
+                </Sequence>
+            </Fallback>
+            <Fallback name="PathPlanningFallback">
+                <Sequence name="PathPlanningCrashSequence">
+                    <Inverter>
+                        <Condition ID="PlannerExecutionCheck"/>
+                    </Inverter>
+                    <Action ID="RestartPathPlanning" name="restart_path_planning_node"/>
+                </Sequence>
+                <Sequence name="PathPlanningProblemSequence">
+                    <Condition ID="PathOutputCheck" name="is_planner_outputting_plans"/>
+                    <Action ID="CauseDetection" name="find_cause_of_planning_problem"/>
+                </Sequence>
+            </Fallback>
+            <Fallback name="BatteryCheckFallback">
+                <Condition ID="BatteryCheck" name="is_battery_sufficient_for_driving"/>
+                <Action ID="CompleteStop" name="BatteryCompleteStop"/>
+            </Fallback>
+            <Fallback name="OcclusionFallback">
+                <Inverter>
+                    <Condition ID="OcclusionCheck" name="are_occlusions_ahead"/>
+                </Inverter>
+                <Action ID="DecreaseSpeed"/>
             </Fallback>
         </Sequence>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
-        <Condition ID="ExecutionCheck"/>
-        <Action ID="complete_stop"/>
-        <Action ID="decel_to_min_driving_speed"/>
-        <Action ID="is_odometry_running"/>
-        <Action ID="restart_lidar"/>
-        <Action ID="restart_odom"/>
+        <Condition ID="BatteryCheck"/>
+        <Action ID="CauseDetection"/>
+        <Condition ID="CollisionCheck"/>
+        <Action ID="CompleteStop"/>
+        <Action ID="DecelToMinDrivingSpeed"/>
+        <Action ID="DecreaseSpeed"/>
+        <Condition ID="LidarExecutionCheck"/>
+        <Condition ID="OcclusionCheck"/>
+        <Condition ID="OdomExecutionCheck"/>
+        <Condition ID="OrientationCheck"/>
+        <Condition ID="PathOutputCheck"/>
+        <Condition ID="PlannerExecutionCheck"/>
+        <Action ID="PositionEstimate"/>
+        <Action ID="RestartLidar"/>
+        <Action ID="RestartOdom"/>
+        <Action ID="RestartPathPlanning"/>
+        <Action ID="ReverseCmdVel"/>
+        <Action ID="RevertOdom"/>
+        <Action ID="StartNode"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>
