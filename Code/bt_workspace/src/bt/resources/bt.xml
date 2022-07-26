@@ -19,7 +19,7 @@
                         <Action ID="RestartOdom"/>
                     </RetryUntilSuccessful>
                 </Sequence>
-                <Action ID="StartNode" name="start_laser_odometry"/>
+                <Action ID="StartLaserOdom" name="start_laser_odometry"/>
                 <Action ID="CompleteStop" name="complete_stop"/>
             </Fallback>
             <Fallback name="CollisionFallback">
@@ -33,7 +33,7 @@
                     <Action ID="ReverseCmdVel" name="reverse_cmd_vel"/>
                     <Sequence name="ResetLocalisationSequence">
                         <Action ID="RevertOdom" name="revert_odom_for_3s"/>
-                        <Action ID="PositionEstimate" name="set_position_estimate_before_crash"/>
+                        <Action ID="EstimatePosition" name="set_position_estimate_before_crash"/>
                     </Sequence>
                 </Sequence>
             </Fallback>
@@ -59,6 +59,25 @@
                 </Inverter>
                 <Action ID="DecreaseSpeed"/>
             </Fallback>
+            <Fallback name="SafeDistanceFallback">
+                <Condition ID="SafeDistanceCheck" name="is_distance_safe_at_current_speed"/>
+                <Sequence name="IncreaseDistanceSequence">
+                    <Condition ID="SafeDistancePossibleCheck" name="can_distance_be_increased"/>
+                    <Action ID="IncreaseDistance"/>
+                </Sequence>
+                <Action ID="DecreaseSpeed"/>
+            </Fallback>
+            <Fallback name="RightOfWayFallback">
+                <Condition ID="RightOfWayCheck" name="is_the_path_ahead_collision_free"/>
+                <Sequence name="SlowDownSequence">
+                    <Condition ID="SlowDownViableCheck" name="is_slowing_down_avoiding_collision"/>
+                    <Action ID="DecreaseSpeed"/>
+                </Sequence>
+                <Sequence name="SwerveSequence">
+                    <Condition ID="SwerveViableCheck" name="is_swerving_avoiding_collision"/>
+                    <Action ID="SwerveManeuver" name="swerve_with_minimal_direction_change"/>
+                </Sequence>
+            </Fallback>
         </Sequence>
     </BehaviorTree>
     <!-- ////////// -->
@@ -69,19 +88,26 @@
         <Action ID="CompleteStop"/>
         <Action ID="DecelToMinDrivingSpeed"/>
         <Action ID="DecreaseSpeed"/>
+        <Action ID="EstimatePosition"/>
+        <Action ID="IncreaseDistance"/>
         <Condition ID="LidarExecutionCheck"/>
         <Condition ID="OcclusionCheck"/>
         <Condition ID="OdomExecutionCheck"/>
         <Condition ID="OrientationCheck"/>
         <Condition ID="PathOutputCheck"/>
         <Condition ID="PlannerExecutionCheck"/>
-        <Action ID="PositionEstimate"/>
         <Action ID="RestartLidar"/>
         <Action ID="RestartOdom"/>
         <Action ID="RestartPathPlanning"/>
         <Action ID="ReverseCmdVel"/>
         <Action ID="RevertOdom"/>
-        <Action ID="StartNode"/>
+        <Condition ID="RightOfWayCheck"/>
+        <Condition ID="SafeDistanceCheck"/>
+        <Condition ID="SafeDistancePossibleCheck"/>
+        <Condition ID="SlowDownViableCheck"/>
+        <Action ID="StartLaserOdom"/>
+        <Action ID="SwerveManeuver"/>
+        <Condition ID="SwerveViableCheck"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>

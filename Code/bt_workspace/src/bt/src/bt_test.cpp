@@ -36,7 +36,7 @@ int main()
 
     factory.registerNodeType<LidarExecutionCheck>("LidarExecutionCheck");
 
-    auto tree = factory.createTreeFromFile("../../resources/bt.xml");
+    auto tree = factory.createTreeFromFile("/home/levers/behavioural-planning/Code/bt_workspace/src/bt/resources/bt.xml");
 
     tree.tickRoot();
 
