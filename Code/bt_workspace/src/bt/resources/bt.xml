@@ -3,8 +3,9 @@
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
         <Sequence name="RootSequence">
+            <Action ID="ExecutionChecker" in_collision="" lidar_running="" odom_running="" path_planning_running=""/>
             <Fallback name="LidarFallback">
-                <Condition ID="LidarExecutionCheck" name="IsLidarRunning"/>
+                <Condition ID="LidarExecutionCheck" lidar_running="" name="IsLidarRunning"/>
                 <Sequence name="LidarSequence">
                     <Action ID="DecelToMinDrivingSpeed"/>
                     <Action ID="RestartLidar"/>
@@ -12,7 +13,7 @@
                 <Action ID="CompleteStop" name="complete_stop"/>
             </Fallback>
             <Fallback name="OdomFallback">
-                <Condition ID="OdomExecutionCheck" name="IsOdomRunning"/>
+                <Condition ID="OdomExecutionCheck" name="IsOdomRunning" odom_running=""/>
                 <Sequence name="OdomSequence">
                     <Action ID="DecelToMinDrivingSpeed"/>
                     <RetryUntilSuccessful num_attempts="5">
@@ -23,7 +24,7 @@
                 <Action ID="CompleteStop" name="complete_stop"/>
             </Fallback>
             <Fallback name="CollisionFallback">
-                <Condition ID="CollisionCheck" name="is_robot_in_collision"/>
+                <Condition ID="CollisionCheck" in_collision="" name="is_robot_in_collision"/>
                 <Fallback>
                     <Condition ID="OrientationCheck" name="wheels_still_on_the_ground"/>
                     <Action ID="CompleteStop" name="complete_stop"/>
@@ -31,16 +32,13 @@
                 <Sequence name="ReverseOutOfCollisionSequence">
                     <Action ID="CompleteStop" name="complete_stop"/>
                     <Action ID="ReverseCmdVel" name="reverse_cmd_vel"/>
-                    <Sequence name="ResetLocalisationSequence">
-                        <Action ID="RevertOdom" name="revert_odom_for_3s"/>
-                        <Action ID="EstimatePosition" name="set_position_estimate_before_crash"/>
-                    </Sequence>
+                    <Action ID="RevertOdom" name="revert_odom_for_3s"/>
                 </Sequence>
             </Fallback>
             <Fallback name="PathPlanningFallback">
                 <Sequence name="PathPlanningCrashSequence">
                     <Inverter>
-                        <Condition ID="PlannerExecutionCheck"/>
+                        <Condition ID="PlannerExecutionCheck" path_planning_running=""/>
                     </Inverter>
                     <Action ID="RestartPathPlanning" name="restart_path_planning_node"/>
                 </Sequence>
@@ -62,7 +60,7 @@
             <Fallback name="SafeDistanceFallback">
                 <Condition ID="SafeDistanceCheck" name="is_distance_safe_at_current_speed"/>
                 <Sequence name="IncreaseDistanceSequence">
-                    <Condition ID="SafeDistancePossibleCheck" name="can_distance_be_increased"/>
+                    <Condition ID="SafeDistancePossibleCheck" name="can_distance_be_increased_to_obstacles"/>
                     <Action ID="IncreaseDistance"/>
                 </Sequence>
                 <Action ID="DecreaseSpeed"/>
@@ -77,6 +75,7 @@
                     <Condition ID="SwerveViableCheck" name="is_swerving_avoiding_collision"/>
                     <Action ID="SwerveManeuver" name="swerve_with_minimal_direction_change"/>
                 </Sequence>
+                <Action ID="CompleteStop"/>
             </Fallback>
         </Sequence>
     </BehaviorTree>
@@ -84,18 +83,31 @@
     <TreeNodesModel>
         <Condition ID="BatteryCheck"/>
         <Action ID="CauseDetection"/>
-        <Condition ID="CollisionCheck"/>
+        <Condition ID="CollisionCheck">
+            <input_port default="false" name="in_collision">&quot;true&quot; or &quot;false&quot;</input_port>
+        </Condition>
         <Action ID="CompleteStop"/>
         <Action ID="DecelToMinDrivingSpeed"/>
         <Action ID="DecreaseSpeed"/>
-        <Action ID="EstimatePosition"/>
+        <Action ID="ExecutionChecker">
+            <output_port default="false" name="in_collision">&quot;true&quot; or &quot;false&quot;</output_port>
+            <output_port default="false" name="lidar_running">&quot;true&quot; or &quot;false&quot;</output_port>
+            <output_port default="false" name="odom_running">&quot;true&quot; or &quot;false&quot;</output_port>
+            <output_port default="false" name="path_planning_running">&quot;true&quot; or &quot;false&quot;</output_port>
+        </Action>
         <Action ID="IncreaseDistance"/>
-        <Condition ID="LidarExecutionCheck"/>
+        <Condition ID="LidarExecutionCheck">
+            <input_port default="false" name="lidar_running"/>
+        </Condition>
         <Condition ID="OcclusionCheck"/>
-        <Condition ID="OdomExecutionCheck"/>
+        <Condition ID="OdomExecutionCheck">
+            <input_port default="false" name="odom_running">&quot;true&quot; or &quot;false&quot;</input_port>
+        </Condition>
         <Condition ID="OrientationCheck"/>
         <Condition ID="PathOutputCheck"/>
-        <Condition ID="PlannerExecutionCheck"/>
+        <Condition ID="PlannerExecutionCheck">
+            <input_port default="false" name="path_planning_running">&quot;true&quot; or &quot;false&quot;</input_port>
+        </Condition>
         <Action ID="RestartLidar"/>
         <Action ID="RestartOdom"/>
         <Action ID="RestartPathPlanning"/>
