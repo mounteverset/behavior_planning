@@ -1,0 +1,143 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makecell}
+\usepackage[margin=1in]{geometry}
+
+\author{Lukas Evers}
+\title{Weekly Report 2}
+
+
+\renewcommand\theadalign{bl}
+\renewcommand{\cellalign}{tc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\section{Collection of Scenarios for Autonomy and Safety Tests}
+
+\subsection{Scenarios Derived From Intel RSS Guidelines}
+
+\begin{table}[!h]
+
+	\caption{RSS Guideline Scenarios}
+	\label{tab:table1}
+	\begin{tabular}{|c|l|l|}
+		\hline
+      	\thead{Name of Scenario} & \thead{RSS Rule} & \thead{Description} \\
+      	\hline
+      	SafeDistance &  \makecell{ Safe linear and \\ lateral distance}  &  \makecell{ An obstacle gets too close to the \\ robot. 				Obstacle gets spawned near \\ the current location of the robot}  \\
+     	 \hline
+      	RightOfWay &  \makecell{Right of way \\ is given} & \makecell{Another robot drives into \\ the path of the robot.} \\
+      	\hline
+      	Occlusions & \makecell{Limited Visibility} & \makecell{The robot drives through a densely \\ occupied area with many occlusions \\ in the lidar data ahead.} \\
+      	\hline
+      	CollisionAvoidance & \makecell{Avoid collisions} & \makecell{Robot performs a dodge maneuver \\ if anything gets too close in the 			zone \\ what is considered to be a safe distance.} \\
+      	\hline 
+	\end{tabular}
+\end{table}
+
+\subsection{Scenarios Derived Fom Sense - Plan - Act - Principle}
+
+\begin{table}[!h]
+
+	\caption{Sense-Plan-Act Scenarios}
+	\label{tab:table2}
+	\begin{tabular}{|c|l|l|}
+		\hline
+      	\thead{Name of Scenario} & \thead{Activity} & \thead{Description} \\
+      	\hline
+      	LidarCrash &  \makecell{Sense} & \makecell{Crash of the Lidar node.} \\
+     	\hline
+      	OdomCrash &  \makecell{Sense} & \makecell{Crash of the Odometry/Localization node.} \\
+      	\hline
+      	NoPathFound & \makecell{Plan}  & \makecell{No valid path to goal is found.} \\
+      	\hline
+      	PlannerCrash & \makecell{Plan}  & \makecell{Path Planning Node crashed.} \\
+      	\hline
+      	ForcedCollision & \makecell{Act}  & \makecell{A collision with an obstacle is forced.} \\
+      	\hline 
+      	BatteryLow & \makecell{Act} & \makecell{The battery is too low to at the destination.} \\
+      	\hline
+      	MotorFailure & \makecell{Act} & \makecell{The motor has a hardware failure.} \\
+      	\hline
+      	NetworkFailure & \makecell{Act} & \makecell{The method to transmit the motor commands crashes.} \\
+      	\hline
+      	
+	\end{tabular}
+\end{table}
+
+\newpage
+
+\section{Current Behaviour vs. Planned Behaviour during Scenarios}
+
+
+\begin{table}[!h]
+
+	\caption{Current Behaviour vs. Behaviour Planning Extension}
+	\label{tab:table3}
+	\begin{tabular}{|c|l|l|}
+		\hline
+      	\thead{Scenario} & \thead{Current Behaviour} & \thead{With Behaviour Planning} \\
+      	\hline
+      	SafeDistance &  \makecell{Robot replans to avoid the\\ obstacles, but does not factor in the \\speed into what is considered safe.}  &  \makecell{The robot adapts the allowed safe distance \\to the current speed.}  \\
+     	 \hline
+      	RightOfWay &  \makecell{The robot would replan the \\ path around the around but \\ not predict where things will \\ be moving.} &  \makecell{The robot would calculate the point of \\collision and search for strategies to \\avoid the crash in the future. Slowing down, \\ slowing down hard, or planning around. } \\
+      	\hline
+      	Occlusions &  \makecell{Robot is unaware of occlusions \\ and sudden appearances of \\dynamic obstacles} 						& \makecell{The robot slows down in areas with \\ occlusions.} \\
+      	\hline
+      	CollisionAvoidance & \makecell{The robot would replan the \\ path around the around but \\ not predict where things will \\ be moving.} 	& \makecell{The robot would calculate the point of \\collision and search for strategies to \\avoid the crash in the future. Slowing down, \\ slowing down hard, or planning around.} \\
+      	\hline 
+      	LidarCrash &  \makecell{The robot would continue to drive, \\ but it has no information about the \\ environment anymore.} 															& \makecell{The robot would continue to drive with \\ lowered speed and try to restart the \\ Lidar. Taking into consideration the motion \\ prediction of obstacles. After not receiving\\ information for a longer period the robot\\ would come to a stop.} \\
+     	\hline
+      	OdomCrash &  \makecell{Robot would drive indefinitely and \\ never reach the goal} 												& \makecell{The robot tries to change the method of \\localization and to meanwhile restart or \\reset the odometry.} \\
+      	\hline
+      	NoPathFound &  \makecell{The robot would never move.} & \makecell{The robot tries to restart the planner and \\ replan. Else, it tries to change the path \\planning algorithm. If planning is still not \\ possible the robot tries to move to a \\ different starting position. } \\
+      	\hline
+      	PlannerCrash &  \makecell{The robot would never move.}  & \makecell{The robot will reuse the last path and \\drive slower and restart the path planning \\ node.} \\
+      	\hline
+      	ForcedCollision &  \makecell{The robot would not be able\\ to move away from the crash.}  											& \makecell{The robot slowly reverses out\\ of the crash and resets \\navigation and odometry at the \\last known safe location. } \\
+      	\hline 
+      	BatteryLow &  \makecell{The robot would take goals and \\ execute the commands even though\\ the battery would  fail during \\the driving.} & \makecell{The robot would calculate if the battery \\ would be enough to make it to the goal\\ and only then would start to drive. } \\
+      	\hline 
+      	MotorFailure &  \makecell{The robot would not be able\\ to move.}  											& \makecell{The robot would not be able to move. } \\
+      	\hline 
+	\end{tabular}
+\end{table}
+
+
+\newpage
+
+\section{Robot Definitions}
+\begin{itemize}
+\item Turtlebot 3 Waffle
+\item ROS2 Foxy
+\item Ubuntu 20.04
+\item Lidar
+\item Wheel Odometry
+\item Raspberry Pi Camera
+\item Add an additional IMU Sensor in the Simulation
+
+
+\end{itemize}
+
+
+
+\section{Next Week}
+
+\begin{itemize}
+\item Work on creating the first BT nodes with ROS Interfaces
+\item Make concrete Sub-Scenarios
+\item Create a template for scenario creation (Launch file(s), Gazebo Setup, etc.)
+\end{itemize}
+
+
+
+\end{document}
