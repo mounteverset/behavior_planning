@@ -20,14 +20,17 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(behaviortree_cpp_v3 REQUIRED)
 
-message("behaviortree_cpp_v3: " ${behaviortree_cpp_v3_INCLUDE_DIRS})
+# message("behaviortree_cpp_v3: " ${behaviortree_cpp_v3_INCLUDE_DIRS})
 
-if(behavior_tree_cpp_v3_FOUND)
-    message([STATUS] " behavior_tree_cpp_v3 is available.")
-endif()
+# if(behavior_tree_cpp_v3_FOUND)
+#     message([STATUS] " behavior_tree_cpp_v3 is available.")
+# endif()
+
 
 add_executable(bt_test src/bt_test.cpp)
+
 ament_target_dependencies(bt_test rclcpp behaviortree_cpp_v3)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -44,8 +47,9 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# install(
-#   TARGETS
-# )
+install(
+  DIRECTORY resources
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_package()
