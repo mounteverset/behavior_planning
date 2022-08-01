@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Fallback name="LidarFallback">
+            <Condition ID="LidarExecutionCheck"/>
+            <Sequence name="LidarSequence">
+                <Action ID="DecelToMinDrivingSpeed"/>
+                <RetryUntilSuccessful num_attempts="5">
+                    <Action ID="RestartLidar"/>
+                </RetryUntilSuccessful>
+            </Sequence>
+            <Action ID="CompleteStop"/>
+        </Fallback>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="CompleteStop"/>
+        <Action ID="DecelToMinDrivingSpeed"/>
+        <Condition ID="LidarExecutionCheck"/>
+        <Action ID="RestartLidar"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+
