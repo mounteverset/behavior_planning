@@ -19,17 +19,15 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(behaviortree_cpp_v3 REQUIRED)
+find_package(std_msgs)
+find_package(geometry_msgs)
 
-# message("behaviortree_cpp_v3: " ${behaviortree_cpp_v3_INCLUDE_DIRS})
-
-# if(behavior_tree_cpp_v3_FOUND)
-#     message([STATUS] " behavior_tree_cpp_v3 is available.")
-# endif()
-
-
+# add executables
 add_executable(bt_test src/bt_test.cpp)
-
 ament_target_dependencies(bt_test rclcpp behaviortree_cpp_v3)
+
+add_executable(bt_lidar src/bt_lidar.cpp)
+ament_target_dependencies(bt_lidar rclcpp behaviortree_cpp_v3 std_msgs geometry_msgs)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -42,8 +40,13 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+include_directories(
+  include
+  ) 
+
+
 install(
-  TARGETS bt_test
+  TARGETS bt_test bt_lidar
   DESTINATION lib/${PROJECT_NAME}
 )
 

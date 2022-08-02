@@ -1,96 +1,33 @@
-#include "behaviortree_cpp_v3/bt_factory.h"
-#include "rclcpp/rclcpp.hpp"
+#include "bt_lidar.hpp"
+#include "complete_stop.hpp"
+#include "decel_to_min_driving_speed.hpp"
+#include "lidar_execution_check.hpp"
+#include "restart_lidar.hpp"
 
-namespace BT
-{
-    class LidarExecutionCheck : public BT::ConditionNode
-    {
-        public:
-        LidarExecutionCheck(const std::string& name) : BT::ConditionNode(name, {})
-        {
-            
-        }
 
-        BT::NodeStatus tick() override
-        {
-            std::vector<std::string> node_names = node_pointer->get_node_names();
+int main(int argc, const char* argv[])
+{   
+    //node_ptr = std::make_shared<BtHelperNode>();
+    rclcpp::init(argc, argv);
+    
+    BT::BehaviorTreeFactory factory;
 
-            bool node_name_found = false;
-            std::string lidar_node_name = "rplidar";
+    factory.registerNodeType<LidarExecutionCheck>("LidarExecutionCheck");
+    factory.registerNodeType<DecelToMinDrivingSpeed>("DecelToMinDrivingSpeed");
+    factory.registerNodeType<CompleteStop>("CompleteStop");
+    factory.registerNodeType<RestartLidar>("RestartLidar");
+    
 
-            for (int i = 0; i < node_names.size(); i++)
-            {
-                lidar_node_name.compare(node_names[i]);
-                if(node_name_found)
-                    break;
-                
-            }
-            
-            if (node_name_found)
-            {
-                return BT::NodeStatus::SUCCESS;
-            }
-            else 
-            {
-                return BT::NodeStatus::FAILURE;
-            }            
-        }    
-    };
+    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/lidar_bt.xml");
+    // BT::NodeStatus status;
+    // while(true)
+    // {   
+        std::cout << "Ticking root" << std::endl;
+        // status = 
+        tree.tickRoot();
 
-    class DecelToMinDrivingSpeed : BT::SyncActionNode
-    {
-        DecelToMinDrivingSpeed(const std::string& name) : BT::SyncActionNode(name, {})
-        {
+        // std::cout << "Status: " << status << std::endl;
+    // }
 
-        }
-
-        BT::NodeStatus tick() override
-        {
-            
-        }
-    };
-
-    class CompleteStop : BT::SyncActionNode
-    {
-        CompleteStop(const std::string& name) : BT::SyncActionNode(name, {})
-        {
-
-        }
-
-        BT::NodeStatus tick() override
-        {
-
-        }
-    };
-
-    class RestartLidar : BT::SyncActionNode
-    {
-        RestartLidar(const std::string& name) : BT::SyncActionNode(name, {})
-        {
-            
-        }
-
-        BT::NodeStatus tick() override
-        {
-
-        }
-    };
-
-    class BtHelperNode : rclcpp::Node
-    {
-        BtHelperNode() : rclcpp::Node("bt_helper_node")
-        {
-
-        }
-    };
-
-    //extern auto node_ptr = std::make_shared<BtHelperNode>();
-
-    std::shared_ptr<rclcpp::Node> node_pointer = rclcpp::Node::make_shared(bt_helper_node);
-
-    int main(int argc, char* argv[])
-    {   
-        //node_ptr = std::make_shared<BtHelperNode>();
-
-    };
+    return 0;
 }
