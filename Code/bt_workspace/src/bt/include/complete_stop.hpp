@@ -9,7 +9,8 @@ class CompleteStop : public BT::SyncActionNode
     CompleteStop(const std::string& name) : BT::SyncActionNode(name, {})
     {
         node_= rclcpp::Node::make_shared("complete_stop");
-        node_->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_bt", 10);
+        cmd_vel_publisher_ = node_->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_bt", 10);
+        
     }
 
     BT::NodeStatus tick() override
@@ -29,6 +30,7 @@ class CompleteStop : public BT::SyncActionNode
     }
 
     private:
+    bool debug = false;
     std::shared_ptr<rclcpp::Node> node_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher_;
 };

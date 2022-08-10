@@ -2,3 +2,4 @@ Code/bt_workspace/build/*
 Code/bt_workspace/install/*
 Code/bt_workspace/log/*
 .vscode/tasks.json
+Code/bt_workspace/bt_lidar_trace.fbl
