@@ -2,22 +2,31 @@
 <root main_tree_to_execute="BehaviorTree">
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
-        <Fallback name="LidarFallback">
-            <Condition ID="LidarExecutionCheck"/>
-            <Sequence name="LidarSequence">
-                <Action ID="DecelToMinDrivingSpeed"/>
-                <RetryUntilSuccessful num_attempts="5">
-                    <Action ID="RestartLidar"/>
-                </RetryUntilSuccessful>
-            </Sequence>
-            <Action ID="CompleteStop"/>
-        </Fallback>
+        <ReactiveSequence>
+            <Fallback name="LidarFallback">
+                <Delay delay_msec="300">
+                    <Condition ID="LidarExecutionCheck" is_lidar_running="{is_lidar_running}"/>
+                </Delay>
+                <Sequence name="LidarSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="5">
+                        <Action ID="RestartLidar"/>
+                    </RetryUntilSuccessful>
+                </Sequence>
+                <Action ID="CompleteStop"/>
+            </Fallback>
+        </ReactiveSequence>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
         <Action ID="CompleteStop"/>
         <Action ID="DecelToMinDrivingSpeed"/>
-        <Condition ID="LidarExecutionCheck"/>
+        <Action ID="ExecutionChecker">
+            <output_port name="is_lidar_running" type="bool"/>
+        </Action>
+        <Condition ID="LidarExecutionCheck">
+            <input_port name="is_lidar_running" type="bool"/>
+        </Condition>
         <Action ID="RestartLidar"/>
     </TreeNodesModel>
     <!-- ////////// -->

@@ -1,6 +1,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "behaviortree_cpp_v3/action_node.h"
+#include "bt_msgs/srv/pub_cmd_vel.hpp"
 
 class DecelToMinDrivingSpeed : public BT::SyncActionNode
 {   
@@ -9,15 +10,44 @@ class DecelToMinDrivingSpeed : public BT::SyncActionNode
     DecelToMinDrivingSpeed(const std::string& name) : BT::SyncActionNode(name, {})
     {
         node_= rclcpp::Node::make_shared("decel_to_min_driving_speed");
-        node_->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_bt", 10);
+        // cmd_vel_publisher_ = node_->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_bt", 1);
+        if(debug)
+            std::cout << "DecelMinDrivingSpeed Constructor" << std::endl;
+
+        service_client_ = node_->create_client<bt_msgs::srv::PubCmdVel>("pub_cmd_vel_service");
+
+        message_ = std::make_shared<geometry_msgs::msg::Twist>();
+        message_->linear.x = 0.05;
+        message_->linear.y = 0.0;
+        message_->linear.z = 0.0;
+        message_->angular.z = 0.0;
+        message_->angular.x = 0.0;
+        message_->angular.y = 0.0;
+
+        request_->cmd_vel = *message_;
+        request_->time_in_seconds = 0.5;
+    }
+
+    virtual ~DecelToMinDrivingSpeed()
+    {
+        if(debug)
+            std::cout << "DecelToMinDrivingSpeed destroyed" << std::endl;
     }
 
     BT::NodeStatus tick() override
     {   
-        node_= rclcpp::Node::make_shared("decel_to_min_driving_speed");
-        node_->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_bt", 10);
-        message_ = std::make_shared<geometry_msgs::msg::Twist>();
+        // node_= rclcpp::Node::make_shared("decel_to_min_driving_speed");
+        // node_->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_bt", 10);
+        // if(debug)
+            // std::cout << "DecelMinDrivingSpeed ticked" << std::endl;
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "MinDrivingSpeed ticked");
 
+
+        // message_ = std::make_shared<geometry_msgs::msg::Twist>();
+
+        // std::cout << message_->linear.x << std::endl;
+        
         // message_->linear.x = 0.1;
         // message_->linear.y = 0.0;
         // message_->linear.z = 0.0;
@@ -25,13 +55,27 @@ class DecelToMinDrivingSpeed : public BT::SyncActionNode
         // message_->angular.x = 0.0;
         // message_->angular.y = 0.0;
 
-        cmd_vel_publisher_->publish(*message_);
+        auto result = service_client_->async_send_request(request_);
+
+        if(rclcpp::spin_until_future_complete(node_, result) == rclcpp::FutureReturnCode::SUCCESS)
+        {
+            return BT::NodeStatus::SUCCESS;
+        }
+        else
+        {
+            return BT::NodeStatus::FAILURE;
+        }
 
         return BT::NodeStatus::SUCCESS;
+
+        // cmd_vel_publisher_->publish(*message_);
     }
 
     private:
-    std::shared_ptr<rclcpp::Node> node_;
-    rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher_;
-    geometry_msgs::msg::Twist::SharedPtr message_;
+        bool debug = true;
+        std::shared_ptr<rclcpp::Node> node_;
+        rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher_;
+        geometry_msgs::msg::Twist::SharedPtr message_;
+        rclcpp::Client<bt_msgs::srv::PubCmdVel>::SharedPtr service_client_;
+        std::shared_ptr<bt_msgs::srv::PubCmdVel::Request> request_;
 };
