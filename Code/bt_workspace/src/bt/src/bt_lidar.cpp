@@ -54,7 +54,7 @@ int main(int argc, const char* argv[])
         RCLCPP_INFO(rclcpp::get_logger("root"), "%d", status); 
         // std::cout << "Status: " << status << std::endl;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
         // tree.sleep(std::chrono::milliseconds(50));
     }
 
