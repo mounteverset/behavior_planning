@@ -5,16 +5,16 @@
 #include "std_srvs/srv/set_bool.hpp"
 
 
-class LidarExecutionCheck : public BT::ConditionNode
+class ImuExecutionCheck : public BT::ConditionNode
 {
 public:
 
-    LidarExecutionCheck(const std::string& name) : BT::ConditionNode(name, {})
+    ImuExecutionCheck(const std::string& name) : BT::ConditionNode(name, {})
     {   
-        is_lidar_running_ = true;
+        is_imu_running_ = true;
         debug = true;
-        node_= rclcpp::Node::make_shared("lidar_execution_check");
-        service_client_ = node_->create_client<std_srvs::srv::SetBool>("lidar_execution_service");
+        node_= rclcpp::Node::make_shared("imu_execution_check");
+        service_client_ = node_->create_client<std_srvs::srv::SetBool>("imu_execution_service");
         request_ = std::make_shared<std_srvs::srv::SetBool::Request>();
         request_->data = true;
     }
@@ -25,7 +25,7 @@ public:
 
         if(rclcpp::spin_until_future_complete(node_, result) == rclcpp::FutureReturnCode::SUCCESS)
         {
-            is_lidar_running_ = result.get()->success;
+            is_imu_running_ = result.get()->success;
         }
         else
         {
@@ -38,10 +38,10 @@ public:
         if(debug)
         {
             // RCLCPP_INFO(rclcpp::get_logger("lidar_execution_check"), "Input port read as: ");
-            RCLCPP_INFO(rclcpp::get_logger("lidar_execution_check"), (is_lidar_running_) ? "true" : "false");
+            RCLCPP_INFO(rclcpp::get_logger("imuexecution_check"), (is_imu_running_) ? "true" : "false");
         }
 
-        if (is_lidar_running_)
+        if (is_imu_running_)
         {
             return BT::NodeStatus::SUCCESS;
         }
@@ -63,5 +63,5 @@ private:
     rclcpp::Client<std_srvs::srv::SetBool>::SharedPtr service_client_;
     std::shared_ptr<std_srvs::srv::SetBool::Request> request_;
     bool debug;
-    bool is_lidar_running_;
+    bool is_imu_running_;
 };

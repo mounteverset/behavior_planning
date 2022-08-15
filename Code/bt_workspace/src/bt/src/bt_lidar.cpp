@@ -5,13 +5,13 @@
 #include "restart_lidar.hpp"
 #include "execution_checker.hpp"
 
+#include "imu_execution_check.hpp"
+#include "restart_imu.hpp"
 
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "behaviortree_cpp_v3/loggers/bt_file_logger.h"
 #include "behaviortree_cpp_v3/behavior_tree.h"
-
-
 
 int main(int argc, const char* argv[])
 {   
@@ -28,13 +28,17 @@ int main(int argc, const char* argv[])
     // BT::PortsList exec_checker_ports = {BT::OutputPort<bool>("is_lidar_running")};
     // factory.registerNodeType<ExecutionChecker>("ExecutionChecker", exec_checker_ports);
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating Nodes"); 
-    BT::PortsList lidar_exec_check_ports = {BT::InputPort<bool>("is_lidar_running")};
+    // BT::PortsList lidar_exec_check_ports = {BT::InputPort<bool>("is_lidar_running")};
     factory.registerNodeType<LidarExecutionCheck>("LidarExecutionCheck");
     factory.registerNodeType<DecelToMinDrivingSpeed>("DecelToMinDrivingSpeed");
     factory.registerNodeType<CompleteStop>("CompleteStop");
     factory.registerNodeType<RestartLidar>("RestartLidar");
+
+    factory.registerNodeType<ImuExecutionCheck>("ImuExecutionCheck");
+    factory.registerNodeType<RestartImu>("RestartImu");
+
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT"); 
-    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/lidar_bt.xml");
+    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/imu_bt.xml");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Created BT");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT Publisher"); 
 
