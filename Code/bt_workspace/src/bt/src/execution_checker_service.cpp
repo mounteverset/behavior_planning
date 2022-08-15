@@ -9,8 +9,16 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
             std::placeholders::_1, 
             std::placeholders::_2));
 
+    imu_service_ = this->create_service<std_srvs::srv::SetBool>(
+        "imu_execution_service", 
+        std::bind(&ExecutionCheckerService::ImuExecutionCheckServiceCallback, 
+            this, 
+            std::placeholders::_1, 
+            std::placeholders::_2));
+
     // topics_qos = rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(); // Transient Local Sub Settings
     sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, std::bind(&ExecutionCheckerService::lidar_callback, this, std::placeholders::_1));
+    sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>("imu", 10, std::bind(&ExecutionCheckerService::imu_callback, this, std::placeholders::_1));
 }
 
 ExecutionCheckerService::~ExecutionCheckerService() = default;
@@ -57,6 +65,32 @@ void ExecutionCheckerService::lidar_callback(const sensor_msgs::msg::LaserScan::
 
     if(debug)
         RCLCPP_INFO(this->get_logger(), "last_msg_time when callback finished: %f", last_msg_received_.seconds());
+}
+
+void ExecutionCheckerService::imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
+{
+    last_msg_received_imu_ = this->get_clock()->now();
+}
+
+void ExecutionCheckerService::ImuExecutionCheckServiceCallback(
+            const std_srvs::srv::SetBool_Request::SharedPtr request,
+            const std_srvs::srv::SetBool_Response::SharedPtr response)
+{
+    time_difference_imu = (this->get_clock()->now().seconds() - last_msg_received_imu_.seconds());
+
+    if(time_difference_imu < MAX_ALLOWED_TIME_DIFFERENCE)
+    {
+        if(debug_callback)
+            RCLCPP_INFO(this->get_logger(), "IMU active");
+        is_imu_running_ = true;
+    }
+    else 
+    {
+        is_imu_running_ = false;
+    }  
+
+    response->message = "";
+    response->success = is_imu_running_;  
 }
 
 int main(int argc, char ** argv)
