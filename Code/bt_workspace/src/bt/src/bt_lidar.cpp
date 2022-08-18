@@ -1,17 +1,4 @@
 #include "bt_lidar.hpp"
-#include "complete_stop.hpp"
-#include "decel_to_min_driving_speed.hpp"
-#include "lidar_execution_check.hpp"
-#include "restart_lidar.hpp"
-#include "execution_checker.hpp"
-
-#include "imu_execution_check.hpp"
-#include "restart_imu.hpp"
-
-#include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
-#include "behaviortree_cpp_v3/loggers/bt_file_logger.h"
-#include "behaviortree_cpp_v3/behavior_tree.h"
 
 int main(int argc, const char* argv[])
 {   
@@ -37,8 +24,15 @@ int main(int argc, const char* argv[])
     factory.registerNodeType<ImuExecutionCheck>("ImuExecutionCheck");
     factory.registerNodeType<RestartImu>("RestartImu");
 
+    factory.registerNodeType<OdomExecutionCheck>("OdomExecutionCheck");
+    factory.registerNodeType<RestartOdom>("RestartOdom");
+
+    factory.registerNodeType<CollisionCheck>("CollisionCheck");
+    factory.registerNodeType<OrientationCheck>("OrientationCheck");
+    factory.registerNodeType<ReverseCmdVel>("ReverseCmdVel");
+
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT"); 
-    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/imu_bt.xml");
+    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/collision_bt.xml");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Created BT");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT Publisher"); 
 

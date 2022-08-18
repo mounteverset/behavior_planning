@@ -1,24 +1,32 @@
 #include "behaviortree_cpp_v3/condition_node.h"
 
-#include <chrono>
-
 #include "rclcpp/rclcpp.hpp"
 
 #include "std_srvs/srv/set_bool.hpp"
 
-
-class LidarExecutionCheck : public BT::ConditionNode
+/**
+ * @brief Returns Success when all 4 wheels are still on the ground 
+ * Determined by the robots imu orientation,
+ * if the terrain contains slopes this method does not work 
+ * 
+ */
+class OrientationCheck : public BT::ConditionNode
 {
 public:
 
-    LidarExecutionCheck(const std::string& name) : BT::ConditionNode(name, {})
+    OrientationCheck(const std::string& name) : BT::ConditionNode(name, {})
     {   
-        is_lidar_running_ = true;
-        debug = true;
-        node_= rclcpp::Node::make_shared("lidar_execution_check");
-        service_client_ = node_->create_client<std_srvs::srv::SetBool>("lidar_execution_service");
+        node_= rclcpp::Node::make_shared("orientation_check");
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Constructor OrientationCheck");
+        all_wheels_on_the_ground = false;
+        service_client_ = node_->create_client<std_srvs::srv::SetBool>("orientation_check_service");
         request_ = std::make_shared<std_srvs::srv::SetBool::Request>();
         request_->data = true;
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Constructor OrientationCheck finished.");
+        // debug = true;
+        debug = true;
     }
 
     BT::NodeStatus tick() override
@@ -30,14 +38,14 @@ public:
                 RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
                 return BT::NodeStatus::FAILURE;
             }
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Lidar Execution Service not available, waiting again...");
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Orientation Checker Service not available, waiting again...");
         }
-
+        
         auto result = service_client_->async_send_request(request_);
 
         if(rclcpp::spin_until_future_complete(node_, result) == rclcpp::FutureReturnCode::SUCCESS)
         {
-            is_lidar_running_ = result.get()->success;
+            all_wheels_on_the_ground = result.get()->success;
         }
         else
         {
@@ -49,11 +57,11 @@ public:
 
         if(debug)
         {
-            // RCLCPP_INFO(rclcpp::get_logger("lidar_execution_check"), "Input port read as: ");
-            RCLCPP_INFO(rclcpp::get_logger("lidar_execution_check"), (is_lidar_running_) ? "true" : "false");
+            RCLCPP_INFO(rclcpp::get_logger("orientation_check"), "Robot is standing with 4 wheels: ");
+            RCLCPP_INFO(rclcpp::get_logger("orientation_check"), (all_wheels_on_the_ground) ? "true" : "false");
         }
 
-        if (is_lidar_running_)
+        if (all_wheels_on_the_ground)
         {
             return BT::NodeStatus::SUCCESS;
         }
@@ -63,17 +71,10 @@ public:
         }
     }
 
-    // static BT::PortsList providedPorts()
-    // {
-    //     // This action has a single input port called "message"
-    //     // Any port must have a name. The type is optional.
-    //     return { BT::InputPort<bool>("is_lidar_running") };
-    // }
-
 private:
     rclcpp::Node::SharedPtr node_;
     rclcpp::Client<std_srvs::srv::SetBool>::SharedPtr service_client_;
     std::shared_ptr<std_srvs::srv::SetBool::Request> request_;
     bool debug;
-    bool is_lidar_running_;
+    bool all_wheels_on_the_ground;
 };
