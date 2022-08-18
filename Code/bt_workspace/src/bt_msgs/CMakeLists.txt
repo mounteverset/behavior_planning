@@ -25,6 +25,7 @@ find_package(std_msgs REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/GetTwistArray.srv"
   "srv/PubCmdVel.srv"
   DEPENDENCIES geometry_msgs std_msgs
 )

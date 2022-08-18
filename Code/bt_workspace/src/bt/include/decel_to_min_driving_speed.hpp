@@ -71,6 +71,16 @@ class DecelToMinDrivingSpeed : public BT::SyncActionNode
         // message_->angular.x = 0.0;
         // message_->angular.y = 0.0;
 
+        while (!service_client_->wait_for_service(std::chrono::seconds(1)))
+        {
+            if (!rclcpp::ok()) 
+            {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return BT::NodeStatus::FAILURE;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "PubCmdVel Service not available, waiting again...");
+        }
+
         auto result = service_client_->async_send_request(request_);
 
         if (debug)

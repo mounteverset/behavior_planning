@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence name="RootSequence">
+            <Fallback name="LidarFallback">
+                <Condition ID="LidarExecutionCheck"/>
+                <Sequence name="LidarSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="2">
+                        <Action ID="RestartLidar"/>
+                    </RetryUntilSuccessful>
+                </Sequence>
+                <Action ID="CompleteStop"/>
+            </Fallback>
+            <Fallback name="ImuFallback">
+                <Condition ID="ImuExecutionCheck"/>
+                <Sequence name="ImuSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="2">
+                        <Action ID="RestartImu"/>
+                    </RetryUntilSuccessful>
+                </Sequence>
+                <Action ID="CompleteStop"/>
+            </Fallback>
+            <Fallback name="OdomFallback">
+                <Condition ID="OdomExecutionCheck"/>
+                <Sequence name="OdomSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="2">
+                        <Action ID="RestartOdom"/>
+                    </RetryUntilSuccessful>
+                </Sequence>
+                <Action ID="CompleteStop"/>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="CompleteStop"/>
+        <Action ID="DecelToMinDrivingSpeed"/>
+        <Condition ID="ImuExecutionCheck"/>
+        <Condition ID="LidarExecutionCheck"/>
+        <Condition ID="OdomExecutionCheck"/>
+        <Action ID="RestartImu"/>
+        <Action ID="RestartLidar"/>
+        <Action ID="RestartOdom"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+

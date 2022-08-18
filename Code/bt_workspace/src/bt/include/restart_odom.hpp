@@ -12,11 +12,11 @@
 
 #include "behaviortree_cpp_v3/action_node.h"
 
-class RestartImu : public BT::SyncActionNode
+class RestartOdom : public BT::SyncActionNode
 {   
     public:
 
-    RestartImu(const std::string& name) : BT::SyncActionNode(name, {})
+    RestartOdom(const std::string& name) : BT::SyncActionNode(name, {})
     {
         
     }
@@ -25,11 +25,11 @@ class RestartImu : public BT::SyncActionNode
     {
         try
         {
-            system("gnome-terminal -e 'sh -c \"ros2 run gazebo_sensor_drivers imu_driver; exec bash\"'");
+            system("gnome-terminal -e 'sh -c \"ros2 run gazebo_sensor_drivers odom_driver; exec bash\"'");
             std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
             if(debug)
-                RCLCPP_INFO(rclcpp::get_logger("restart_imu"), "Trying to restart IMU");
+                RCLCPP_INFO(rclcpp::get_logger("restart_Odom"), "Trying to restart Odom");
             return BT::NodeStatus::SUCCESS;
         }
         catch(const std::exception& e)

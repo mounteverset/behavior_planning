@@ -20,7 +20,7 @@ class CompleteStop : public BT::SyncActionNode
         request_->cmd_vel.angular.z = 0.0;
         request_->cmd_vel.angular.x = 0.0;
         request_->cmd_vel.angular.y = 0.0;
-        request_->time_in_seconds = 0.01;
+        request_->time_in_seconds = 0.001;
     }
 
     BT::NodeStatus tick() override

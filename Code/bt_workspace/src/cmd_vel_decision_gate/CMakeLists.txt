@@ -21,19 +21,20 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(bt_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(rcl_interfaces REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 add_executable(cmd_vel_decision_gate src/cmd_vel_decision_gate.cpp)
-ament_target_dependencies(cmd_vel_decision_gate rclcpp geometry_msgs bt_msgs std_srvs)
+ament_target_dependencies(cmd_vel_decision_gate rclcpp geometry_msgs bt_msgs std_srvs rcl_interfaces)
 
 target_include_directories(cmd_vel_decision_gate PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 include_directories(
-  include
+  include/${PROJECT_NAME}
   ) 
 
 install(TARGETS cmd_vel_decision_gate
