@@ -27,6 +27,8 @@ find_package(std_msgs REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/GetTwistArray.srv"
   "srv/PubCmdVel.srv"
+  "srv/GetDistance.srv"
+  "srv/GetCharge.srv"
   DEPENDENCIES geometry_msgs std_msgs
 )
 

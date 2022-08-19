@@ -27,40 +27,27 @@ class ReverseCmdVel : public BT::SyncActionNode
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "Constructor ReverseCmdVel");
 
-
-
         service_client_pub_cmd_vel = node_->create_client<bt_msgs::srv::PubCmdVel>("pub_cmd_vel_service");
         request_pub_cmd_vel = std::make_shared<bt_msgs::srv::PubCmdVel_Request>();
 
-
-        if (debug)
-            RCLCPP_INFO(node_->get_logger(), "1");
-        service_client_get_twist_array = node_->create_client<bt_msgs::srv::GetTwistArray>("get_last_cmd_vels");
-
-        if (debug)
-            RCLCPP_INFO(node_->get_logger(), "2");
-
-        service_client_set_override_flag = node_->create_client<rcl_interfaces::srv::SetParameters>("cmd_vel_decision_gate/set_parameters");
-
-        if (debug)
-            RCLCPP_INFO(node_->get_logger(), "3");
-
-        param.name = "bt_override";       
-        param.value.bool_value = true;
-        parameters.push_back(param);
-
-        // request_set_parameter->parameters.push_back(param);
-        // request_set_parameter->parameters.emplace(request_set_parameter->parameters.rbegin(), param);
-
-        if (debug)
-            RCLCPP_INFO(node_->get_logger(), "4");
+        service_client_get_twist_array = node_->create_client<bt_msgs::srv::GetTwistArray>("get_last_cmd_velocities");
 
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "Finished Constructor ReverseCmdVel");
     }
 
     bool pub_cmd_vel_service_call()
-    {
+    {   
+        while (!service_client_get_twist_array->wait_for_service(std::chrono::seconds(1)))
+        {
+            if (!rclcpp::ok()) 
+            {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return false;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Get Twist Array Service not available, waiting again...");
+        }
+
         auto result = service_client_pub_cmd_vel->async_send_request(request_pub_cmd_vel);
 
         if (debug)
@@ -83,29 +70,26 @@ class ReverseCmdVel : public BT::SyncActionNode
      * @return false 
      */
     bool get_twist_array_service_call()
-    {
-        auto result = service_client_get_twist_array->async_send_request(std::make_shared<bt_msgs::srv::GetTwistArray_Request>());
+    {   
+        while (!service_client_get_twist_array->wait_for_service(std::chrono::seconds(1)))
+        {
+            if (!rclcpp::ok()) 
+            {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return false;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Get Twist Array Service not available, waiting again...");
+        }
+
+        auto request = std::make_shared<bt_msgs::srv::GetTwistArray_Request>();
+
+        auto result = service_client_get_twist_array->async_send_request(request);
 
         if(rclcpp::spin_until_future_complete(node_, result) == rclcpp::FutureReturnCode::SUCCESS)
         {   
             twist_array = result.get()->cmd_vel_array;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool set_override_flag_service_call()
-    {
-        // auto request = service_client_set_override_flag->
-        request_set_parameter->parameters = parameters;
-
-        auto result = service_client_set_override_flag->async_send_request(request_set_parameter);
-
-        if(rclcpp::spin_until_future_complete(node_, result) == rclcpp::FutureReturnCode::SUCCESS)
-        {   
+            if (debug)
+                RCLCPP_INFO(node_->get_logger(), "Reveived a vector of length: %d", twist_array.size());
             return true;
         }
         else
@@ -157,9 +141,6 @@ class ReverseCmdVel : public BT::SyncActionNode
         if(!get_twist_array_service_call())
             return BT::NodeStatus::FAILURE;
 
-        if(!set_override_flag_service_call())
-            return BT::NodeStatus::FAILURE;
-
         if(!reverse_cmd_vel())
             return BT::NodeStatus::FAILURE;
 
@@ -169,11 +150,6 @@ class ReverseCmdVel : public BT::SyncActionNode
     private:
     bool debug = true;
     std::shared_ptr<rclcpp::Node> node_;
-
-    rcl_interfaces::msg::Parameter param;
-    rclcpp::Client<rcl_interfaces::srv::SetParameters>::SharedPtr service_client_set_override_flag;
-    std::vector<rcl_interfaces::msg::Parameter> parameters;
-    std::shared_ptr<rcl_interfaces::srv::SetParameters::Request> request_set_parameter;
 
     // rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher_;
     rclcpp::Client<bt_msgs::srv::PubCmdVel>::SharedPtr service_client_pub_cmd_vel;

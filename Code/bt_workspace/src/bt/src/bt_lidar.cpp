@@ -31,8 +31,13 @@ int main(int argc, const char* argv[])
     factory.registerNodeType<OrientationCheck>("OrientationCheck");
     factory.registerNodeType<ReverseCmdVel>("ReverseCmdVel");
 
+    factory.registerNodeType<EnableCmdVelOverride>("EnableCmdVelOverride");
+    factory.registerNodeType<DisableCmdVelOverride>("DisableCmdVelOverride");
+    factory.registerNodeType<SlamExecutionCheck>("SlamExecutionCheck");
+    factory.registerNodeType<ResetOccupancyMap>("ResetOccupancyMap");
+
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT"); 
-    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/collision_bt.xml");
+    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/map_bt.xml");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Created BT");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT Publisher"); 
 

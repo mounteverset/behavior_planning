@@ -38,6 +38,16 @@ class CompleteStop : public BT::SyncActionNode
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "CompleteStop ticked");
 
+        while (!service_client_->wait_for_service(std::chrono::seconds(1)))
+        {
+            if (!rclcpp::ok()) 
+            {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return BT::NodeStatus::FAILURE;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "PubCmdVel Service not available, waiting again...");
+        }
+
         auto result = service_client_->async_send_request(request_);
 
         if (debug)

@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/ros/foxy/include/**",
-                "/opt/ros/foxy/include"
+                "/opt/ros/foxy/include",
+                "${workspaceFolder}/Code/bt_workspace/src/robot_battery/include/robot_battery"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

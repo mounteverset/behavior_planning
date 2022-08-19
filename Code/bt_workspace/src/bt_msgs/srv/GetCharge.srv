@@ -1,0 +1,5 @@
+std_msgs/Empty placeholder
+---
+float64 charge
+float64 idle_decrease_per_sec
+float64 drive_decrease_per_sec

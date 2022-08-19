@@ -42,10 +42,13 @@
                         <Condition ID="OrientationCheck"/>
                         <Action ID="ReverseCmdVel"/>
                     </Sequence>
-                    <Sequence name="MapResetSequence">
-                        <Condition ID="SlamExecutionCheck"/>
+                    <Fallback name="MapResetFallback">
+                        <Inverter>
+                            <Condition ID="SlamExecutionCheck"/>
+                        </Inverter>
                         <Action ID="ResetOccupancyMap"/>
-                    </Sequence>
+                    </Fallback>
+                    <Action ID="DisableCmdVelOverride"/>
                 </Sequence>
             </Fallback>
         </Sequence>
