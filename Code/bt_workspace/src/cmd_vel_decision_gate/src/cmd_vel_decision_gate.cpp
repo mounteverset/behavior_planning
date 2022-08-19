@@ -1,5 +1,33 @@
 #include "cmd_vel_decision_gate.hpp"
 
+CmdVelDecisionGate::CmdVelDecisionGate(
+  const std::string & node_name, 
+  const rclcpp::NodeOptions & options = rclcpp::NodeOptions().allow_undeclared_parameters(true)) : Node(node_name, options)
+{
+    sub_nav_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel_nav", 1, std::bind(&CmdVelDecisionGate::cmd_vel_nav_callback, this, std::placeholders::_1));
+    pub_cmd_vel_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+
+    service_pub_cmd_vel_ = this->create_service<bt_msgs::srv::PubCmdVel>("pub_cmd_vel_service", std::bind(&CmdVelDecisionGate::pub_cmd_vel_service_callback, this, std::placeholders::_1, std::placeholders::_2));
+
+
+    service_called = false;
+    debug = true;
+
+    this->declare_parameter("bt_override", false);
+    
+    // What is the diff between these two lines?
+    bt_override_flag = this->get_parameter("bt_override").as_bool();
+
+    this->get_parameter("bt_override", bt_override_flag);
+
+    parameter_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CmdVelDecisionGate::parametersCallback, this, std::placeholders::_1));
+
+    
+
+    if(debug)
+        RCLCPP_INFO(this->get_logger(), "Finished init.");
+}
+
 /**
  * @brief 
  * 
@@ -12,13 +40,13 @@ void CmdVelDecisionGate::pub_cmd_vel_service_callback(
 {
   service_called = true;
 
-  if(debug)
-  {
-    RCLCPP_INFO(this->get_logger(), "Received service call.");
-    RCLCPP_INFO(this->get_logger(), "Linear.x: %f", request->cmd_vel.linear.x);
-    RCLCPP_INFO(this->get_logger(), "Angular.z: %f", request->cmd_vel.angular.z);
-    RCLCPP_INFO(this->get_logger(), "Publish Time in Seconds: %f", request->time_in_seconds);
-  }
+//   if(debug)
+//   {
+//     RCLCPP_INFO(this->get_logger(), "Received service call.");
+//     RCLCPP_INFO(this->get_logger(), "Linear.x: %f", request->cmd_vel.linear.x);
+//     RCLCPP_INFO(this->get_logger(), "Angular.z: %f", request->cmd_vel.angular.z);
+//     RCLCPP_INFO(this->get_logger(), "Publish Time in Seconds: %f", request->time_in_seconds);
+//   }
 
   bt_twist_msg.linear.x = request->cmd_vel.linear.x;
   bt_twist_msg.linear.y = request->cmd_vel.linear.y;
@@ -42,25 +70,38 @@ void CmdVelDecisionGate::pub_cmd_vel_service_callback(
  */
 rcl_interfaces::msg::SetParametersResult CmdVelDecisionGate::parametersCallback(const std::vector<rclcpp::Parameter> &parameters)
 {
-    rcl_interfaces::msg::SetParametersResult result;
-    result.successful = true;
-    result.reason = "success";
+  if(debug)
+    RCLCPP_INFO(this->get_logger(), "Parameter Callback called.");
 
-    for (auto &param : parameters)
+  for (auto &param : parameters)
+  {
+
+    RCLCPP_INFO(this->get_logger(), "%s", param.get_name().c_str());
+    RCLCPP_INFO(this->get_logger(), "%s", param.get_type_name().c_str());
+    RCLCPP_INFO(this->get_logger(), "%s", param.value_to_string().c_str());
+
+    if(debug)
+        RCLCPP_INFO(this->get_logger(), "Parameter Name: %s", param.get_name().c_str());
+    
+    // this->
+
+    if(param.get_name() == "bt_override")
     {
-      if(param.get_name() == "bt_override")
+      if (param.get_type() == rclcpp::ParameterType::PARAMETER_BOOL)
       {
-        if (param.get_type() == rclcpp::ParameterType::PARAMETER_BOOL)
-        {
-          if(debug)
-            RCLCPP_INFO(this->get_logger(), "Changed bt_override.");
+        bt_override_flag = param.as_bool();
 
-          bt_override_flag = param.as_bool();
-        }
+        if(debug)
+          RCLCPP_INFO(this->get_logger(), "Changed bt_override.");
       }
     }
+  }
 
-    return result;
+  rcl_interfaces::msg::SetParametersResult result;
+  result.successful = true;
+  result.reason = "success";
+
+  return result;
 }
 
 
@@ -93,7 +134,19 @@ void CmdVelDecisionGate::cmd_vel_nav_callback(const geometry_msgs::msg::Twist::S
 { 
   time_when_last_nav_msgs_received = this->get_clock()->now();
 
-  if (!service_called || bt_override_flag)
+  rclcpp::Parameter param = this->get_parameter("bt_override");
+
+  bt_override_flag = param.as_bool();
+
+
+  if(debug)
+  {
+    RCLCPP_INFO(this->get_logger(), "bt_override value param: %s", param.value_to_string().c_str());
+    RCLCPP_INFO(this->get_logger(), "bt_override_flag variable: %s", bt_override_flag ? "true" : "false");
+
+  }
+
+  if (!service_called && !bt_override_flag)
   {
     if(debug)
       RCLCPP_INFO(this->get_logger(), "Republishing Navigation cmd_vel.");

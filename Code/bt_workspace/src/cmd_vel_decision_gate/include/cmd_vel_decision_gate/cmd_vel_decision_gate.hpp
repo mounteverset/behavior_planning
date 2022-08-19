@@ -2,31 +2,13 @@
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "bt_msgs/srv/pub_cmd_vel.hpp"
+#include "rcl_interfaces/msg/parameter.hpp"
 #include "rcl_interfaces/msg/set_parameters_result.hpp"
 
 class CmdVelDecisionGate : public rclcpp::Node 
 {
     public:
-        CmdVelDecisionGate(const std::string & node_name) : Node(node_name)
-        {
-            sub_nav_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel_nav", 1, std::bind(&CmdVelDecisionGate::cmd_vel_nav_callback, this, std::placeholders::_1));
-            pub_cmd_vel_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
-
-            service_pub_cmd_vel_ = this->create_service<bt_msgs::srv::PubCmdVel>("pub_cmd_vel_service", std::bind(&CmdVelDecisionGate::pub_cmd_vel_service_callback, this, std::placeholders::_1, std::placeholders::_2));
-
-
-            service_called = false;
-            debug = true;
-
-            this->declare_parameter("bt_override", false);
-
-            bt_override_flag = this->get_parameter("bt_override").as_bool();
-
-            parameter_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CmdVelDecisionGate::parametersCallback, this, std::placeholders::_1));
-
-            if(debug)
-                RCLCPP_INFO(this->get_logger(), "Finished init.");
-        }
+        CmdVelDecisionGate(const std::string & node_name, const rclcpp::NodeOptions & options);
 
         rcl_interfaces::msg::SetParametersResult parametersCallback(const std::vector<rclcpp::Parameter> &parameters);
 

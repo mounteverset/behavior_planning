@@ -37,11 +37,23 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
             std::placeholders::_1,
             std::placeholders::_2));
 
+    distance_service_ = this->create_service<bt_msgs::srv::GetDistance>(
+        "goal_distance_service",
+        std::bind(&ExecutionCheckerService::goal_distance_service_callback,
+            this,
+            std::placeholders::_1,
+            std::placeholders::_2));
+    
+
     // topics_qos = rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(); // Transient Local Sub Settings
     sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, std::bind(&ExecutionCheckerService::lidar_callback, this, std::placeholders::_1));
     sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>("imu", 10, std::bind(&ExecutionCheckerService::imu_callback, this, std::placeholders::_1));
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&ExecutionCheckerService::odom_callback, this, std::placeholders::_1));
     sub_collision_ = this->create_subscription<gazebo_msgs::msg::ContactsState>("bumper_states", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
+    sub_goal_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("goal_pose", 1, std::bind(&ExecutionCheckerService::goal_callback, this, std::placeholders::_1));
+    //sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 1, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
+    sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 10, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
+
 
     debug = false;
     debug_orientation = true;
@@ -235,6 +247,39 @@ void ExecutionCheckerService::orientation_checker_service_callback(
         RCLCPP_INFO(this->get_logger(), response->success ? "true" : "false");
         
     }
+}
+
+void ExecutionCheckerService::calc_distance()
+{
+    if(goal_received && pose_received)
+    {
+        distance_to_goal = sqrt(pow(goal.pose.position.x - pose.pose.pose.position.x, 2) + pow(goal.pose.position.y - pose.pose.pose.position.y, 2));
+    }
+    else
+    {
+        distance_to_goal = 0.0;
+    }
+}
+
+void ExecutionCheckerService::goal_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+{
+    goal = *msg;
+    goal_received = true;
+    calc_distance();
+}
+
+void ExecutionCheckerService::pose_update_callback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg)
+{
+    pose = *msg;
+    pose_received = true;
+    calc_distance();
+}
+
+void ExecutionCheckerService::goal_distance_service_callback(
+    const bt_msgs::srv::GetDistance_Request::SharedPtr request,
+    const bt_msgs::srv::GetDistance_Response::SharedPtr response)
+{
+    response->distance_in_meter = distance_to_goal;
 }
 
 

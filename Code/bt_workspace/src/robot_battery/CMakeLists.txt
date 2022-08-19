@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(bt)
+project(robot_battery)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -18,26 +18,32 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(bt_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(gazebo_msgs REQUIRED)
 
-# add executables
-add_executable(bt_test src/bt_test.cpp)
-ament_target_dependencies(bt_test rclcpp behaviortree_cpp_v3)
+add_executable(robot_battery src/robot_battery.cpp)
+target_include_directories(robot_battery PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  robot_battery
+  "rclcpp"
+  "std_msgs"
+  "std_srvs"
+  "sensor_msgs"
+  "geometry_msgs"
+  "bt_msgs"
+)
 
-add_executable(bt_lidar src/bt_lidar.cpp)
-ament_target_dependencies(bt_lidar rclcpp behaviortree_cpp_v3 std_msgs geometry_msgs sensor_msgs std_srvs bt_msgs)
+include_directories(
+  include/${PROJECT_NAME}
+)
 
-add_executable(execution_checker_service src/execution_checker_service.cpp)
-ament_target_dependencies(execution_checker_service rclcpp std_srvs sensor_msgs nav_msgs gazebo_msgs tf2 bt_msgs)
-
+install(TARGETS robot_battery
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -49,25 +55,5 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-include_directories(
-  include
-  ) 
-
-
-install(
-  TARGETS bt_test bt_lidar execution_checker_service
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(
-  DIRECTORY resources
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(
-  DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
 
 ament_package()
