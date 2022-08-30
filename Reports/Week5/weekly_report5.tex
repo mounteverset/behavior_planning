@@ -1,0 +1,74 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makecell}
+\usepackage[margin=1in]{geometry}
+
+\author{Lukas Evers}
+\title{Weekly Report 3}
+
+
+\renewcommand\theadalign{bl}
+\renewcommand{\cellalign}{tc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\section{Scenarios}
+
+
+\subsection{Scenarios with Subscenarios}
+
+\begin{table}[!h]
+
+	\caption{Sense-Plan-Act Scenarios}
+	\label{tab:table2}
+	\begin{tabular}{|c|l|l|}
+		\hline
+      	\thead{Scenario Name} & \thead{Sub Scenario} & \thead{Description} \\
+      	\hline
+      	LidarCrash_1 &  \makecell{Lidar Node dies while stationary} & \makecell{Crash of the Lidar node.} \\
+      	\hline
+      	LidarCrash_2 &  \makecell{Lidar Node dies while driving straight} & \makecell{Crash of the Lidar node.} \\
+      	\hline
+      	LidarCrash_3 &  \makecell{Lidar Node dies while driving around a corner} & \makecell{Crash of the Lidar node.} \\
+     	\hline
+      	OdomCrash_1 &  \makecell{Odometry Node dies while standing} & \makecell{Crash of the Odometry.} \\
+      	\hline
+      	OdomCrash_2 &  \makecell{Odometry Node dies while driving} & \makecell{Crash of the Odometry.} \\
+      	\hline
+      	IMUCrash_1 &  \makecell{Odometry Node dies while standing} & \makecell{Crash of the IMU Driver.} \\
+      	\hline
+      	IMUCrash_2 &  \makecell{Odometry Node dies while driving} & \makecell{Crash of the IMU Driver.} \\
+      	\hline
+      	NoPathFound_1 & \makecell{No valid global path can be found}  & \makecell{Path can not be calculated.} \\
+		\hline      	
+      	NoPathFound_2 & \makecell{Global Planner Node crashed.}  & \makecell{No response from Path Planner.} \\
+      	\hline
+      	ForcedCollision_1 & \makecell{Obstacle crashes into robot}  & \makecell{The robot is following its path and something else crashes into the robot.} \\
+      	\hline
+      	ForcedCollision_2 & \makecell{The robot crashes into undetected obstacle}  & \makecell{The robot is following its path crashes into an .} \\
+      	\hline 
+      	BatteryLow_1 & \makecell{Battery Voltage Low} & \makecell{The remaining battery is too low to reach the destination.} \\
+      	\hline
+      	MotorFailure_1 & \makecell{The motor driver fails.} & \makecell{The motor has a hardware failure.} \\
+      	\hline
+      	NetworkFailure_1 & \makecell{The robot can not receive any commands.} & \makecell{The method to transmit the motor commands crashes.} \\
+      	\hline
+      	
+	\end{tabular}
+\end{table}
+
+\newpage
+
+
+\section{Next Week}
+
+\end{document}
