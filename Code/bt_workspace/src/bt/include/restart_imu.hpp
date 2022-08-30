@@ -26,7 +26,7 @@ class RestartImu : public BT::SyncActionNode
         try
         {
             system("gnome-terminal -e 'sh -c \"ros2 run gazebo_sensor_drivers imu_driver; exec bash\"'");
-            std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
             if(debug)
                 RCLCPP_INFO(rclcpp::get_logger("restart_imu"), "Trying to restart IMU");

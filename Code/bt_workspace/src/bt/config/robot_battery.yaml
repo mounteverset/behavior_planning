@@ -1,0 +1,6 @@
+/robot_battery:
+  ros__parameters:
+    charge: 100.0
+    drive_decrease: 0.02
+    idle_decrease: 0.01
+    use_sim_time: false

@@ -1,0 +1,3 @@
+std_msgs/Empty placeholder
+---
+geometry_msgs/Pose last_robot_pose

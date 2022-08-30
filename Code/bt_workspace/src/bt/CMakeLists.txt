@@ -25,18 +25,37 @@ find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(bt_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(nav2_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(gazebo_msgs REQUIRED)
+find_package(rclcpp_action)
+find_package(action_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
+find_package(rcl_interfaces REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
+# find_package(rclcpp_components)
 
 # add executables
 add_executable(bt_test src/bt_test.cpp)
 ament_target_dependencies(bt_test rclcpp behaviortree_cpp_v3)
 
 add_executable(bt_lidar src/bt_lidar.cpp)
-ament_target_dependencies(bt_lidar rclcpp behaviortree_cpp_v3 std_msgs geometry_msgs sensor_msgs std_srvs bt_msgs)
+ament_target_dependencies(bt_lidar 
+  rclcpp 
+  behaviortree_cpp_v3 
+  std_msgs
+  geometry_msgs
+  sensor_msgs
+  std_srvs
+  bt_msgs
+  nav2_msgs
+  rclcpp_action
+  visualization_msgs
+  rcl_interfaces
+  lifecycle_msgs)
 
 add_executable(execution_checker_service src/execution_checker_service.cpp)
-ament_target_dependencies(execution_checker_service rclcpp std_srvs sensor_msgs nav_msgs gazebo_msgs tf2 bt_msgs)
+ament_target_dependencies(execution_checker_service rclcpp std_srvs sensor_msgs nav_msgs gazebo_msgs tf2 bt_msgs action_msgs)
 
 
 if(BUILD_TESTING)
@@ -50,10 +69,18 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# target_include_directories(bt_lidar PRIVATE
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>)
+
+# target_compile_definitions(bt_lidar
+#   PRIVATE "ACTION_TUTORIALS_CPP_BUILDING_DLL")
+
 include_directories(
   include
   ) 
 
+# rclcpp_components_register_node(action_client PLUGIN "CancelNavGoal" EXECUTABLE fibonacci_action_client)
 
 install(
   TARGETS bt_test bt_lidar execution_checker_service
@@ -67,6 +94,11 @@ install(
 
 install(
   DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
 )
 

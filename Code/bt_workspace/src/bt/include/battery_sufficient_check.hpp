@@ -38,6 +38,8 @@ public:
 
     bool distance_service_call(float &distance)
     {
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Distance Service Call");
         while (!distance_service_client_->wait_for_service(std::chrono::seconds(1)))
         {
             if (!rclcpp::ok()) 
@@ -65,7 +67,10 @@ public:
     }
 
     bool charge_service_call(float &charge, float &idle_decrease, float &drive_decrease)
-    {
+    {   
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Charge Service Call");
+
         while (!charge_service_client_->wait_for_service(std::chrono::seconds(1)))
         {
             if (!rclcpp::ok()) 
@@ -82,7 +87,7 @@ public:
             RCLCPP_INFO(node_->get_logger(), "Sent Service Request");
 
         if(rclcpp::spin_until_future_complete(node_, charge_result) == rclcpp::FutureReturnCode::SUCCESS)
-        {
+        {   
             charge = charge_result.get()->charge;
             idle_decrease = charge_result.get()->idle_decrease_per_sec;
             drive_decrease = charge_result.get()->drive_decrease_per_sec;
@@ -101,6 +106,9 @@ public:
         if(!distance_service_call(distance))
             return BT::NodeStatus::FAILURE;
 
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Distance to Goal: %f", distance);
+
         if(distance == 0.0)
             return BT::NodeStatus::SUCCESS;
         
@@ -109,9 +117,15 @@ public:
         if(!charge_service_call(charge, idle_decrease, drive_decrease))
             return BT::NodeStatus::FAILURE;
         
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Charge: %f", charge);
+
         float time = distance / avrg_speed_;
 
         float consumption = time * (idle_decrease + drive_decrease);
+
+        if (debug)
+            RCLCPP_INFO(node_->get_logger(), "Consumption: %f", consumption);
 
         if (charge >= (consumption * safety_factor_))
         {

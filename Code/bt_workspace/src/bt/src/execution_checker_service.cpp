@@ -43,6 +43,13 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
             this,
             std::placeholders::_1,
             std::placeholders::_2));
+
+    plan_possible_service_ = this->create_service<std_srvs::srv::SetBool>(
+        "path_possible_check_service",
+        std::bind(&ExecutionCheckerService::plan_possible_service_callback,
+        this,
+        std::placeholders::_1,
+        std::placeholders::_2));
     
 
     // topics_qos = rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(); // Transient Local Sub Settings
@@ -50,13 +57,16 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
     sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>("imu", 10, std::bind(&ExecutionCheckerService::imu_callback, this, std::placeholders::_1));
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&ExecutionCheckerService::odom_callback, this, std::placeholders::_1));
     sub_collision_ = this->create_subscription<gazebo_msgs::msg::ContactsState>("bumper_states", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
-    sub_goal_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("goal_pose", 1, std::bind(&ExecutionCheckerService::goal_callback, this, std::placeholders::_1));
+    sub_path_ = this->create_subscription<nav_msgs::msg::Path>("plan", 1, std::bind(&ExecutionCheckerService::goal_callback, this, std::placeholders::_1));
     //sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 1, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
     sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 10, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
+    sub_global_planner_goal_states = this->create_subscription<action_msgs::msg::GoalStatusArray>("compute_path_to_pose/_action/status", 10, std::bind(&ExecutionCheckerService::global_planner_goal_states_callback, this, std::placeholders::_1));
 
+    save_collision_pose_client = this->create_client<std_srvs::srv::Empty>("save_collision_pose_service");
 
     debug = false;
-    debug_orientation = true;
+    debug_orientation = false;
+    debug_distance = false;
 }
 
 ExecutionCheckerService::~ExecutionCheckerService() = default;
@@ -225,6 +235,12 @@ void ExecutionCheckerService::collision_service_callback(
     }
     response->message = "";
     response->success = collision_detected_;
+
+    if(collision_detected_)
+    {
+        auto response = save_collision_pose_client->async_send_request(std::make_shared<std_srvs::srv::Empty::Request>());
+        
+    }
     
 }
 
@@ -249,6 +265,8 @@ void ExecutionCheckerService::orientation_checker_service_callback(
     }
 }
 
+
+// Battery Sufficient Check
 void ExecutionCheckerService::calc_distance()
 {
     if(goal_received && pose_received)
@@ -261,18 +279,45 @@ void ExecutionCheckerService::calc_distance()
     }
 }
 
-void ExecutionCheckerService::goal_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+void ExecutionCheckerService::goal_callback(const nav_msgs::msg::Path::SharedPtr msg)
 {
-    goal = *msg;
+    if(debug_distance)
+    {
+        RCLCPP_INFO(this->get_logger(), "Received a goal!");   
+    }
+
+    goal = msg->poses.back();
+
+
+
+    if(debug_distance)
+    {
+        RCLCPP_INFO(this->get_logger(), "goal pos.x: %f", goal.pose.position.x);  
+        RCLCPP_INFO(this->get_logger(), "goal pos.y: %f", goal.pose.position.y);  
+        RCLCPP_INFO(this->get_logger(), "msg pos.x: %f", msg->poses.back().pose.position.x); 
+        RCLCPP_INFO(this->get_logger(), "msg pos.y: %f", msg->poses.back().pose.position.y); 
+    }
     goal_received = true;
     calc_distance();
 }
 
 void ExecutionCheckerService::pose_update_callback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg)
 {
+    if(debug_distance)
+    {
+        RCLCPP_INFO(this->get_logger(), "Received a pose!");   
+    }
     pose = *msg;
+
+    if(debug_distance)
+    {
+        RCLCPP_INFO(this->get_logger(), "pose pos.x: %f", pose.pose.pose.position.x);  
+        RCLCPP_INFO(this->get_logger(), "pose pos.y: %f", pose.pose.pose.position.y);  
+        RCLCPP_INFO(this->get_logger(), "msg pos.x: %f", msg->pose.pose.position.x); 
+        RCLCPP_INFO(this->get_logger(), "msg pos.y: %f", msg->pose.pose.position.y); 
+    }
     pose_received = true;
-    calc_distance();
+    // calc_distance();
 }
 
 void ExecutionCheckerService::goal_distance_service_callback(
@@ -280,6 +325,58 @@ void ExecutionCheckerService::goal_distance_service_callback(
     const bt_msgs::srv::GetDistance_Response::SharedPtr response)
 {
     response->distance_in_meter = distance_to_goal;
+}
+
+// Global Path Possible Related
+
+void ExecutionCheckerService::plan_possible_service_callback(   
+    const std_srvs::srv::SetBool_Request::SharedPtr request,
+    const std_srvs::srv::SetBool_Response::SharedPtr response)
+{   
+    response->message="";
+    response->success = is_global_plan_possible;    
+}   
+
+void ExecutionCheckerService::global_planner_goal_states_callback(const action_msgs::msg::GoalStatusArray::SharedPtr msg)
+{
+    auto state = msg->status_list.back();
+
+    if(debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "Received a Goal Status Array");
+        RCLCPP_INFO(this->get_logger(), "Time since last goal state added: %f", (this->get_clock()->now().seconds() - (state.goal_info.stamp.sec + state.goal_info.stamp.nanosec * pow(10, -9) )));
+    }
+
+    if ((this->get_clock()->now().seconds() - (state.goal_info.stamp.sec + state.goal_info.stamp.nanosec * pow(10, -9) )) > 0.1)
+    {
+        if (state.status == action_msgs::msg::GoalStatus::STATUS_SUCCEEDED)
+        {
+            is_global_plan_possible = true;
+        }
+        // else if (state.status == action_msgs::msg::GoalStatus::STATUS_EXECUTING)
+        // {
+        //     is_global_plan_possible = false;
+        // }
+        else
+        {
+            is_global_plan_possible = false;
+        }
+    }
+    else
+    {
+        if (state.status == action_msgs::msg::GoalStatus::STATUS_SUCCEEDED)
+        {
+            is_global_plan_possible = true;
+        }
+        else if (state.status == action_msgs::msg::GoalStatus::STATUS_EXECUTING)
+        {
+            is_global_plan_possible = true;
+        }
+        else
+        {
+            is_global_plan_possible = false;
+        }
+    }
 }
 
 
