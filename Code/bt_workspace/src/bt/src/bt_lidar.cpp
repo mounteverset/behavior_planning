@@ -17,6 +17,7 @@ int main(int argc, const char* argv[])
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating Nodes"); 
     // BT::PortsList lidar_exec_check_ports = {BT::InputPort<bool>("is_lidar_running")};
     factory.registerNodeType<LidarExecutionCheck>("LidarExecutionCheck");
+    factory.registerNodeType<AccelToNormalSpeed>("AccelToNormalSpeed");
     factory.registerNodeType<DecelToMinDrivingSpeed>("DecelToMinDrivingSpeed");
     factory.registerNodeType<CompleteStop>("CompleteStop");
     factory.registerNodeType<RestartLidar>("RestartLidar");
@@ -35,9 +36,22 @@ int main(int argc, const char* argv[])
     factory.registerNodeType<DisableCmdVelOverride>("DisableCmdVelOverride");
     factory.registerNodeType<SlamExecutionCheck>("SlamExecutionCheck");
     factory.registerNodeType<ResetOccupancyMap>("ResetOccupancyMap");
+    factory.registerNodeType<UpdateMapAfterCollision>("UpdateMapAfterCollision");
+    factory.registerNodeType<SaveUpdatedMap>("SaveUpdatedMap");
+    factory.registerNodeType<LoadUpdatedMap>("LoadUpdatedMap");
+
+    factory.registerNodeType<BatterySufficientCheck>("BatterySufficientCheck");
+
+    factory.registerNodeType<CancelNavGoal>("CancelNavGoal");
+    factory.registerNodeType<RepublishLastGoal>("RepublishLastGoal");
+
+    factory.registerNodeType<GlobalPlannerExecutionCheck>("GlobalPlannerExecutionCheck");
+    factory.registerNodeType<RestartGlobalPlanner>("RestartGlobalPlanner");
+    factory.registerNodeType<PathPossibleCheck>("PathPossibleCheck");
+    factory.registerNodeType<PublishCloserGoal>("PublishCloserGoal");
 
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT"); 
-    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/map_bt.xml");
+    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/save_new_map.xml");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Created BT");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT Publisher"); 
 

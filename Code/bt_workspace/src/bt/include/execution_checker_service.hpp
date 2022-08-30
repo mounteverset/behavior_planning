@@ -2,6 +2,7 @@
 #include <math.h>
 #include "rclcpp/rclcpp.hpp"
 #include "std_srvs/srv/set_bool.hpp"
+#include "std_srvs/srv/empty.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "sensor_msgs/msg/imu.hpp"
 #include "nav_msgs/msg/odometry.hpp"
@@ -11,9 +12,11 @@
 #include "tf2/LinearMath/Quaternion.h"
 #include "tf2/LinearMath/Matrix3x3.h"
 
+#include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_with_covariance_stamped.hpp"
 #include "bt_msgs/srv/get_distance.hpp"
+#include "action_msgs/msg/goal_status_array.hpp"
 // #include "tf2_conversion_helpers.hpp"
 // #include "tf2_helpers/tf2_conversion_helpers.hpp"
 
@@ -77,6 +80,7 @@ class ExecutionCheckerService : public rclcpp::Node
             const std_srvs::srv::SetBool_Response::SharedPtr response);
 
         rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr collision_service_;
+        rclcpp::Client<std_srvs::srv::Empty>::SharedPtr save_collision_pose_client;
         rclcpp::Subscription<gazebo_msgs::msg::ContactsState>::SharedPtr sub_collision_;
         rclcpp::Time last_msg_received_collision_;
         bool collision_detected_;
@@ -96,13 +100,13 @@ class ExecutionCheckerService : public rclcpp::Node
             const bt_msgs::srv::GetDistance_Request::SharedPtr request,
             const bt_msgs::srv::GetDistance_Response::SharedPtr response);
 
-        void goal_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
+        void goal_callback(const nav_msgs::msg::Path::SharedPtr msg);
         void pose_update_callback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg);
 
         void calc_distance();
 
         rclcpp::Service<bt_msgs::srv::GetDistance>::SharedPtr distance_service_;
-        rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_goal_;
+        rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_path_;
         rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr sub_pose_;
 
         geometry_msgs::msg::PoseStamped goal = geometry_msgs::msg::PoseStamped();
@@ -111,9 +115,25 @@ class ExecutionCheckerService : public rclcpp::Node
         bool goal_received = false;
         bool pose_received = false;
 
+        //Global Planner Related
+
+        void plan_possible_service_callback(
+            const std_srvs::srv::SetBool_Request::SharedPtr request,
+            const std_srvs::srv::SetBool_Response::SharedPtr response);
+
+        void global_planner_goal_states_callback(const action_msgs::msg::GoalStatusArray::SharedPtr msg);
+
+        rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr plan_possible_service_;
+        rclcpp::Subscription<action_msgs::msg::GoalStatusArray>::SharedPtr sub_global_planner_goal_states;
+        bool is_global_plan_possible;
+
+
+
+
         // Debug Statement Related
 
         bool debug_callback;
         bool debug;
         bool debug_orientation;
+        bool debug_distance;
 };

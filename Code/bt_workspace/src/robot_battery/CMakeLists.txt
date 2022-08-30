@@ -23,6 +23,7 @@ find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(bt_msgs REQUIRED)
+find_package(rcl_interfaces REQUIRED)
 
 add_executable(robot_battery src/robot_battery.cpp)
 target_include_directories(robot_battery PUBLIC
@@ -36,6 +37,7 @@ ament_target_dependencies(
   "sensor_msgs"
   "geometry_msgs"
   "bt_msgs"
+  "rcl_interfaces"
 )
 
 include_directories(

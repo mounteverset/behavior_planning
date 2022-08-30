@@ -37,7 +37,8 @@ class OdomDriver : public rclcpp::Node
 
     void callback(const nav_msgs::msg::Odometry::SharedPtr msg)
     {
-      RCLCPP_INFO(this->get_logger(), "%d", msg->header.stamp.sec);
+      if(debug)
+        RCLCPP_INFO(this->get_logger(), "%d", msg->header.stamp.sec);
 
       // tf = buffer.lookupTransform()
 
@@ -46,7 +47,7 @@ class OdomDriver : public rclcpp::Node
 
   private:
 
-    bool debug = true;
+    bool debug = false;
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr pub_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_;
     //tf2_ros::TransformListener tf_listener;

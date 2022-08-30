@@ -12,11 +12,11 @@
 
 #include "behaviortree_cpp_v3/action_node.h"
 
-class RestartOdom : public BT::SyncActionNode
+class RestartGlobalPlanner : public BT::SyncActionNode
 {   
     public:
 
-    RestartOdom(const std::string& name) : BT::SyncActionNode(name, {})
+    RestartGlobalPlanner(const std::string& name) : BT::SyncActionNode(name, {})
     {
         
     }
@@ -25,18 +25,18 @@ class RestartOdom : public BT::SyncActionNode
     {
         try
         {
-            system("gnome-terminal -e 'sh -c \"ros2 run gazebo_sensor_drivers odom_driver; exec bash\"'");
-            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("gnome-terminal -e 'sh -c \"ros2 launch bt launch_global_planner.launch.py ; exec bash\"'");
+            std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
             if(debug)
-                RCLCPP_INFO(rclcpp::get_logger("restart_Odom"), "Trying to restart Odom");
+                RCLCPP_INFO(rclcpp::get_logger("restart_global_planner"), "Trying to restart Global Planner");
             return BT::NodeStatus::SUCCESS;
         }
         catch(const std::exception& e)
         {   
             //std::cerr << e.what() << '\n';
             if(debug)
-                RCLCPP_ERROR(rclcpp::get_logger("restart_lidar"), e.what());
+                RCLCPP_ERROR(rclcpp::get_logger("restart_global_planner"), e.what());
             return BT::NodeStatus::FAILURE;
         }
     }
