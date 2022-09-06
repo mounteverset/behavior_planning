@@ -1,0 +1,41 @@
+% Created by Christoph Jansen
+% License: CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
+% Source: https://github.com/Gnork/htw-latex-template
+% THIS TEMPLATE IS NOT OFFICIAL
+% Offical .doc template: http://www.htw-berlin.de/hochschulstruktur/zentrale-referate/presse-und-oeffentlichkeitsarbeit/abschlussarbeiten-vorlagen/
+
+\documentclass[a4paper]{book}
+\usepackage[twoside=true,margin=2.5cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{wallpaper}
+\usepackage{textpos}
+
+% set wallpaper position for title page
+\addtolength{\wpXoffset}{0.0cm}
+\addtolength{\wpYoffset}{7.0cm}
+
+% define htw color for title page
+\definecolor{htwgreen}{RGB}{118,185,0}
+
+\begin{document}
+\input{text/titel}
+\frontmatter
+\input{text/abstract}
+\tableofcontents
+\listoffigures
+\mainmatter
+\input{text/einleitung}
+\input{text/verwandt}
+\input{text/methoden}
+\input{text/implementierung}
+\input{text/ergebnisse}
+\input{text/diskussion}
+\appendix
+\input{appendix/apA} % Appendix A
+\backmatter
+\bibliographystyle{gerplain}
+\bibliography{thesis}
+\end{document}
