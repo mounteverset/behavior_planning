@@ -70,7 +70,9 @@
                             <Sequence name="MapUpdateSequence">
                                 <Action ID="UpdateMapAfterCollision"/>
                                 <Action ID="SaveUpdatedMap"/>
-                                <Action ID="LoadUpdatedMap"/>
+                                <Delay delay_msec="500">
+                                    <Action ID="LoadUpdatedMap"/>
+                                </Delay>
                             </Sequence>
                         </Fallback>
                         <Sequence name="RepublishGoalSequence">

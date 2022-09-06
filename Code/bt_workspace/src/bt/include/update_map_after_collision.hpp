@@ -53,6 +53,8 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         if(rclcpp::spin_until_future_complete(node_, result) == rclcpp::FutureReturnCode::SUCCESS)
         {
             map = result.get()->map;
+            if(debug)
+                RCLCPP_INFO(node_->get_logger(), "Received map with dimensions: width: %d and height: %d", map.info.width, map.info.height);
             return true;
         }
         else
@@ -131,15 +133,15 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
     {
         if(debug)
             RCLCPP_INFO(node_->get_logger(), "Converting to vector 2d.");
-        for (size_t i = 0; i < map.info.height -1; i++)
+        for (size_t i = 0; i < map.info.width-1; i++)
         {   
             // if(debug)
                 // RCLCPP_INFO(node_->get_logger(), "i: %d", i);
-            for (size_t j = 0; j < map.info.width -1; j++)
+            for (size_t j = 0; j < map.info.height -1; j++)
             {   
                 // if(debug)
                     // RCLCPP_INFO(node_->get_logger(), "j: %d", j);
-                vec_2d.at(i).at(j) = map.data.at(i * map.info.width + j);
+                vec_2d.at(i).at(j) = map.data.at(i * map.info.height + j);
             }            
         }       
     }
@@ -196,6 +198,9 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         goal_point.y = (sin(yaw)*ROBOT_RADIUS) + pose.position.y;
         goal_point.z = 0.0;
 
+        if(debug)
+            RCLCPP_INFO(node_->get_logger(), "Calculated Collision Point: %f | %f ", goal_point.x, goal_point.y); 
+
         return goal_point;
     }
 
@@ -209,7 +214,7 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         {
             for (size_t j = y_px -2; j < y_px +2; j++)
             {
-                costmap_2d.at(j).at(i) = 100; 
+                costmap_2d.at(i).at(j) = 100; 
             }
             
         }
@@ -225,12 +230,37 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
             RCLCPP_INFO(node_->get_logger(), "Converting to one dimensional data array and putting it into the map msg.");
         std::vector<int8_t> data((map.info.height * map.info.width), -1);
 
-        for (size_t i = 0; i < costmap_vector_2d.size() -1; i++) //Rows
-        {
-            for (size_t j = 0; j < costmap_vector_2d.at(i).size() -1; j++) // Columns
+        for (size_t i = 0; i < costmap_vector_2d.size(); i++) //Rows
+        {   
+            // if(debug)
+                // RCLCPP_INFO(node_->get_logger(), "i: %d", i);
+            for (size_t j = 0; j < costmap_vector_2d.at(i).size(); j++) // Columns
             {
                 // data.push_back(costmap_vector_2d.at(i).at(j));
-                data.at(costmap_vector_2d.size()*i + j) = costmap_vector_2d.at(i).at(j); // pixel = at.(row).at(column) = 
+                // if(debug)
+                    // RCLCPP_INFO(node_->get_logger(), "j: %d", j);
+                // if(debug)
+                // {
+                    // RCLCPP_INFO(node_->get_logger(), "data.size(): %d", data.size());
+                    // RCLCPP_INFO(node_->get_logger(), "costmap_vector_2d.size(): %d", costmap_vector_2d.size());
+                    // RCLCPP_INFO(node_->get_logger(), "costmap_vector_2d.at(i).size(): %d", costmap_vector_2d.at(i).size());
+                    // RCLCPP_INFO(node_->get_logger(), "costmap.at(i).at(j): %d", costmap_vector_2d.at(i).at(j));
+                    // RCLCPP_INFO(node_->get_logger(), "costmap_vector_2d.at(i).size()*i + j: %d", costmap_vector_2d.at(i).size()*i + j);
+                    // RCLCPP_INFO(node_->get_logger(), "costmap_vector_2d.size(): %d", costmap_vector_2d.size());
+                // }
+                // if(debug)
+                //     RCLCPP_INFO(node_->get_logger(), "Before creash");
+                // data.at(map.info.height * i + j) = 100;
+
+                // if(debug)
+                // {
+                //     RCLCPP_INFO(node_->get_logger(), "data.at should be 100: %d", costmap_vector_2d.at(j).size()*i + j);
+                // }
+                // data.at((costmap_vector_2d.at(i).size() * i) + j) = costmap_vector_2d.at(i).at(j); // pixel = at.(row).at(column) = 
+                // if(debug)
+                //     RCLCPP_INFO(node_->get_logger(), "i: %d, j: %d", i, j);
+
+                data.at(map.info.height * i + j ) = costmap_vector_2d.at(i).at(j);                
             }            
         }
         if(data.size() == map.info.width * map.info.height)
@@ -257,7 +287,10 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         if(!get_map_service_call(map))
             return BT::NodeStatus::FAILURE;
 
-        std::vector<std::vector<int>> costmap_vector_2d(map.info.height, std::vector<int>(map.info.width, 0));
+        // std::vector<std::vector<int>> costmap_vector_2d(map.info.width, std::vector<int>(map.info.height, 0));
+
+        std::vector<int> row(map.info.height, 0);
+        std::vector<std::vector<int>> costmap_vector_2d(map.info.width, row);
 
         convert_data_to_vector(map, costmap_vector_2d);
 
