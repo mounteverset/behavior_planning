@@ -159,7 +159,7 @@ global_costmap:
 map_server:
   ros__parameters:
     use_sim_time: False
-    yaml_filename: "map.yaml"
+    yaml_filename: "map_house.yaml"
 
 map_saver:
   ros__parameters:
@@ -172,7 +172,7 @@ lifecycle_manager:
   ros__parameters:
     use_sim_time: False
     autostart: True
-    node_names: ['map_server', 'amcl', 'costmap_filter_info_server'
+    node_names: ['map_server', 'amcl',
                  'world_model', 'dwb_controller',
                  'navfn_planner', 'bt_navigator']
 
