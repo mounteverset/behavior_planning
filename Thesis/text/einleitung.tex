@@ -1,0 +1,39 @@
+\chapter{Introduction}
+\label{cha:introduction}
+
+
+
+Core Problem - too little autonomy in a standard autonomous mobile robot running ROS navigation(AMR)
+
+Description of the Problem
+
+Robots regurlarly needs operator in case smth unexpected happens\\
+
+this may include: unexpected collisions, a system restart is needed, battery is empty\\
+
+The system is not able to react and handle unforeseen situations\\
+
+This can lead to safety issues during the operation of a robot. These safety issues can lead to uncontrolled driving maneuvers due to wrong sensor data or a wrong environment represantation.\\
+
+Due to the need of the robot to require an operator, the robot is closer to an automated instead of an autonomous vehicle. 
+Difference is defined by the SAE Levels for automonous driving in cars.\\
+
+It is important for the robot to possess the ability to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment, these can be other robots and humans.\\
+
+In theory the robot can perform fully autonomous navigation including mapping and localization but as soon as something out of the ordinary happens the robots autonomy is not guaranteed to be reliable anymore.
+Default robot is not able to represent all possible fail states and does not detect failures on a systematic level, but only inside its navigation related subsystem. And even when failures inside this subsystems are discovered, the options to handle these problems are very limited and often do not deal with the problems in an autonomous way. The reliance on human-needed problem solving decreases the robots usefulness when tasked with real goals. 
+
+Having a robust and safe robot behaviour opens the door to many applications in a more diverse set of challenging environments. Usually a reinforcement learning approach with broad training data set is a great way to handle a multitude of unknown environments and situations, but one of the biggest problems is the lacking determinism in such systems.
+
+In the robotic world exists a need for a deterministic system which can enhance and override the decision making process and navigation capabilities of the robot. 
+
+This thesis proposes a comprehensive approach for behavior planning for an autonomous mobile robot.  
+
+
+\textbf{How can behavior planning increase the safety and autonomy of an autonomous mobile robot running ROS?}
+
+
+	
+	
+
+
