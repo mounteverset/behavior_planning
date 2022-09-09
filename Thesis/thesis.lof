@@ -1,8 +1,8 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Common Autonomous Driving Architecture \cite {1087032} \cite {9266268} }}{4}{figure.2.1}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Common Autonomous Driving Architecture \cite {1087032} \cite {9266268} }}{4}{figure.2.2}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces SAE Levels Of Driving Automation \cite {J3016_202104} }}{4}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Common Autonomous Driving Architecture \cite {brooks1986} \cite {velasco2020} }}{4}{figure.2.2}%
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Hybrid Planning Architecture \cite {arkin1998} }}{6}{figure.2.3}%
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a finite state machine transition diagram \cite {wagner2006} }}{7}{figure.2.4}%
 \addvspace {10\p@ }
