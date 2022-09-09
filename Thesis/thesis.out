@@ -9,17 +9,15 @@
 \BOOKMARK [2][-]{subsection.2.3.3}{Hybrid}{section.2.3}% 9
 \BOOKMARK [1][-]{section.2.4}{Behavior Planning Approaches}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.4.1}{Finite State Machines}{section.2.4}% 11
-\BOOKMARK [2][-]{subsection.2.4.2}{POMDPs}{section.2.4}% 12
-\BOOKMARK [2][-]{subsection.2.4.3}{Behavior Trees}{section.2.4}% 13
-\BOOKMARK [1][-]{section.2.5}{Deterministic Behavior}{chapter.2}% 14
-\BOOKMARK [0][-]{chapter.3}{Methodology}{}% 15
-\BOOKMARK [1][-]{section.3.1}{Requirements}{chapter.3}% 16
-\BOOKMARK [1][-]{section.3.2}{Libraries}{chapter.3}% 17
-\BOOKMARK [0][-]{chapter.4}{Implementation}{}% 18
-\BOOKMARK [1][-]{section.4.1}{System Architecture}{chapter.4}% 19
-\BOOKMARK [1][-]{section.4.2}{Behavior Tree Structure}{chapter.4}% 20
-\BOOKMARK [0][-]{chapter.5}{Evaluation}{}% 21
-\BOOKMARK [1][-]{section.5.1}{Scenarios}{chapter.5}% 22
-\BOOKMARK [0][-]{chapter.6}{Summary}{}% 23
-\BOOKMARK [1][-]{section.6.1}{Conclusion}{chapter.6}% 24
-\BOOKMARK [1][-]{section.6.2}{Prospect}{chapter.6}% 25
+\BOOKMARK [2][-]{subsection.2.4.2}{Behavior Trees}{section.2.4}% 12
+\BOOKMARK [0][-]{chapter.3}{Methodology}{}% 13
+\BOOKMARK [1][-]{section.3.1}{Requirements}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.2}{Libraries}{chapter.3}% 15
+\BOOKMARK [0][-]{chapter.4}{Implementation}{}% 16
+\BOOKMARK [1][-]{section.4.1}{System Architecture}{chapter.4}% 17
+\BOOKMARK [1][-]{section.4.2}{Behavior Tree Structure}{chapter.4}% 18
+\BOOKMARK [0][-]{chapter.5}{Evaluation}{}% 19
+\BOOKMARK [1][-]{section.5.1}{Scenarios}{chapter.5}% 20
+\BOOKMARK [0][-]{chapter.6}{Summary}{}% 21
+\BOOKMARK [1][-]{section.6.1}{Conclusion}{chapter.6}% 22
+\BOOKMARK [1][-]{section.6.2}{Prospect}{chapter.6}% 23

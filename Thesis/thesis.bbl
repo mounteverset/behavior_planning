@@ -1,14 +1,8 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{1087032}
-R.~Brooks, ``A robust layered control system for a mobile robot,'' {\em IEEE
-  Journal on Robotics and Automation}, vol.~2, no.~1, pp.~14--23, 1986.
-
-\bibitem{9266268}
-G.~Velasco-Hernandez, D.~J. Yeong, J.~Barry, and J.~Walsh, ``Autonomous driving
-  architectures, perception and data fusion: A review,'' in {\em 2020 IEEE 16th
-  International Conference on Intelligent Computer Communication and Processing
-  (ICCP)}, pp.~315--321, 2020.
+\bibitem{J3016_202104}
+SAEInternational, {\em Taxonomy and Definitions for Terms Related to Driving
+  Automation Systems for On-Road Motor Vehicles}, apr 2021.
 
 \bibitem{arkin1998}
 R.~Arkin, R.~Arkin, and R.~Arkin, {\em Behavior-based Robotics}.
@@ -24,17 +18,55 @@ E.~F. und Innovation~(EFI), ``Gutachten zu forschung, innovation und
   technologischer leistungsfaehigkeit deutschlands 2018,'' tech. rep., EFI,
   Berlin, 2018.
 
-\bibitem{J3016_202104}
-SAEInternational, {\em Taxonomy and Definitions for Terms Related to Driving
-  Automation Systems for On-Road Motor Vehicles}, apr 2021.
-
 \bibitem{murphy2000}
 R.~Murphy, R.~Murphy, and R.~Arkin, {\em Introduction to AI Robotics}.
 \newblock A Bradford book, MIT Press, 2000.
+
+\bibitem{reke2020}
+M.~Reke, D.~Peter, J.~Schulte-Tigges, S.~Schiffer, A.~Ferrein, T.~Walter, and
+  D.~Matheis, ``A self-driving car architecture in ros2,'' in {\em 2020
+  International SAUPEC/RobMech/PRASA Conference}, pp.~1--6, IEEE, 2020.
+
+\bibitem{brooks1986}
+R.~Brooks, ``A robust layered control system for a mobile robot,'' {\em IEEE
+  Journal on Robotics and Automation}, vol.~2, no.~1, pp.~14--23, 1986.
+
+\bibitem{velasco2020}
+G.~Velasco-Hernandez, D.~J. Yeong, J.~Barry, and J.~Walsh, ``Autonomous driving
+  architectures, perception and data fusion: A review,'' in {\em 2020 IEEE 16th
+  International Conference on Intelligent Computer Communication and Processing
+  (ICCP)}, pp.~315--321, 2020.
 
 \bibitem{desilva2008}
 L.~De~Silva and H.~Ekanayake, ``Behavior-based robotics and the reactive
   paradigm a survey,'' in {\em 2008 11th International Conference on Computer
   and Information Technology}, pp.~36--43, 2008.
+
+\bibitem{fourakis2014}
+M.~Foukarakis, A.~Leonidis, M.~Antona, and C.~Stephanidis, ``Combining finite
+  state machine and decision-making tools for adaptable robot behavior,'' in
+  {\em Universal Access in Human-Computer Interaction. Aging and Assistive
+  Environments} (C.~Stephanidis and M.~Antona, eds.), (Cham), pp.~625--635,
+  Springer International Publishing, 2014.
+
+\bibitem{ziegler2014}
+J.~Ziegler, P.~Bender, M.~Schreiber, H.~Lategahn, T.~Strauss, C.~Stiller,
+  T.~Dang, U.~Franke, N.~Appenrodt, C.~G. Keller, E.~Kaus, R.~G. Herrtwich,
+  C.~Rabe, D.~Pfeiffer, F.~Lindner, F.~Stein, F.~Erbs, M.~Enzweiler,
+  C.~Knöppel, J.~Hipp, M.~Haueis, M.~Trepte, C.~Brenk, A.~Tamke, M.~Ghanaat,
+  M.~Braun, A.~Joos, H.~Fritz, H.~Mock, M.~Hein, and E.~Zeeb, ``Making bertha
+  drive—an autonomous journey on a historic route,'' {\em IEEE Intelligent
+  Transportation Systems Magazine}, vol.~6, no.~2, pp.~8--20, 2014.
+
+\bibitem{conner2017}
+D.~C. Conner and J.~Willis, ``Flexible navigation: Finite state machine-based
+  integrated navigation and control for ros enabled robots,'' in {\em
+  SoutheastCon 2017}, pp.~1--8, 2017.
+
+\bibitem{park2013}
+H.-W. Park, A.~Ramezani, and J.~W. Grizzle, ``A finite-state machine for
+  accommodating unexpected large ground-height variations in bipedal robot
+  walking,'' {\em IEEE Transactions on Robotics}, vol.~29, no.~2, pp.~331--345,
+  2013.
 
 \end{thebibliography}

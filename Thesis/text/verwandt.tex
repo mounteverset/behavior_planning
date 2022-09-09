@@ -28,10 +28,10 @@ Fachforum
 
 To gain a better understanding how behavior planning influences the autonomy of a robot, one can take a look at the latest and most used software architectures for autonomous driving on a functional level. 
 Most of the current autonomous driving architectures are implementing a hierarchical structure that follows the "Sense - Think - Act" paradigm \cite{murphy2000}. As shown in figure xx the sensory inputs, usually from multiple sensors, get processed to create an environment representation. Then the system calculates how to get from its current position to the destination and creates a path. A second planning calculation is triggered to compute the motion commands with the constraints of the system (e.g. size, turning radius, etc.). These motion commands then get converted to control the motors. 
-The planning sequence can be further divided into global planning, behavior planning and local planning. Global planning,also named route planning, is responsible for outputting a path from start to goal. This is comparable to a person using Google Maps to find the shortest or fastest path to a far away city. In this analogy, the behavior planner is responsible to follow the traffic rules on the trip to the destination, e.g. stopping at red lights, giving right of way to other vehicles, following the speed limit. The local planning, also named motion planning, module takes the input from the behavior layer and has the task to let the vehicle drive in accordance to the executed behavior, so that it stays in its lane and comes to a stop at a red light. \\
+The planning sequence can be further divided into global planning, behavior planning and local planning. Global planning,also named route planning, is responsible for outputting a path from start to goal. This is comparable to a person using Google Maps to find the shortest or fastest path to a far away city. In this analogy, the behavior planner is responsible to follow the traffic rules on the trip to the destination, e.g. stopping at red lights, giving right of way to other vehicles, following the speed limit. The local planning, also named motion planning, module takes the input from the behavior layer and has the task to let the vehicle drive in accordance to the executed behavior, so that it stays in its lane and comes to a stop at a red light \cite{reke2020}. \\
 \begin{figure}
 	\includegraphics[width=1.0\textwidth]{images/autonomous_driving_architecture.png}
-	\caption{Common Autonomous Driving Architecture \cite{1087032} \cite{9266268}  }
+	\caption{Common Autonomous Driving Architecture \cite{brooks1986} \cite{velasco2020}  }
 \end{figure}
  \\
 
@@ -89,25 +89,30 @@ The different solution for such behavior execution system all share the fact tha
  
 
 \subsection{Finite State Machines}
-Finite State Machines are commonly used in the environment of autonomous driving. A finite state machine is defined by a list of possible states S, a starting state s0, a set of state transitions delta, a set of final states F and the input alphabet sigma. \\
+
+Finite State Machines are commonly used in the environment of autonomous driving. They are used to describe behavior in a form of states, which in turn execute action. A finite state machine is defined by a list of possible states S, a starting state s0, a set of state transitions delta, a set of final states F and the input alphabet sigma. At any given time only a single state is selected and its containing actions are executed. \\
 
 \begin{figure}
 	\includegraphics[width=1.0\textwidth]{images/fsm.png} 
 	\caption{Example of a finite state machine transition diagram \cite{wagner2006} }
 \end{figure}
 
+Figure xx depicts an example state machine with different states and examplatory transitions between them. Inside of the states the letters indicate the existence of actions.  E stands for entry, I for Input and X for Exit. The arrows between the states illustrate the possible transition and transition conditions for every state. A state transition diagram is a good way to understand the system behavior but can not show the details of the modedeled behavior, like the actions \cite{wagner2006}. \\
+
+Creating small state machines can easily and quickly be accomplished through the use of various feature-rich and performant libraries \cite{fourakis2014}. 
+Finite state machines are often being used for comprehensive modeling of reactive behavior and sequential behaviors in autonomous driving functions \cite{ziegler2014}. These finite state machines make use of nested state machines inside of another state machine. This reduces the complexity of the state machine as the transition do not need to be modeled, because the start and final state of a nested state machine is treated as just one state inside of the larger state machine. Despite this possibility to simplify state machines, as a modeled behavior system grows larger to accomodate more complex behaviors into the state machine the effort to expand and maintain the state machine grows rapidly. This is due to the modeling effort of the transitions, transition conditions and transition events growing with each new state that gets introduced into the state machine as existing states need to be checked and updated accordingly \cite{conner2017}. \\
+
+The execution time of finite state machines can be fast enough that they are used to control the motors of a bipedal robot to enable the robot to balance and walk despite unexpected height variations between steps \cite{park2013}. This property makes state machines suited very well suited for fast, reactive type behaviors and still allows a hierarchical approach to behavior planning 
+
 
 allgeuer 2013
 connor 2017
 ziegler 2014
 
-
-\subsection{POMDPs}
-
 \subsection{Behavior Trees}
 marzinotto 2014
 colledanchise 2018
 
-\section{Deterministic Behavior}
+% \section{Deterministic Behavior}
 
 

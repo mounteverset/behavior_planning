@@ -1,0 +1,4 @@
+Ensure that sensors hardware redundancy are complemented by the time synchronization and intrinsic/extrinsic calibration
+Ensure that each element should have a fail-safe and/or fail silent mode, depending on the individual system design aspects
+Ensure that redundant elements avoid dependent failure, thus they should be separated by design and avoid common cause failure
+Ensure that the system maintains at least degraded capability, even when a single element is not available
