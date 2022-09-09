@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+
+\bibitem{1087032}
+R.~Brooks, ``A robust layered control system for a mobile robot,'' {\em IEEE
+  Journal on Robotics and Automation}, vol.~2, no.~1, pp.~14--23, 1986.
+
+\bibitem{9266268}
+G.~Velasco-Hernandez, D.~J. Yeong, J.~Barry, and J.~Walsh, ``Autonomous driving
+  architectures, perception and data fusion: A review,'' in {\em 2020 IEEE 16th
+  International Conference on Intelligent Computer Communication and Processing
+  (ICCP)}, pp.~315--321, 2020.
+
+\bibitem{arkin1998}
+R.~Arkin, R.~Arkin, and R.~Arkin, {\em Behavior-based Robotics}.
+\newblock Bradford book, MIT Press, 1998.
+
+\bibitem{wagner2006}
+F.~Wagner, R.~Schmuki, T.~Wagner, and P.~Wolstenholme, {\em Modeling Software
+  with Finite State Machines: A Practical Approach}.
+\newblock 05 2006.
+
+\bibitem{efi2018}
+E.~F. und Innovation~(EFI), ``Gutachten zu forschung, innovation und
+  technologischer leistungsfaehigkeit deutschlands 2018,'' tech. rep., EFI,
+  Berlin, 2018.
+
+\bibitem{J3016_202104}
+SAEInternational, {\em Taxonomy and Definitions for Terms Related to Driving
+  Automation Systems for On-Road Motor Vehicles}, apr 2021.
+
+\bibitem{murphy2000}
+R.~Murphy, R.~Murphy, and R.~Arkin, {\em Introduction to AI Robotics}.
+\newblock A Bradford book, MIT Press, 2000.
+
+\bibitem{desilva2008}
+L.~De~Silva and H.~Ekanayake, ``Behavior-based robotics and the reactive
+  paradigm a survey,'' in {\em 2008 11th International Conference on Computer
+  and Information Technology}, pp.~36--43, 2008.
+
+\end{thebibliography}

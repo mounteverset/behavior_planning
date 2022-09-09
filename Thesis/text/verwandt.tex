@@ -1,16 +1,113 @@
 \chapter{State of the Art}
 \label{cha:state of the art}
 
-\section{Automated and Autonomous Vehicle}
+\section{Automated and Autonomous Vehicles}
 
-\section{Autonomous Driving Architectures}
+This thesis looks for a way to improve the autonomy of mobile robots. In order to define what qualifies as an improvement in the autonomous behaviour of a mobile robot, one needs to look at the defintion of automated and autonomy. 
+The EFI defines the term autonomy in the context of robotics as a system which can act without human instructions and still solve complex tasks, make decisions, learn independently aswell as react to unforeseen circumstances \cite{efi2018}. 
+The definition specifies the needed requirements to make a robot fully autonomous. 
+The automotive industry defines vehicle autonomy in levels based on the human driver's need for supervision and possible intervention during the execution of complex driving tasks \cite{J3016_202104}. Figure xx depicts the different levels of autonomy of passenger cars on a scale between no automation to completely autonomous. \\
 
-\section{Autonomous Robot Navigation}
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{images/j3016graphic_2021.png}
+	\caption{SAE Levels Of Driving Automation \cite{J3016_202104}  }
+\end{figure}
+
+
+Both definitions entail the reliance on human supervision and guidance as the central part of what hinders a system or vehicle to become autonomous. By decreasing the instances a human intervention during the operation of a robot, one can increase the automation level towards full autonomy. But this has to be done by equipping the robot with robust and context-driven decision-making and planning capabilities, otherwise a robot which would never need a human to operate could easily be created. But this robot could not be considered autonomous as it would not able to solve complex tasks and make intelligent decisions.
+
+Different levels of autonomy require different methodologies to achieve them. 
+
+
+
+SAE Levels
+EFI Gutachten
+Fachforum 
+
+\section{Autonomous Driving Navigation Architectures}
+
+To gain a better understanding how behavior planning influences the autonomy of a robot, one can take a look at the latest and most used software architectures for autonomous driving on a functional level. 
+Most of the current autonomous driving architectures are implementing a hierarchical structure that follows the "Sense - Think - Act" paradigm \cite{murphy2000}. As shown in figure xx the sensory inputs, usually from multiple sensors, get processed to create an environment representation. Then the system calculates how to get from its current position to the destination and creates a path. A second planning calculation is triggered to compute the motion commands with the constraints of the system (e.g. size, turning radius, etc.). These motion commands then get converted to control the motors. 
+The planning sequence can be further divided into global planning, behavior planning and local planning. Global planning,also named route planning, is responsible for outputting a path from start to goal. This is comparable to a person using Google Maps to find the shortest or fastest path to a far away city. In this analogy, the behavior planner is responsible to follow the traffic rules on the trip to the destination, e.g. stopping at red lights, giving right of way to other vehicles, following the speed limit. The local planning, also named motion planning, module takes the input from the behavior layer and has the task to let the vehicle drive in accordance to the executed behavior, so that it stays in its lane and comes to a stop at a red light. \\
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{images/autonomous_driving_architecture.png}
+	\caption{Common Autonomous Driving Architecture \cite{1087032} \cite{9266268}  }
+\end{figure}
+ \\
+
+Due to safety considerations, many autonomous driving architectures implement an additional system supervision layer which monitors the execution of the other system components. This supervisor checks the health of all software components. In case one or more components fail to pass the health check the supervisor is responsible for ensuring that the system does not continue the normal driving routine. The supervisor triggers measures to restore the normal functionality or if that is not possible bring the robot into a safe state (zimmermann2020). 
+
+Considering that with these architectures, vehicles can achieve an SAE level of autonomy up to level 4 (bacha 2008),  a good starting point to increase autonomy in a robotic system would be to ensure that all of the functional modules in figure xx are implemented and available. On this basis higher levels of autonomy are achievable through the expansion of the behavior planning module inside of the planning layer. 
+
+bacha2008
+reke 2020
+wei2014
+brooks1986
+dhillon 2002
+gonzales2016
+
+\section{Behavior Types}
+
+The behavior planning module contains a set of behaviors to operate in a environment. The task of the module is then to choose the best behavior to execute. In this sense a behavior is defined as a mapping of sensory inputs to a pattern of actions that in turn carry out a specific task \cite{murphy2000}. A good behavior planning approach provides the robot with adequate behaviors for every possible scenario the robot is operating in. Different scenarios pose different challenges for the behavior planning module which has to decide on the best behavior option to execute in order to achieve a higher level goal. 
+
+\subsection{Reactive}
+During the emergence of behavior based robots, the first type of behavior that was implemented in many robots was a simple reactive behavior. This behavior maps a sensory input directly to motor commands. In human behavior this type of behavior resembles reflexes, like the tapping on the kneecap which unwillingly results in motion in the knee joint. This behavior pattern is not following the typical "Sense, Think, Act" loop, but shortcuts directly from sensing to acting \cite{desilva2008}. Reactive behaviors can be chained together to result in more advanced and goal-driven behaviors. Despite the possibility of more complex robot behaviors, sequential behaviors remain on the level of reactive behaviors due to the lack of a planning and decision-making cycle during their execution. The computational load of reactive behaviours is low and thereby fast as no decision and planning process is taking place, which makes them suited in scenarios where real-time safety is of concern. This property makes these kind of behaviours useful for system supervisor, where sometimes immediate reactions with low latency are required to ensure vehicle safety. But a system with a reactive behavior planning approach will always fail to meet the requirements for higher levels of autonomy due to the fact. This does not mean that reactive behaviors can not be part in highly autonomous systems as their quick response time to sensor inputs makes them valuable in improving vehicle safety and reliability. 
+
+
+\subsection{Deliberative}
+Reactive behaviors suffer the drawback that they are not suitable enable complex behaviors. In addition, the creation of sequences of reactive behaviors that produce the target behavior is a complicated task \cite{murphy2000}. Behaviors that involve a planning and decision making aspect are defined as deliberative. Unlike reactive behaviors, deliberative behaviors are following the Sense, Think, Act paradigm. They are not mapping sensory inputs directly into motor commands. Instead deliberative-type behaviors are deciding the best course of action before acting and only then proceed with the exution. The use of deliberative behaviors in the planning module is what enables a robot to meet the defintion of autonomy, e.g. making decisions and react to unforeseen circumstances. 
+So in order to improve the autonomy of a robot, the focus should be on the creation of deliberative behaviors. A behaviour planner with a deliberative approach makes decision based on current sensor data, as well as previously processed data. By incorporating older sensor information into the decision making process, the deliberative behavior planner can make predictions about the changes that will happen in the environment. This allows the planner to proactively change the motion planning commands to better adapt to the environment. For example, a motion prediction of obstacles in highly dynamic environments would improve the motion planning considerably. This is due to a better understanding of how obstacles are interacting with the planned path of the robot in relation to the time at which the robot and obstacle are predicted to intersect paths. A purely reactive planner could never determine if an obstacle is destined to intersect the robots path in the future and would reroute constantly in order to accomplish the goal. A deliberative planner could determine if the best course of action is to stay on the current path as the dynamic obstacle has already moved away by the time the robot reaches to intersection point. Other actions in scenario are possibly slowing down or speeding up briefly to avoid an obstacle and staying on the current path as this is calculated to be quicker than rerouting and taking a longer path. 
+Generally, these cognitively more complex behaviours mimic human skills and thus make a system more autonomous. 
+
+\textit{Talk about machine learning as deliberative behavior -> true autonomy bc learning and unknown scenarios, programmers can not cover every scenario, so a well designed/trained ai is needed to make a system really autonomous, but -> missing determinism and unaccountability of machines, hence we need behaviors that are still hard coded and deterministic, these can be highly automated. traditional behaviour  and ai generated behaviours can and must coexist in the system (adler2019)}
+
+silva2008
+ingrand 2014
+vasiolopolous 2022
+
+\subsection{Hybrid}
+To create reliable aswell as intelligent systems one can combine reactive and deliberative behaviours in a hybrid model. This behavior planning module is then able to quickly react to incoming sensor data and still exhibit high levels of automation. 
+\\
+
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{images/Deliberative_hierarchical_planning.png} 
+	\caption{Hybrid Planning Architecture \cite{arkin1998}  }
+\end{figure}
+
+
+
+Figure xx shows the areas where reactive and deliberative behaviours have their advantages and limitations. Deliberative planning does possess limitations during the execution of generated plans as the time horizon is long-term and not able to react to fast changes in the environment . When the system is not adressing these points, deliberative robots are very focussed on a small problem domain and are not robust \cite{arkin1998}.
+The incorporation of reactive behaviors into the behavior planning combats this problem. In this multi-layer approach the higher level, more deliberative planners are able to override the reactive planners in order to allow the system to be more flexible and adaptible but still maintain fast reaction times. 
+This architecture leads to more robust robots that are able to be deployed in a wider variety of environments, thus leading to higher levels of autonomy.
+
 
 \section{Behavior Planning Approaches}
 
-FSM, POMDP, BT
+Robots that use a hybrid, hierarchical behavior planning approach need a system which decides on a high level which behaviors are to be executed. This allows overriding simple reactive behaviors with more complex, deliberative behaviors when the system benefits from it. 
 
-\section{Behavior Hierarchy}
+The different solution for such behavior execution system all share the fact that they make use of states a robot can be in. Based upon a robots state and additional information about the environment, different strategies and behaviors are executed during the runtime of the system. 
+ 
 
-Reactive Sequential and Deliberative Behaviors
+\subsection{Finite State Machines}
+Finite State Machines are commonly used in the environment of autonomous driving. A finite state machine is defined by a list of possible states S, a starting state s0, a set of state transitions delta, a set of final states F and the input alphabet sigma. \\
+
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{images/fsm.png} 
+	\caption{Example of a finite state machine transition diagram \cite{wagner2006} }
+\end{figure}
+
+
+allgeuer 2013
+connor 2017
+ziegler 2014
+
+
+\subsection{POMDPs}
+
+\subsection{Behavior Trees}
+marzinotto 2014
+colledanchise 2018
+
+\section{Deterministic Behavior}
+
+
