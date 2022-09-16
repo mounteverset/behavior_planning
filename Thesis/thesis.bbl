@@ -4,6 +4,16 @@
 SAEInternational, {\em Taxonomy and Definitions for Terms Related to Driving
   Automation Systems for On-Road Motor Vehicles}, apr 2021.
 
+\bibitem{brooks1986}
+R.~Brooks, ``A robust layered control system for a mobile robot,'' {\em IEEE
+  Journal on Robotics and Automation}, vol.~2, no.~1, pp.~14--23, 1986.
+
+\bibitem{velasco2020}
+G.~Velasco-Hernandez, D.~J. Yeong, J.~Barry, and J.~Walsh, ``Autonomous driving
+  architectures, perception and data fusion: A review,'' in {\em 2020 IEEE 16th
+  International Conference on Intelligent Computer Communication and Processing
+  (ICCP)}, pp.~315--321, 2020.
+
 \bibitem{arkin1998}
 R.~Arkin, R.~Arkin, and R.~Arkin, {\em Behavior-based Robotics}.
 \newblock Bradford book, MIT Press, 1998.
@@ -12,6 +22,16 @@ R.~Arkin, R.~Arkin, and R.~Arkin, {\em Behavior-based Robotics}.
 F.~Wagner, R.~Schmuki, T.~Wagner, and P.~Wolstenholme, {\em Modeling Software
   with Finite State Machines: A Practical Approach}.
 \newblock 05 2006.
+
+\bibitem{iovino2022}
+M.~Iovino, E.~Scukins, J.~Styrud, P.~Ögren, and C.~Smith, ``A survey of
+  behavior trees in robotics and ai,'' {\em Robotics and Autonomous Systems},
+  vol.~154, p.~104096, 2022.
+
+\bibitem{macenski2020}
+S.~Macenski, F.~Martin, R.~White, and J.~Ginés~Clavero, ``The marathon 2: A
+  navigation system,'' in {\em 2020 IEEE/RSJ International Conference on
+  Intelligent Robots and Systems (IROS)}, 2020.
 
 \bibitem{efi2018}
 E.~F. und Innovation~(EFI), ``Gutachten zu forschung, innovation und
@@ -26,16 +46,6 @@ R.~Murphy, R.~Murphy, and R.~Arkin, {\em Introduction to AI Robotics}.
 M.~Reke, D.~Peter, J.~Schulte-Tigges, S.~Schiffer, A.~Ferrein, T.~Walter, and
   D.~Matheis, ``A self-driving car architecture in ros2,'' in {\em 2020
   International SAUPEC/RobMech/PRASA Conference}, pp.~1--6, IEEE, 2020.
-
-\bibitem{brooks1986}
-R.~Brooks, ``A robust layered control system for a mobile robot,'' {\em IEEE
-  Journal on Robotics and Automation}, vol.~2, no.~1, pp.~14--23, 1986.
-
-\bibitem{velasco2020}
-G.~Velasco-Hernandez, D.~J. Yeong, J.~Barry, and J.~Walsh, ``Autonomous driving
-  architectures, perception and data fusion: A review,'' in {\em 2020 IEEE 16th
-  International Conference on Intelligent Computer Communication and Processing
-  (ICCP)}, pp.~315--321, 2020.
 
 \bibitem{desilva2008}
 L.~De~Silva and H.~Ekanayake, ``Behavior-based robotics and the reactive
@@ -68,5 +78,11 @@ H.-W. Park, A.~Ramezani, and J.~W. Grizzle, ``A finite-state machine for
   accommodating unexpected large ground-height variations in bipedal robot
   walking,'' {\em IEEE Transactions on Robotics}, vol.~29, no.~2, pp.~331--345,
   2013.
+
+\bibitem{florez2009}
+G.~Florez-Puga, M.~A. Gomez-Martin, P.~P. Gomez-Martin, B.~Diaz-Agudo, and
+  P.~A. Gonzalez-Calero, ``Query-enabled behavior trees,'' {\em IEEE
+  Transactions on Computational Intelligence and AI in Games}, vol.~1, no.~4,
+  pp.~298--308, 2009.
 
 \end{thebibliography}
