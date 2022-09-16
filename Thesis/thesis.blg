@@ -3,48 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: thesis.aux
 The style file: ieeetr.bst
 Database file #1: thesis.bib
-Warning--I didn't find a database entry for "1087032"
-Warning--I didn't find a database entry for "9266268"
 Warning--empty publisher in wagner2006
-You've used 13 entries,
+You've used 16 entries,
             1876 wiz_defined-function locations,
-            558 strings with 6446 characters,
-and the built_in function-call counts, 3726 in all, are:
-= -- 308
-> -- 229
+            573 strings with 7084 characters,
+and the built_in function-call counts, 4613 in all, are:
+= -- 387
+> -- 277
 < -- 0
-+ -- 81
-- -- 68
-* -- 292
-:= -- 570
-add.period$ -- 16
-call.type$ -- 13
-change.case$ -- 10
++ -- 98
+- -- 82
+* -- 356
+:= -- 696
+add.period$ -- 19
+call.type$ -- 16
+change.case$ -- 13
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 180
-empty$ -- 340
-format.name$ -- 68
-if$ -- 883
+cite$ -- 17
+duplicate$ -- 231
+empty$ -- 418
+format.name$ -- 82
+if$ -- 1101
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 14
-newline$ -- 45
-num.names$ -- 15
-pop$ -- 55
+int.to.str$ -- 16
+missing$ -- 17
+newline$ -- 54
+num.names$ -- 18
+pop$ -- 67
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 103
+skip$ -- 138
 stack$ -- 0
-substring$ -- 171
-swap$ -- 61
+substring$ -- 211
+swap$ -- 84
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 32
-width$ -- 15
-write$ -- 128
-(There were 3 warnings)
+while$ -- 38
+width$ -- 18
+write$ -- 157
+(There was 1 warning)

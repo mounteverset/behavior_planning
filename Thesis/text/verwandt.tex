@@ -90,7 +90,7 @@ The different solution for such behavior execution system all share the fact tha
 
 \subsection{Finite State Machines}
 
-Finite State Machines are commonly used in the environment of autonomous driving. They are used to describe behavior in a form of states, which in turn execute action. A finite state machine is defined by a list of possible states S, a starting state s0, a set of state transitions delta, a set of final states F and the input alphabet sigma. At any given time only a single state is selected and its containing actions are executed. \\
+Finite State Machines (FSM) are commonly used in the environment of autonomous driving. They are used to describe behavior in a form of states, which in turn execute action. A finite state machine is defined by a list of possible states S, a starting state s0, a set of state transitions delta, a set of final states F and the input alphabet sigma. At any given time only a single state is selected and its containing actions are executed. \\
 
 \begin{figure}
 	\includegraphics[width=1.0\textwidth]{images/fsm.png} 
@@ -102,7 +102,8 @@ Figure xx depicts an example state machine with different states and examplatory
 Creating small state machines can easily and quickly be accomplished through the use of various feature-rich and performant libraries \cite{fourakis2014}. 
 Finite state machines are often being used for comprehensive modeling of reactive behavior and sequential behaviors in autonomous driving functions \cite{ziegler2014}. These finite state machines make use of nested state machines inside of another state machine. This reduces the complexity of the state machine as the transition do not need to be modeled, because the start and final state of a nested state machine is treated as just one state inside of the larger state machine. Despite this possibility to simplify state machines, as a modeled behavior system grows larger to accomodate more complex behaviors into the state machine the effort to expand and maintain the state machine grows rapidly. This is due to the modeling effort of the transitions, transition conditions and transition events growing with each new state that gets introduced into the state machine as existing states need to be checked and updated accordingly \cite{conner2017}. \\
 
-The execution time of finite state machines can be fast enough that they are used to control the motors of a bipedal robot to enable the robot to balance and walk despite unexpected height variations between steps \cite{park2013}. This property makes state machines suited very well suited for fast, reactive type behaviors and still allows a hierarchical approach to behavior planning 
+The execution time of finite state machines can be fast enough that they are used to control the motors of a bipedal robot to enable the robot to balance and walk despite unexpected height variations between steps \cite{park2013}. This property makes state machines suited very well suited for fast, reactive type behaviors and still allows a hierarchical approach to behavior planning.
+
 
 
 allgeuer 2013
@@ -110,6 +111,19 @@ connor 2017
 ziegler 2014
 
 \subsection{Behavior Trees}
+Behavior Trees (BT) are another way to model and control the behavior of autonomous systems. Behavior Trees first found big acceptance in the computer game industry where they are mainly used to model artificial intelligence for non-player characters \cite{florez2009}. Every tree consists of one root and many child, parent and leaf nodes. Leaf nodes are also called execution nodes, while non-leaf nodes are called control or control flow nodes. 
+The execution of a behavior tree is done by ticking the root node of tree. This signal then travels down to the child node of the root node, where either control nodes are being ticked or action nodes are executed. Nodes return either "Success", "Running" or "Failure" which influences how the tick signal gets processed by the rest of the behavior tree. Control nodes can be of the type "Sequence", "Fallback" or "Condition". The condition node can not have child nodes and can only return success or failure. A sequence node can be compared to a logical "and" condition. This means that once a sequence gets ticked from the parent node, it will send the tick signal to every child node as long as they return "success" of "running", and only return "success" itself when every child node was successfully ticked. If any of the child nodes return "failure", the sequence node will stop ticking the remaining children and return "failure". On the other hand the fallback node is an equivalent of a logical "or" condition. The fallback node will tick its child nodes as long as they return "failure" or "running" and will return "success" if one of the ticked node returned "success". It will only return "failure" if all of the child nodes "returned success".
+Figure xx depicts an example of a BT with multiple levels and action nodes. The nodes with the arrow (->) symbol are sequence nodes, the question mark (?) symbol denotes fallback nodes. The condition node are depicted as white ovals. The action nodes are represented as gray rectangles in the BT example.
+
+\begin{figure}
+	\includegraphics[width=1.0\textwidth]{images/bt_example.jpg} 
+	\caption{Example of a behavior tree \cite{iovino2022} }
+\end{figure}
+
+One of the core differences to Finite State Machine is that transitions between states are not distributed across all the states but they are organized in a hierarchical tree, where the leaves are representing the states \cite{iovino2022}. While both FSM and BT are capable of producing the same behavior in robots, the fundamental shift in how the two system are created lead to significant advantages in the modularity, synthesis and analysis of the systems at hand. These effects are more significant with an increase in size of the system. BT offer a lot more flexibility when creating an advanced behavior layer for an autonomous system. 
+
+
+iovino2022
 marzinotto 2014
 colledanchise 2018
 
