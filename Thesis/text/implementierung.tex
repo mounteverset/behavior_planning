@@ -4,24 +4,76 @@
 \section{System Architecture}
 \begin{figure}
 	\includegraphics[width=1.0\textwidth]{images/component_diagram_bt_architecture.png}
-	\caption{Turtlebot3 model in Gazebo simulator}
+	\caption{Component Diagram of System Architecture}
 \end{figure}
+
+\section{Data Backup}
+The data backup component functions as a way to efficiently gather data from all components of the system and bereitstellen necessary data to the behavior tree when the planning process requires the use of past data points.  This component subscribes is a to all sensor data and saves the messages in a queue data structure. The most recent data gets pushed into the array and if the array exceeds a bestimmte length, the oldest data this data gets deleted from the array. The limited array size is twofold. On the on side, the goal is to decrease the size of the message that gets sent to the BT to limit the network auslastung and on the other side, the BT often does not need to look back further than a few seconds to make a decision. This way the computational load and network load is decreased.
+The BT can access the saved data by sending a service call to one of the provided services by this component. Service calls in ROS2 are executed with hihg priority and the execution is done quickly but it adds an additional step than just saving the data directly in the behavior tree. The reason for the outsourcing of the data backup in another component is that ROS node need an executor which spins the node constantly. The spinning allows the node to check the network if there is any work to do for the node. This means that if one of the subscribed topic received a message, the node has to execute one of its callback functions that is associated with that topic. This spinning has to be done in regular intervals, otherwise the node might miss incoming messages from subscribed topics. The way to do the spinning is to have the node spun constantly in one thread. Have a constant spinning node would block the execution of the BT completely. If one would try to spin a node once when a node gets ticked in the BT, the problem of missing messages would become relevant because the BT might need longer than exepected to return to a node to tick it. That way the BT node that would be responsible for saving all the relevant data can not guarantee that it has picked up on all of the messages between to spins. The synchronous nature of the ROS executor spinning the nodes is the reason why the data backup is not stored within the BT. 
+
+The saved data inside of this component with the corresponding lookback time is listed in table xx. 
+
+\begin{table}[h!]
+	\caption{Types of saved data}
+	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
+  	\hline
+  	Name & Type & Lookback Time \\ 
+  	\hline
+  	Lidar & Laserscan & 3 seconds \\
+  	\hline
+  	Poses & Pose with Covariance & 2 seconds\\ 
+  	\hline
+  	Map & Occupancy Grid & Only saved last one \\ 
+  	\hline
+  	Collision Pose & Pose with Covariance & Only last one \\
+  	\hline
+  	Command Velocities & Twist & 2 seconds\\
+  	\hline  	
+  	Global Costmap & Occupancy Grid & Only last one \\
+  	\hline
+	\end{tabular}
+\end{table}
 
 \section{Behavior Tree Structure}
 
+A simplified behavior tree only depicting the top level behavior control nodes is shown in figure xx. The tree receives the inital tick signal from the root in an infinite loop. The root control node is a sequence node. We made the root a simple sequence because we want the whole system to function with increasing complexity in the later parts (on the right side) of the tree. The complex behaviors require that all of the previous components and conditions are working as they should. The root sequence will not allow the execution of higher level behaviors if the system is detecting problems on more fundamental levels. The root sequence is the first step for increasing the robustness of the system to combat competing reactive and deliberative behaviors which could endanger the safety of the robot and other actors in its environments. 
+
 \subsection{BT System Supervision}
 
+The system supervisor component is partly outsourced into a component outside of the thread of the BT, because of the same reasons as the sensor backup component discussed in the previous section. The synchronous executor would stop the execution of the whole behavior tree, which is why the component needs to be moved inside of a new thread. The system supervisor, nachfolgend also called execution checker, is receiving messages from nodes that are not implemented as ROS2 lifecycle nodes. If a node stops sending messages or stops responding completely the external execution checker can inform the BT via a provided service of a problem with the node. ROS2 lifecycle nodes provide information about their health via an implementation of a FSM inside of the node. The current node state can be found out via a service call. However, to ensure the node is working correctly the output of the node needs to be checked too, because it might be that the FSM inside of the node did not pick up on a error. 
+The system supervision is constantly checking the system's health. The BT is using service calls to get the health information about the compononts which are checked inside of Condition Nodes. 
+The components get checked by the BT inside of a Fallback. If the condition for the execution is met, the Condition Node returns "success" and the fallback would exit to move on to the next fallback and execution condition check (see fig. xx). In case the execution checker detects a node failure, a sequence to react to the sensor failure is executed in which the robot slows down to a minimum and tries to restart the sensor. Should the restart fail the robot will not be able to navigate in a safe manner anymore and will come to a complete stop. This behavior pattern is realized for the lidar, the IMU and the wheel odometry. 
+
+\begin{figure}[h!]
+	\includegraphics[width=1.0\textwidth]{images/sensor_fallback.png}
+	\caption{Lidar Fallback}
+\end{figure}
+
+The timeout period for the execution checker to declare a node failed after no message was received is set at one second. 
+After that period the goal is to enable to robot to continue to make progress towards the goal but if the system can not restart the sensor in a short time after failure, the robot has to come to a stop as a sensor failure is a severe function loss for the robot.
+
+
 \subsection{BT Advanced Behaviors}
+After the BT has checked for sensor failures and can guarantee that the environment representation is accurate, the system can check for more complicated scenarios to improve the autonomy. 
+
 
 \subsubsection{Collision Behavior}
+One of the biggest problems mentioned in chapter 3.1 is the inability to react to collisions. The collision can happen due to inadequate sensory coverage for detecting obstacles or general sensor inadequacy which can not detect obstacles because of their shape or surface material. With a multitude of sensors covering all angles and heights and computer vision capabilities to detect obstacles collisions would be very unlikely. But even if the robot could perrfectly detect obstacles, it would still be vulnerable to outside pertubations like other robots driving into it, humans accidently touching the robot etc. . 
+To combat this the robot must be able to first detect that a collision occured, get out of the collision state, update the map and reset all costmaps to generate a new path to the original goal. 
+
+Figure for the Collision Behavior from Groot.
+
+The collision checker uses a simulated sensor to detect collisions. On a real robot the collision checker can use a IMU-based collision detection, but this has not been implemented in this behavior tree due to time constraints of this thesis. The collision checker itself is integrated into the system supervisor and the BT is making service calls to the execution checker to get the collision state of the robot periodically. 
+The child nodes of the collision sequence make use of the sensor data backup. 
+To get out of the collision state, the BT requests the last saved command velocities from the data backup component and modifies them to reverse with minimum speed the same way the robot got into the collision. The reversing action takes longer than the two seconds as the commands get published with longer time intervals between them to adjust the driven distance to be the same as the navigation commands. An additional check is implemented before the reversing to make sure the robot only reverses once, otherwise the robot would be driving back and forth as the data backup service would provide the BT with the commands from the last reversing action. 
+
+Regarding the map reset, we have to determine if we are creating a new map with a SLAM method or if the map server provided a previously saved map. 
+In case of the running SLAM, the map needs to be reset to before the collision occurred. 
 
 \subsubsection{Battery Behavior}
 
 \subsubsection{Path Planning Behavior}
 
-
-
-
-
+\section{Command Velocity Decision Gate}
 
 

@@ -3,32 +3,38 @@
 \contentsline {chapter}{\numberline {2}State of the Art}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Automated and Autonomous Vehicles}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Autonomous Driving Navigation Architectures}{3}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Behavior Types}{5}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Reactive}{5}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Deliberative}{5}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Hybrid}{6}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Behavior Planning Approaches}{7}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Finite State Machines}{7}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Behavior Trees}{8}{subsection.2.4.2}%
-\contentsline {chapter}{\numberline {3}Concept}{9}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Current State}{9}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Turtlebot3}{9}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}ROS?!}{9}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Navigation2}{9}{subsection.3.1.3}%
-\contentsline {section}{\numberline {3.2}Risk Analysis For Requirement Prioritization}{11}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Requirements}{11}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Software}{12}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Behaviortree.CPP}{12}{subsection.3.4.1}%
-\contentsline {chapter}{\numberline {4}Implementation}{15}{chapter.4}%
-\contentsline {section}{\numberline {4.1}System Architecture}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Behavior Tree Structure}{15}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}BT System Supervision}{15}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}BT Advanced Behaviors}{15}{subsection.4.2.2}%
-\contentsline {subsubsection}{Collision Behavior}{15}{section*.5}%
-\contentsline {subsubsection}{Battery Behavior}{15}{section*.6}%
-\contentsline {subsubsection}{Path Planning Behavior}{15}{section*.7}%
-\contentsline {chapter}{\numberline {5}Evaluation}{17}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Scenarios}{17}{section.5.1}%
-\contentsline {chapter}{\numberline {6}Summary}{19}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusion}{19}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Prospect}{19}{section.6.2}%
+\contentsline {section}{\numberline {2.3}Behavior Types}{6}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Reactive}{6}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Deliberative}{6}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Hybrid}{7}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Behavior Planning Approaches}{9}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Finite State Machines}{9}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Behavior Trees}{10}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}POMPDs}{11}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}Concept}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Current State}{13}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}ROS}{13}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Navigation2}{13}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Turtlebot3}{16}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Requirements}{16}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Risk Analysis For Requirement Prioritization}{17}{section.3.3}%
+\contentsline {section}{\numberline {3.4}System Solution}{17}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Software and Simulation}{19}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Behaviortree.CPP}{19}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Groot}{19}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Gazebo Simulation Environment}{20}{subsection.3.5.3}%
+\contentsline {chapter}{\numberline {4}Implementation}{21}{chapter.4}%
+\contentsline {section}{\numberline {4.1}System Architecture}{21}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Data Backup}{21}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Behavior Tree Structure}{22}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}BT System Supervision}{23}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}BT Advanced Behaviors}{24}{subsection.4.3.2}%
+\contentsline {subsubsection}{Collision Behavior}{24}{section*.5}%
+\contentsline {subsubsection}{Battery Behavior}{24}{section*.6}%
+\contentsline {subsubsection}{Path Planning Behavior}{24}{section*.7}%
+\contentsline {section}{\numberline {4.4}Command Velocity Decision Gate}{24}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Scenarios}{25}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Summary}{27}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusion}{27}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Prospect}{27}{section.6.2}%

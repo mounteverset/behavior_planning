@@ -4,45 +4,46 @@ The top-level auxiliary file: thesis.aux
 The style file: ieeetr.bst
 Database file #1: thesis.bib
 Warning--empty publisher in wagner2006
-You've used 16 entries,
+Warning--can't use both volume and number fields in quigley2009
+You've used 18 entries,
             1876 wiz_defined-function locations,
-            573 strings with 7084 characters,
-and the built_in function-call counts, 4613 in all, are:
-= -- 387
-> -- 277
+            586 strings with 7524 characters,
+and the built_in function-call counts, 5296 in all, are:
+= -- 444
+> -- 323
 < -- 0
-+ -- 98
-- -- 82
-* -- 356
-:= -- 696
-add.period$ -- 19
-call.type$ -- 16
-change.case$ -- 13
++ -- 114
+- -- 96
+* -- 410
+:= -- 795
+add.period$ -- 21
+call.type$ -- 18
+change.case$ -- 15
 chr.to.int$ -- 0
-cite$ -- 17
-duplicate$ -- 231
-empty$ -- 418
-format.name$ -- 82
-if$ -- 1101
+cite$ -- 20
+duplicate$ -- 270
+empty$ -- 470
+format.name$ -- 96
+if$ -- 1266
 int.to.chr$ -- 0
-int.to.str$ -- 16
-missing$ -- 17
-newline$ -- 54
-num.names$ -- 18
-pop$ -- 67
+int.to.str$ -- 18
+missing$ -- 19
+newline$ -- 60
+num.names$ -- 20
+pop$ -- 74
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 138
+skip$ -- 169
 stack$ -- 0
-substring$ -- 211
-swap$ -- 84
+substring$ -- 229
+swap$ -- 105
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 38
-width$ -- 18
-write$ -- 157
-(There was 1 warning)
+warning$ -- 2
+while$ -- 42
+width$ -- 20
+write$ -- 179
+(There were 2 warnings)
