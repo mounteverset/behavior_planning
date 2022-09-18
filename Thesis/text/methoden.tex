@@ -4,161 +4,208 @@
 
 \section{Current State}
 This chapter briefly presents the current state of mobile navigation with ROS and its limitations. 
-The goal of this chapter is to then identify the key areas in which standard mobile robots running ROS lack robustness and autonomy during autonomous mobile navigation. According to these key areas requirements are derived from them and prioritized with a risk analysis. 
-Furthermore this chapter proposes a way how behavior planning can improve the current systems to meet the requirements. 
+This chapter aims to identify the critical areas in which standard mobile robots running ROS lack robustness and autonomy during autonomous mobile navigation. According to these critical areas, requirements are derived from them and prioritized with a risk analysis. 
+This chapter proposes how behavior planning can improve the current default systems to meet these requirements. 
 
+\subsection{ROS}
+The Robot Operating System (ROS) is an open-source middleware for creating robot applications. It is not an operating system (OS) since it needs an underlying OS, mainly Linux-based, to work. 
+ROS can handle the communication between different programs (called nodes) with standardized interfaces and network protocols. Nodes can communicate via topics, services, and actions, which differ in their application domain (compare table xx). 
 
-\subsection{Turtlebot3}
-A standard mobile research plattform that has an available ROS interface to control the robot is the Turtlebot3. The robot is well integrated in the ROS ecosystem and is established in the literature as a system to develop and integrate new methods on. 
-The robot has two motors with attached wheel encoders to drive and steer, so it classifies as an differential drive robot. A third omnidirectional wheel is added for stability. 
+\begin{table}[h!]
+	\caption{ROS Communication Options}
+	\begin{tabular}{ | m{0.15\textwidth} | m{0.3\textwidth}| m{0.15\textwidth} | m{0.4\textwidth}|} 
+  	\hline
+  	Name & Communication Pattern & Area of Use & Cardinality \\ 
+  	\hline
+  	Topics & Publisher/Subscriber & Continuous stream of data e.g. sensor data &  n:m \\ 
+  	\hline
+  	Services & Request/Response & Get specific data only once & One service, many clients \\ 
+  	\hline
+  	Actions & Request/Response and Publish/Subscribe & Trigger executing of asynchronous goal-driven processes and receive updates & One action, many clients \\
+  	\hline
+	\end{tabular}
+\end{table}
 
-The manufacturer provides an open-source model for simulating the robot in physics-based simulators like Gazebo, as depicted in figure xx, which enables faster development and testing for the robot. 
-The equipped sensors and easy simulation capabilities make the robot very well suited for the use of the Nav2 stack and further development for behavior planning. 
+This design choice makes robotic applications built with ROS highly reusable and interchangeable, allowing developers to integrate foreign libraries more easily into their applications. 
+Due to the availability of many high-quality open-source libraries for many different use cases, ROS has become the leading methodology for creating robotic applications in the research environment \cite{quigley2009}. 
 
-The robots specifications are specified in table xx. 
-
-\begin{figure}[h!]
-	\includegraphics[width=1.0\textwidth]{images/turtlebot_sim.png}
-	\caption{Turtlebot3 model in Gazebo simulator}
-\end{figure}
-
-The turtlebot will be used for the analysis of the current state of mobile navigation. Furthermore, the simulated turtlebot will be the plattform on which the behavior planning will be implemented and tested.
-
-\subsection{ROS?!}
-\textit{write sth about that?}
+With ROS2, the framework received fundamental changes and updates to its architecture and design to gain more acceptance and use in the industry. These changes allow for real-time safety, simpler certification, and security when building industrial applications and products using ROS2 \cite{ros2022}. 
 
 \subsection{Navigation2}
-The ROS Navigation2 Stack (Nav2) is a combination of different packages that allows mobile robots to navigate from point A to point B. Navigation2 is the de-facto standard to achieve mobile navigation with a wide-range of supported robots. Supported robot types are holonomic, differential-drive, legged and ackerman (car-like). For the mobile robot to make use of the Nav2 stack, it has to be set up in a certain way to be able to generate plans and execute commands in the right way. Nav2 requires the mobile robot to possess a laserscan or pointcloud sensor, an odometry source (such as an IMU, wheel encoders) and a set of transformations to be available for planning and navigation. 
-The stack contains tools that save and load occupancy maps, localize the robot, plan paths, execute the path, provide costmaps, build behaviors and execute recoveries \cite{macenski2020}. 
+The ROS Navigation2 Stack (Nav2) combines different packages that allow mobile robots to navigate from point A to point B. Navigation2 is the de-facto standard for mobile navigation with a wide range of supported robots. Supported robot types are holonomic, differential-drive, legged, and ackerman (car-like). For the mobile robot to make use of the Nav2 stack, it has to be set up in a certain way to be able to generate plans and execute commands in the right way. Nav2 requires the mobile robot to possess a laser scan or point cloud sensor, an odometry source (such as an IMU or wheel encoders), and a set of transformations for planning and navigation. 
+The stack contains tools that save and load occupancy maps, localize the robot, plan paths, execute the path, provide cost maps, build behaviors and execute recoveries \cite{macenski2020}. 
 
 \begin{figure}[h!]
 	\includegraphics[width=1.0\textwidth]{images/nav2_architecture.png}
 	\caption{Navigation2 Architecture \cite{macenski2020}}
 \end{figure}
-These packages are often combined with a SLAM method to build or enlarge maps. The path planning and path execution capabilities, which correspond to the global and local planner as described in section 2.2, are further supported by ready-to-use planning plugins which use A* and Dijkstra algorithms for path planning and a dynamic window approach for path execution. The system sequencing is done in a hierarchical structure as there is central behavior tree which calls asynchronous actions from the respective planners after another as seen in figure xx. 
+These packages are often integrating a SLAM method to build or enlarge maps. Path planning and execution capabilities, which correspond to the global and local planner described in section 2.2, are further supported by ready-to-use planning plugins that use A* and Dijkstra algorithms for path planning and a dynamic window approach for path execution. The system sequencing is done in a hierarchical structure as a central behavior tree calls asynchronous actions from the respective planners after another, as seen in figure xx. 
 
 \begin{figure} [h!]
 	\includegraphics[width=1.0\textwidth]{images/nav_bt-modified.png}
 	\caption{Navigation2 Behavior Tree}
 \end{figure}
 
-The behavior tree depicted in figure xx is the one that is the default Nav2 behvaior and has a set of recovery behaviors already implemented (spin, wait, backup, clear map). These behaviors are executed if the robot can not make progess towards the set goal. 
-Nav2 makes use of a node lifecycle management system which is used to start, activate, deactivate and shutdown nodes in a controlled way. This allows the system degree to monitor the system's nodes startups, executions and failures. 
+The behavior tree depicted in figure xx is the one that is the default Nav2 behavior and has a set of recovery behaviors already implemented (spin, wait, back up, clear map). These behaviors are executed if the robot can not make progress towards the set goal. 
+Nav2 uses a node lifecycle management system to start, activate, deactivate, and shut down nodes in a controlled way. The lifecycle approach allows the system degree to monitor the system node's startups, executions, and failures. 
 
-With this quantity of functions and hierarchical architecture the ROS Navigation2 stack is a great basis to achieve high levels of autonomy in robots. Due to the expandability of the software with plugins the software can be modified and expanded to fit the users needs. 
-When comparing the functionalities of the software stack to the proposed autonomous system architecture in figure xx (2.2), the things that Nav2 are missing are a system-wide supervision layer and and a more deliberative approach to behavior planning as mentioned in 2.3.
-The absence of these components leads to a limited set of circumstances in which the robot can perform navigation reliably. One of the core problems that behavior-based robots face is to generate a dependable environment representation as this is the basis for all of the latter steps in the planning part of the "Sense - Think - Act" cycle. Unforeseen events can severely limit the reliability of the environment representation without the robot being aware of it. Examples for such types of events that are currently not handled appropriatly are slipping wheels, orientation changes by external influences or undetected, more specifically undetectable obstacles. \textit{Add statistics about random sensor failures every ~10000h} This can lead for example to erratic movement of the robot, as reactive behaviors and more deliberative behaviors compete for authority over the robots movement. By design, in order to allow more intelligent robot behaviors, the deliberative behavior can override commands from reactive behaviors. But the deliberative behavior's planning is based upon a wrong representation of reality which then leads to unsafe commands which in turn triggers reactive-type behaviors again to counteract the commands from the deliberative behavior. Possibly the reactive behaviors do not get activated at all and the robot is continuing to drive despite being unaware of the surroundings. This would be a situation in which a human operator would need to step in and restore the robot to full functionality by hand. 
+With this quantity of functions and hierarchical architecture, the ROS Navigation2 stack is an excellent basis for achieving high levels of robot autonomy. The software can be modified and expanded with plugins to fit the users' needs. 
+When comparing the functionalities of the software stack to the proposed autonomous system architecture in figure xx (2.2), the things that Nav2 is missing are a system-wide supervision layer and a more deliberative approach to behavior planning, as mentioned in 2.3.
+The absence of these components leads to a limited set of circumstances in which the robot can perform navigation reliably. One of the core problems behavior-based robots face is generating a dependable environment representation. An accurate representation is the basis for the last steps in the planning part of the "Sense - Think - Act" cycle. Unforeseen events can severely limit the reliability of the environment representation without the robot being aware of it. Examples of such events currently not handled appropriately are slipping wheels, orientation changes by external influences, or undetected, more specifically, undetectable obstacles. \textit{Add statistics about random sensor failures every ~10000h} This can lead to erratic movement of the robot, as reactive behaviors and more deliberative behaviors compete for authority over the robot's movement. By design, to allow more intelligent robot behaviors, the deliberative behavior can override commands from reactive behaviors. However, the deliberative behavior's planning is based upon a false representation of reality, leading to unsafe commands. The unsafe planning triggers reactive-type behaviors again to counteract the commands from the deliberative behavior. Even worse would be that the reactive behaviors may not get activated, and the robot continues to drive despite being unaware of the surroundings. The unsafe behavior requires a human operator would need to step in and restore the robot to full functionality by hand. 
 
 \textit{Add a closing statement about that suitability of the Nav stack for achieving autonomy}
 
 
+\subsection{Turtlebot3}
+The Turtlebot3 is a standard mobile research platform with an available ROS interface to control the robot. The robot is well integrated into the ROS ecosystem and is established in the literature as a system to develop and integrate new methods. 
+The robot has two motors with attached wheel encoders to drive and steer, classifying it as a differential drive robot. A third omnidirectional wheel stabilizes the robot. 
+
+The manufacturer provides an open-source model for simulating the robot in physics-based simulators like Gazebo, as depicted in figure xx, which enables faster development and testing for the robot. 
+The equipped sensors and easy simulation capabilities make the robot well suited for using the Nav2 stack and further development for behavior planning. 
+
+The robot specifications are specified in table xx.  \\
+
+\begin{figure}[h!]
+	\includegraphics[width=1.0\textwidth]{images/turtlebot_sim.png}
+	\caption{Turtlebot3 model in Gazebo simulator}
+\end{figure}
+
+The turtlebot will be used for the analysis of the current state of mobile navigation. Furthermore, the simulated turtlebot will be the platform on which the behavior planning will be implemented and tested.
 
 
-\section{Risk Analysis For Requirement Prioritization}
+
 
 \textit{Do that?}
 
 \section{Requirements}
 
-\textbf{How do I justify these requirements? Atm they are made arbitrarily with no real substance or reasoning.}
-
-Functional Requirement List
-
-number .. Name .. Description .. Success Criteria -.. Priority
-freq1 Recovery The system can recover from crashes Ensure that the system can successfully reach goals despite previous crashes
-freq2 Sensor Failure	The system detects sensor failures	Ensure that the system can restart sensors and decrease the speed during time sensor delivers limited information
-freq3	Maintain operability The robot executes commands as long as it is safe	Ensure that the robot keeps driving if it is safe even when system functions are not working correctly
-freq5	Emergency Detection	The system detects emergency. Ensure that the system can detect when the continuation on the calculated path is no longer safe (sensor failures, blockage)
-freq6	Emergency Stop The system can initiate emergeny stops	Ensure that the system can override all commands and stop in case an emergency is detected
-freq7	Override Navigation2 The system can override navigation2	Ensure that the system's commands can always override the commands coming from navigation2.
-freq8 Reset Goals The system can reset and override goals set by the user so that the goal is reachable by planners.
-freq9 Determinism The outcome for a given set of inputs has to be deterministic, meaning that the behavior is always executed in the same way. 
+The software requirements that improve the robot's behavior are derived from the current limitations of the standard ROS and Navigation2 setup for mobile robots described in the previous chapter.
 
 \begin{table}[h!]
 \caption{Functional Requirements}
-	\begin{tabular}{ | m{0.05\textwidth} | m{0.13\textwidth}| m{0.07\textwidth} | m{0.65\textwidth} |} 
+	\begin{tabular}{| m{0.08\textwidth} | m{0.13\textwidth}| m{0.07\textwidth} | m{0.62\textwidth}|} 
   	\hline
-  	Nr. & Name & Priority & Description \\ 
+  	Nr. & Name & Priority & Description/Acceptance Criteria \\ 
   	\hline
-  	freq1 & Recovery & High &  The system can recover from crashes. Ensure that the system can successfully reach goals despite previous crashes\\ 
+  	fn$\_$req1 & Recovery & High &  The system can recover from crashes. Ensure that the system can successfully reach goals despite previous crashes\\ 
   	\hline
-  	freq2 & Sensor Failure & High & The system detects sensor failure.Ensure that the system can restart sensors and decrease the speed during time sensor delivers limited information \\ 
+  	fn$\_$req2 & Sensor Failure & High & The system detects sensor failure. Ensure that the system can restart sensors and decrease the speed during the time the sensor delivers limited information \\ 
   	\hline
-  	freq3 & Maintain operability & High & The robot executes commands as long as it is safe	Ensure that the robot keeps driving if it is safe even when system functions are not working correctly \\
+  	fn$\_$req3 & Maintain operability & High & The robot executes commands as long as it is safe. Ensure that the robot keeps driving if it is safe even when system functions are not working correctly. \\
   	\hline
-  	freq4 & Emergency Detection & High & The system detects emergency. Ensure that the system can detect when the continuation on the calculated path is no longer safe (sensor failures, blockage) \\
+  	fn$\_$req4 & Emergency Detection & High & The system detects emergency. Ensure that the system can detect when the continuation on the calculated path is no longer safe (sensor failures, blockage) \\
   	\hline
-  	freq5 & Emergency Stop & High & The system can initiate emergeny stops. Ensure that the system can override all commands and stop in case an emergency is detected \\
+  	fn$\_$req5 & Emergency Stop & High & The system can initiate emergency stops. Ensure that the system can override all commands and stop in case an emergency is detected \\
   	\hline
-  	freq6 & Override Navigation2 & High & The system can override navigation2. Ensure that the system's commands can always override the commands coming from navigation2. \\
+  	fn$\_$req6 & Override Navigation2 & High & The system can override navigation2. Ensure that the system's commands can always override the commands coming from navigation2. \\
   	\hline
-  	freq7 & Reset Goals & Medium & The system can reset and override goals set by the user so that the goal is reachable by planners. \\
+  	fn$\_$req7 & Reset Goals & Medium & The system can reset and override goals set by the user so that the goal is reachable by planners. \\
   	\hline
-  	freq8 & Determinism & High & The outcome for a given set of inputs has to be deterministic, meaning that the behavior is always executed in the same way. \\
+  	fn$\_$req8 & Robot Range & Medium & Ensure that the robot will not run out of battery during navigation to a goal.  \\	
   	\hline
-  	
-  	
 	\end{tabular}
 \end{table}
+
+
 Non-functional requirement list
 
 number .. 	Name .. 				Description ..										Success Criteria
-nfreq1 Single Point of Failure	The system does not have a single point of failure	When parts of the system fail the system maintains operability to a degree
-nfreq2 Performance	The system's control loop guarantees fast reactions	The average frequence with which the system checks the sensors/navigation2 is higher than 100Hz (10ms)
+nfreq1 Single Point of Failure	The system does not have a single point of failure	When parts of the system fail, the system maintains operability to a degree
+nfreq2 Performance	The system's control loop guarantees fast reactions	The average frequency with which the system checks the sensors/navigation2 is higher than 100Hz (10ms)
 nfreq3
 
 \begin{table}[h!]
-\caption{Non-Functional Requirements}
+	\caption{Non-Functional Requirements}
 	\begin{tabular}{ | m{0.05\textwidth} | m{0.13\textwidth}| m{0.07\textwidth} | m{0.65\textwidth} |} 
   	\hline
   	Nr. & Name & Priority & Description \\ 
   	\hline
-  	nfreq1 & Single Point of Failure & High &  The system does not have a single point of failure	When parts of the system fail the system maintains operability to a degree \\ 
+  	nfreq1 & Single Point of Failure & High &  The system does not have a single point of failure	When parts of the system fail, the system maintains operability to a degree \\ 
   	\hline
-  	nfreq2 & Performance & High & The system's control loop guarantees fast reactions. The average frequence with which the system checks the sensors/navigation2 is higher than 100Hz (10ms) \\ 
+  	nfreq2 & Performance & High & The system's control loop guarantees fast reactions. The average frequency with which the system checks the sensors/navigation2 is higher than 100Hz (10ms) \\ 
   	\hline
-  	nfreq3 & Determinism & High & The outcome for a given set of inputs has to be deterministic, meaning that the behavior is always executed in the same way. \\
+  	nfreq3 & Determinism & High & The outcome for a given set of inputs must be deterministic, meaning that the behavior is always executed similarly. \\
   	\hline
-  	nfreq4 & Deliberate & High & The robot is able to execute deliberative behaviors, meaning that behaviors new implemented behaviors go beyond reacting to sensor input and have a planning aspect. \\
+  	nfreq4 & Deliberate & High & The robot can execute deliberative behaviors, meaning that behaviors new implemented behaviors go beyond reacting to sensor input and have a planning aspect. \\
+  	\hline
 	\end{tabular}
 \end{table}
 
+
+\newpage
+
+\section{Risk Analysis For Requirement Prioritization}
+
 \section{System Solution}
 
-In order for a Turtlebot3 running Nav2 to appropriatly deal with the listed requirements, the system needs to be extended with new external modules. To eliminate a single point of failure for the system one needs to create an independent second system outside of the existing one. A suitable name for the second system is autonomy layer as it aims to increase the robustness and autonomy of the whole system. 
-The autonomy layer provides a holistic system supervisor which monitors the health of all components (Sensors, Navigation, Robot Controller). This equips the system with the ability to deal with the event of node failures and component malfunctions. 
-Another required addition to the autonomy layer is a data store of relevant system information. This not only includes sensor data, but also data like generated maps, costmaps, positions and speed commands. Making use of past datapoints allows behaviors to become more deliberative in their approach and opens up many possibilities for smart behaviors like movement predictions of obstacles. 
-A third component to add to the autonomy layer is a behavior planner that is largely independent from the Nav2 execution and planning. This behavior planner 
+For a Turtlebot3 running Nav2 to appropriately deal with the listed requirements, the system needs to be extended with new external modules. To eliminate a single point of failure for the system, one needs to create an independent second system outside the existing one. This is to create a robust fallback behavior that does not rely on Nav2 to move. Also, an external system can more reliably monitor other systems when its execution is detached from the performance and execution of other systems. 
 
-\section{Software}
+A suitable name for the second system is the "autonomy layer", as it aims to increase the robustness and autonomy of the whole system. 
+The autonomy layer has to provide a broad system supervisor that monitors all components' health (sensors, navigation, robot controller). The constant execution monitoring equips the system with the ability to deal with the event of node failures and component malfunctions. 
+Another required addition to the autonomy layer is a data storage of relevant system information. The stored data includes sensor data and generated maps, cost maps, positions, and speed commands. Using past data points allows behaviors to become more deliberative in their approach and opens up many possibilities for intelligent behaviors like movement predictions of obstacles. 
+A third component to the autonomy layer is a behavior planner largely independent of Nav2 execution and planning. This behavior planner must be capable of overriding the Nav2 behaviors if needed. The component processes information from the execution checker, Nav2, and past and present sensor data to decide if and how to override the default behaviors. Based on this information, the behavior planner can make a deliberative, strategic decision to increase robustness and autonomy, thus decreasing reliance on human supervision.
+Additionally, a component to switch intelligently between speed commands from Nav2 and the autonomy layer is needed. This component could be realized as a decision gate that receives speed commands from Nav2 and the new behavior planning component and can forward, block or modify commands sent to the controller. This modification aspect allows high-quality local planning capabilities but enables more deliberative behaviors to happen upon this planning.
+
+
+
+\section{Software and Simulation}
+A comparison and assessment of the behavior planning approach were made in chapter 2.4. The decision on which approach to take fell on the behavior tree method. The reason for this is mainly the increased flexibility when creating and expanding the behavior planning compared to FSMs. Also, behavior trees allow complete determinism and introspection, which is why POMPDs are not suitable as the behavior planning approach for the specified requirements. 
 
 \subsection{Behaviortree.CPP}
-The Navigation2 stack uses a behavior tree to coordinate the planning layer. The behavior tree that is used is an expansion of the Behaviortree.CPP (BT.CPP) library. This library offers a fast way to create, execute, monitor and edit behavior trees. 
-Additionally to the types of control nodes that are mentioned in chapter 2.4.2 the library adds the concept of reactivity into the catalogue of control nodes. Reactive sequences and reactive fallbacks differ from normal ones in the handling of nodes that return the state "running". Instead of ticking the node again, the whole sequence restarts, which is very useful for continously checking a condition and executing an asynchronous action node, that gets halted when a condition is not met anymore. 
+The Navigation2 stack uses a behavior tree to coordinate the planning layer. The behavior tree that is used is an expansion of the Behaviortree.CPP (BT.CPP) library. This library offers a fast way to create, execute, monitor, and edit behavior trees. 
+Additionally to the types of control nodes that are mentioned in chapter 2.4.2, the library adds the concept of reactivity into the catalog of control nodes. Reactive sequences and reactive fallbacks differ from normal ones in handling nodes that return the state "running". Instead of ticking the node again, the whole sequence restarts, which is very useful for continuously checking a condition and executing an asynchronous action node that gets halted when a condition is not met anymore (compare table xx). 
+
+\begin{table}[h!]
+	\caption{Control Nodes in BT.CPP}
+	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
+  	\hline
+  	Name & Child returns Failure & Child Returns Running \\ 
+  	\hline
+  	Sequence & Restart & Tick Again\\ 
+  	\hline
+  	Reactive Sequence & Restart & Restart \\ 
+  	\hline
+  	Sequence Star & Tick again & Tick again \\
+  	\hline
+  	Fallback & Tick next & Tick again\\
+  	\hline  	
+  	Reactive Fallback & Tick next & Restart \\
+  	\hline
+	\end{tabular}
+\end{table}
 
 Also, it offers Decorator Nodes which allow more control over the child node and its output. These Decorator Nodes can only have one child node each. A comprehensive list of the available nodes and descriptions is in table xx.
 
-\textit{TABLE HERE}
+\begin{table}[h!]
+	\caption{Decorator Nodes in BT.CPP}
+	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
+  	\hline
+  	Name & Succeeds & Fails & Running \\ 
+  	\hline
+  	Inverter Node & If the child returns false & If child return success &  If the child returns running \\ 
+  	\hline
+  	ForceSuccess Node & Always & Never & If child returns running \\ 
+  	\hline
+  	ForceFailure Node & Never & Always & If child returns running\\
+  	\hline
+  	Repeat Node & Ticks child as long as it returns success. The maximum number of repeats can be defined & If the child returns failure & If the child returns running \\
+  	\hline  	
+  	Retry Node & If the child returns success & Ticks child as long as it returns failure. The maximum number of ticks can be defined & If the child returns running. \\
+  	\hline
+	\end{tabular}
+\end{table}
 
-As a way to allow the tree nodes to communicate with each other, the library provides the developer with two possibilities. Either node can make use of the blackboard which is a dictionary (key/value) that all nodes of the tree can read and write. Or two nodes can be connected through ports which allows the direct communication between two nodes via a key/value.
+To allow the tree nodes to communicate, the library provides the developer with two possibilities. Either node can use the blackboard, a dictionary (key/value) that all nodes of the tree can read and write. Alternatively, two nodes can be connected through ports which allows direct communication between two nodes via a key/value.
 
+\subsection{Groot}
 
+Groot is a software to create, edit, monitor, and debug behavior trees with a graphical user interface. The software allows the creation of behavior trees in XML files which can be directly loaded into and used by the BT.CPP library. Groot can monitor the live execution of behavior trees and allows the introspection of how the tree reacts to different scenarios.
 
+\textit{Screenshot of live monitoring}
 
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
+\subsection{Gazebo Simulation Environment}
+The development and testing of behaviors will be done with the Gazebo simulator and the Turtlebot3 model. Gazebo is well-integrated into ROS and ROS2 and offers many ROS interfaces to control the simulation. Gazebo accurately models the physics of the robot and can simulate and publish the wheel odometry directly on a ROS topic. Furthermore, the simulator can simulate the readings for the laser scanner and IMU data via plugins. The use of the simulator allows easier repeatability for test cases as various obstacles can be spawned at any time, and sensor failures can be easily induced, resulting in quicker overall development.
+Using a simulator allows slowing down or speeding up the environment time. The time control allows more intricate observation of fast reactive type behaviors in slow motion while also enabling the observation of the long-time robustness of the system during extended tests. 
+The ROS community offers many different simulation environments to test the robot in. The environments range from simple geometric structurs, to office spaces up to complete race tracks. 
 
 

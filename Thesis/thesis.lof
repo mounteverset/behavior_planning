@@ -2,15 +2,16 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces SAE Levels Of Driving Automation \cite {J3016_202104} }}{4}{figure.2.1}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Common Autonomous Driving Architecture \cite {brooks1986} \cite {velasco2020} }}{4}{figure.2.2}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Hybrid Planning Architecture \cite {arkin1998} }}{6}{figure.2.3}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a finite state machine transition diagram \cite {wagner2006} }}{7}{figure.2.4}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of a behavior tree \cite {iovino2022} }}{8}{figure.2.5}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Common Autonomous Driving Architecture \cite {brooks1986} \cite {velasco2020} }}{5}{figure.2.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Hybrid Planning Architecture \cite {arkin1998} }}{8}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a finite state machine transition diagram \cite {wagner2006} }}{9}{figure.2.4}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of a behavior tree \cite {iovino2022} }}{11}{figure.2.5}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{10}{figure.3.1}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Architecture \cite {macenski2020}}}{10}{figure.3.2}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Navigation2 Behavior Tree}}{11}{figure.3.3}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Navigation2 Architecture \cite {macenski2020}}}{15}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Behavior Tree}}{15}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{17}{figure.3.3}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{16}{figure.4.1}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{22}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Lidar Fallback}}{23}{figure.4.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

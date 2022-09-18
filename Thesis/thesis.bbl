@@ -85,4 +85,14 @@ G.~Florez-Puga, M.~A. Gomez-Martin, P.~P. Gomez-Martin, B.~Diaz-Agudo, and
   Transactions on Computational Intelligence and AI in Games}, vol.~1, no.~4,
   pp.~298--308, 2009.
 
+\bibitem{quigley2009}
+M.~Quigley, K.~Conley, B.~Gerkey, J.~Faust, T.~Foote, J.~Leibs, R.~Wheeler,
+  A.~Y. Ng, {\em et~al.}, ``Ros: an open-source robot operating system,'' in
+  {\em ICRA workshop on open source software}, vol.~3, p.~5, Kobe, Japan, 2009.
+
+\bibitem{ros2022}
+S.~Macenski, T.~Foote, B.~Gerkey, C.~Lalancette, and W.~Woodall, ``Robot
+  operating system 2: Design, architecture, and uses in the wild,'' {\em
+  Science Robotics}, vol.~7, no.~66, p.~eabm6074, 2022.
+
 \end{thebibliography}
