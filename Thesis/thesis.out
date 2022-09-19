@@ -26,10 +26,10 @@
 \BOOKMARK [0][-]{chapter.4}{Implementation}{}% 26
 \BOOKMARK [1][-]{section.4.1}{System Architecture}{chapter.4}% 27
 \BOOKMARK [1][-]{section.4.2}{Data Backup}{chapter.4}% 28
-\BOOKMARK [1][-]{section.4.3}{Behavior Tree Structure}{chapter.4}% 29
-\BOOKMARK [2][-]{subsection.4.3.1}{BT System Supervision}{section.4.3}% 30
-\BOOKMARK [2][-]{subsection.4.3.2}{BT Advanced Behaviors}{section.4.3}% 31
-\BOOKMARK [1][-]{section.4.4}{Command Velocity Decision Gate}{chapter.4}% 32
+\BOOKMARK [1][-]{section.4.3}{Command Velocity Decision Gate}{chapter.4}% 29
+\BOOKMARK [1][-]{section.4.4}{Behavior Tree Structure}{chapter.4}% 30
+\BOOKMARK [2][-]{subsection.4.4.1}{BT System Supervision}{section.4.4}% 31
+\BOOKMARK [2][-]{subsection.4.4.2}{BT Advanced Behaviors}{section.4.4}% 32
 \BOOKMARK [0][-]{chapter.5}{Evaluation}{}% 33
 \BOOKMARK [1][-]{section.5.1}{Scenarios}{chapter.5}% 34
 \BOOKMARK [0][-]{chapter.6}{Summary}{}% 35
