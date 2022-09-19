@@ -26,15 +26,15 @@
 \contentsline {chapter}{\numberline {4}Implementation}{21}{chapter.4}%
 \contentsline {section}{\numberline {4.1}System Architecture}{21}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Data Backup}{21}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Behavior Tree Structure}{22}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}BT System Supervision}{23}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}BT Advanced Behaviors}{24}{subsection.4.3.2}%
-\contentsline {subsubsection}{Collision Behavior}{24}{section*.5}%
-\contentsline {subsubsection}{Battery Behavior}{24}{section*.6}%
-\contentsline {subsubsection}{Path Planning Behavior}{24}{section*.7}%
-\contentsline {section}{\numberline {4.4}Command Velocity Decision Gate}{24}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Scenarios}{25}{section.5.1}%
-\contentsline {chapter}{\numberline {6}Summary}{27}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusion}{27}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Prospect}{27}{section.6.2}%
+\contentsline {section}{\numberline {4.3}Command Velocity Decision Gate}{22}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Behavior Tree Structure}{22}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}BT System Supervision}{23}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}BT Advanced Behaviors}{23}{subsection.4.4.2}%
+\contentsline {subsubsection}{Collision Behavior}{23}{section*.5}%
+\contentsline {subsubsection}{Battery Behavior}{25}{section*.6}%
+\contentsline {subsubsection}{Path Planning Behavior}{26}{section*.7}%
+\contentsline {chapter}{\numberline {5}Evaluation}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Scenarios}{29}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Summary}{31}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusion}{31}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Prospect}{31}{section.6.2}%

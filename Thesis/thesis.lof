@@ -12,6 +12,9 @@
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{17}{figure.3.3}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{22}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Lidar Fallback}}{23}{figure.4.2}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Lidar Fallback}}{24}{figure.4.2}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Collision Fallback Behavior}}{25}{figure.4.3}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Battery Fallback Behavior}}{26}{figure.4.4}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Path Planning Fallback}}{27}{figure.4.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
