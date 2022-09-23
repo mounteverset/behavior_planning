@@ -14,27 +14,28 @@
 \contentsline {chapter}{\numberline {3}Concept}{13}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Current State}{13}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}ROS}{13}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Navigation2}{13}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.2}Navigation2}{14}{subsection.3.1.2}%
 \contentsline {subsection}{\numberline {3.1.3}Turtlebot3}{16}{subsection.3.1.3}%
-\contentsline {section}{\numberline {3.2}Requirements}{16}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Risk Analysis For Requirement Prioritization}{17}{section.3.3}%
-\contentsline {section}{\numberline {3.4}System Solution}{17}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Software and Simulation}{19}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Behaviortree.CPP}{19}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Groot}{19}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Gazebo Simulation Environment}{20}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.2}Requirements}{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}System Solution}{17}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Software and Simulation}{18}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Behaviortree.CPP}{19}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Groot}{20}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Gazebo Simulation Environment}{20}{subsection.3.4.3}%
 \contentsline {chapter}{\numberline {4}Implementation}{21}{chapter.4}%
 \contentsline {section}{\numberline {4.1}System Architecture}{21}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Data Backup}{21}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Command Velocity Decision Gate}{22}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Behavior Tree Structure}{22}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}BT System Supervision}{23}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}BT Advanced Behaviors}{23}{subsection.4.4.2}%
-\contentsline {subsubsection}{Collision Behavior}{23}{section*.5}%
-\contentsline {subsubsection}{Battery Behavior}{25}{section*.6}%
-\contentsline {subsubsection}{Path Planning Behavior}{26}{section*.7}%
-\contentsline {chapter}{\numberline {5}Evaluation}{29}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Scenarios}{29}{section.5.1}%
-\contentsline {chapter}{\numberline {6}Summary}{31}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusion}{31}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Prospect}{31}{section.6.2}%
+\contentsline {section}{\numberline {4.4}Behavior Tree Structure}{23}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}BT System Supervision}{24}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}BT Advanced Behaviors}{25}{subsection.4.4.2}%
+\contentsline {subsubsection}{Collision Behavior}{25}{section*.5}%
+\contentsline {subsubsection}{Battery Behavior}{26}{section*.6}%
+\contentsline {subsubsection}{Path Planning Behavior}{28}{section*.7}%
+\contentsline {section}{\numberline {4.5}System Support Tools}{28}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Gazebo Sensor Drivers}{28}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Custom ROS Interfaces}{29}{subsection.4.5.2}%
+\contentsline {chapter}{\numberline {5}Evaluation}{31}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Scenarios}{31}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Results}{32}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Summary}{37}{chapter.6}%

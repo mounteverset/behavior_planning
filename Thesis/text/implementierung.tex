@@ -2,8 +2,12 @@
 \label{cha:implementierung}
 
 \section{System Architecture}
-\begin{figure}
-	\includegraphics[width=1.0\textwidth]{images/component_diagram_bt_architecture.png}
+
+The system architecture, depicted in figure xx, integrates the behavior tree, responsible for the behavior planning, in a position to override Navigation2. This is done through the help of the Decision Gate, that can selectively forward speed commands to the robot controller. 
+The behavior tree can access the sensor data when needed through the Data Backup component. The System Supervision component controls the health of all components, but the connections are not depicted in the component diagram for Übersichtlichkeit.
+
+\begin{figure}[h!]
+	\includegraphics[width=1.05\textwidth]{images/component_diagram_bt.png}
 	\caption{Component Diagram of System Architecture}
 \end{figure}
 
@@ -36,10 +40,17 @@ The saved data inside of this component with the corresponding lookback time is 
 
 \section{Command Velocity Decision Gate}
 
+This component is responsible for modyfying or blocking the Velocity Commands from Nav2. The component receives messages from Navigation2 on the "/cmd$\_$vel$\_$nav" topic and on the "/cmd$\_$vel$\_$bt" topic from the behavior tree. This component publishes the received messages on the actual topic "/cmd$\_$vel" which is subscribed by the robot controller. 
+The BT can modify parameters of the Decision Gate, to either disregard incoming messages of Nav2 completely or to modify them. The modification is useful when the situation demands the robot to slow down. If the Decision Gate receives messages from both Nav2 and the BT, it will prioritize the BT. This situation should theoretically never occur as the BT will set the parameters for the Decision Gate accordingly and/or cancel the current Navigation Goal before publishing commands on its own. It is implemented as an additional safety measure, in case the cancellation of the goal is not possible if Navigation2 is not responsive to the cancellation command. 
 
 \section{Behavior Tree Structure}
 
 A simplified behavior tree only depicting the top level behavior control nodes is shown in figure xx. The tree receives the inital tick signal from the root in an infinite loop. The root control node is a sequence node. We made the root a simple sequence because we want the whole system to function with increasing complexity in the later parts (on the right side) of the tree. The complex behaviors require that all of the previous components and conditions are working as they should. The root sequence will not allow the execution of higher level behaviors if the system is detecting problems on more fundamental levels. The root sequence is the first step for increasing the robustness of the system to combat competing reactive and deliberative behaviors which could endanger the safety of the robot and other actors in its environments. 
+
+\begin{figure}[h!]
+	\includegraphics[width=1.0\textwidth]{images/simplified_bt.png}
+	\caption{Top Level Behavior Tree Structure}
+\end{figure}
 
 \subsection{BT System Supervision}
 
@@ -88,7 +99,12 @@ The collision position is calculated with
 
 A 25 by 25 cm square with full occupation of that space is added to the current map and then saved to be reloaded by the map server as depicted in figure xx. 
 
-The original goal is then republished to replan the global path on the updated map. 
+The original goal is then republished to replan the global path on the updated map. A more detailed view of the whole behavior is depicted in figure xx.
+
+\begin{figure}
+	\includegraphics[width=0.9\textwidth]{images/activity_diagram_collision.png}
+	\caption{Activity Diagram for the Collision Behavior}
+\end{figure}
 
 In this manner obstacles lower than the lidar scan height can be detected. With this behavior the robot should also be able to eventually navigate around transparent obstacles which do not reflect the laser. Glass doors are known to cause issues for robots based only on lidars. 
 
@@ -113,10 +129,50 @@ With this behavior, we implement a way to make the global planner more flexible.
 The execution checker component monitors the health of the Nav2 global planner. Additionally, the BT analyses the global planners output. If one of the condition fails, the given navigation goal is not reachable by the planning algorithm. We combat this by shifting the goal to a nearby alternative to get the robot as close to the original goal as possible. Is the location still unreachable, the goal gets moved further away and closer to the robot again. This routine gets repeated for up to ten times, which leads to a distance to the original goal of up to one meter. 
 The goal gets moved on a straight vector towards the robot. Other strategies for finding alternative goals were not implemented in this behavior.
 
-\begin{figure}
-	\includegraphics[width=0.75\textwidth]{images/global_planning_fallback.png}
-	\caption{Path Planning Fallback}
+
+\begin{figure}[h!]
+	\includegraphics[width=0.7\textwidth]{images/global_planning_fallback.png}
+	\caption{Path Planning Fallback Behavior}
 \end{figure}
+
+
+
+\section{System Support Tools}
+\subsection{Gazebo Sensor Drivers}
+For testing purposes, the simulated sensor data is not published directly on to the actual topic by gazebo. To control the flow of information in the system, an intermediary node is used, which subscribes to the Gazebo topic and republishes the information on the original topic. With this methodology, the failure of a sensor can be simulated as the simulation does not offer this functionality. Figure xx shows the RQT graph, which depicts the ROS nodes and their subscribed/published topics. 
+
+\begin{figure}
+	\includegraphics[width=0.75\textwidth]{images/rqt_graph_sensor_drivers.png}
+	\caption{Graph for the Sensor Driver nodes and topics}
+\end{figure}
+
+
+\subsection{Custom ROS Interfaces}
+
+Because of the neccessity to have ROS nodes spinning outside of the BT thread as discussed in 4.4.1, additional interfaces needed to be created in order to receive informations through service calls. The created service types are listed in table xx. All of the service definitions are created in a dedicated package named "bt$\_$msgs". 
+
+\begin{table}[h!]
+	\caption{Implemented Custom Services}
+	\begin{tabular}{ | m{0.2\textwidth} | m{0.33\textwidth}| m{0.33\textwidth} | m{0.2\textwidth} |} 
+  	\hline
+  	Name & Request & Response \\ 
+  	\hline
+  	GetCharge & Empty & float charge, float idle$\_$decrease$\_$per$\_$sec, float drive$\_$decrease$\_$per$\_$sec \\
+  	\hline
+  	GetDistance & Empty & float distance$\_$in$\_$meter\\ 
+  	\hline
+  	GetLastGoal & Empty & geometry$\_$msgs/Pose last$\_$goal$\_$pose \\ 
+  	\hline
+  	GetLastMap & Empty & nav$\_$msgs/OccupancyGrid map \\
+  	\hline
+  	GetTwistArray & Empty & geometry$\_$msgs/Twist[] cmd$\_$vel$\_$array\\
+  	\hline  	
+  	PubCmdVel & geometry$\_$msgs/Twist cmd$\_$vel, float time$\_$in$\_$seconds & bool success \\
+  	\hline
+  	SendUpdatedMap & nav$\_$msgs/OccupancyGrid updated$\_$map & Empty \\
+  	\hline
+	\end{tabular}
+\end{table}
 
 
 

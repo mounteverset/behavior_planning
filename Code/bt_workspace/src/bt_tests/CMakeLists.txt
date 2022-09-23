@@ -24,6 +24,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
+find_package(gazebo_msgs REQUIRED)
 
 add_executable(scenario1 src/scenario1.cpp)
 target_include_directories(scenario1 PUBLIC
@@ -38,6 +39,7 @@ ament_target_dependencies(
   "geometry_msgs"
   "nav_msgs"
   "nav2_msgs"
+  "gazebo_msgs"
 )
 
 install(TARGETS scenario1
