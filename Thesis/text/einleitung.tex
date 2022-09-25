@@ -1,45 +1,50 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-
-Research question:
-\textbf{How can behavior planning increase the robustness and autonomy of a robot running ROS2?}
-
-Core Problem - too little autonomy in a standard autonomous mobile robot running ROS navigation(AMR)
-
-Description of the Problem:
-
-Despite the advancements in autonomous driving the robot regurlarly needs an operator in case smth unexpected happens.
-
-This may include: unexpected collisions, a system restart is needed, battery is empty, the environment is too crowded and the robot gets stuck
-
-The system is not able to react and handle unforeseen situations.
-
-This can lead to safety issues during the operation of a robot. These safety issues can lead to uncontrolled driving maneuvers due to wrong sensor data or a wrong environment represantation.
-
-Due to the need of the robot to require an operator for safe, the robot is not really autonomous despite it being labeled as such. 
-
-(Difference is defined by the SAE Levels for automonous driving in cars.) \\
-
-Relevance, need for research:\\
-It is important for the robot to possess the ability to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment, these can be other robots and humans.\\
-
+Mobile robots are becoming more widespread in many domains. They are marketed as autonomous mobile robots, but often the autonomy of the robot is limited to very specific environments and require frequent human help to function correctly. This hardly qualifies the robot to be labeled autonomous. 
+One of the quickest and most popular ways to build and program a robot is to use the Robot Operating System (ROS). ROS offers many tools and functionalities to create and program robots, but even then a normal robot needs human supervision during the operation to ensure the proper function and safety. 
+There are ROS packages to safely navigate from point A to point B, but currently they are lacking the ability to react to unforeseen events. It is important for the robot to possess the ability to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment, these can be other robots and humans. 
 In theory the robot can perform fully autonomous navigation including mapping and localization but as soon as something out of the ordinary happens the robots autonomy is not guaranteed to be reliable anymore. 
 Default robot is not able to represent all possible fail states and does not detect failures on a systematic level, but only inside its navigation related subsystem. And even when failures inside this subsystems are discovered, the options to handle these problems are very limited and often do not deal with the problems in an autonomous way. The reliance on human-needed problem solving decreases the robots usefulness when tasked with real goals. 
+Therefore, this thesis centers around the research question how behavior planning can increase the robustness and autonomy of a robot running ROS2. 
+Behavior planning enables the robot to react to failures and problems of the system and can decide alternative courses of action to mitigate risks and finish the given tasks.
 
-Having a robust and safe robot behaviour opens the door to many applications in a more diverse set of challenging environments. Usually a reinforcement learning approach with broad training data set is a great way to handle a multitude of unknown environments and situations, but one of the biggest problems is the lacking determinism in such systems.
+%Core Problem - too little autonomy in a standard autonomous mobile robot running ROS navigation(AMR)
+%
+%Description of the Problem:
+%
+%Despite the advancements in autonomous driving the robot regurlarly needs an operator in case smth unexpected happens.
+%
+%This may include: unexpected collisions, a system restart is needed, battery is empty, the environment is too crowded and the robot gets stuck
+%
+%The system is not able to react and handle unforeseen situations.
+%
+%This can lead to safety issues during the operation of a robot. These safety issues can lead to uncontrolled driving maneuvers due to wrong sensor data or a wrong environment represantation.
+%
+%Due to the need of the robot to require an operator for safe, the robot is not really autonomous despite it being labeled as such. 
+%
+%(Difference is defined by the SAE Levels for automonous driving in cars.) \\
+%
+%Relevance, need for research:\\
+%\\
 
-In the robotic world exists a need for a deterministic system which can enhance and override the decision making process and navigation capabilities of the robot. 
+%
+%Having a robust and safe robot behaviour opens the door to many applications in a more diverse set of challenging environments. Usually a reinforcement learning approach with broad training data set is a great way to handle a multitude of unknown environments and situations, but one of the biggest problems is the lacking determinism in such systems.
+%
+%In the robotic world exists a need for a deterministic system which can enhance and override the decision making process and navigation capabilities of the robot. 
+%
+%Planned solution:\\
 
-Planned solution:\\
+This thesis will explore possibilities how current systems can be improved through the addition of a dedicated behavior planning component. Furthermore, the thesis will provide an implementation of examplatory behaviors and provide a system architecture to incorporate behavior planning in other robots, too
 
-This thesis will explore an approach how an extension of the current software architecture and behavior planning capabilities for an autonomous mobile robot that is running ROS2 can improve the autonomy of the robot. 
+%The thesis will explore how an extension of the current software architecture and behavior planning capabilities for an autonomous mobile robot that is running ROS2 can improve the autonomy of the robot. 
+%
+%Expected results:\\
 
-Expected results:\\
+The desired outcomes of these implemented software will be an increase of robustness and decrease of required human actions during a number of scenarios. In these scenarios, failures and problems are artificially induced to test the robots abilities to behave autonomously. 
 
-The desired outcomes of these implemented extension will be an increase of robustness and decrease of required human actions during a number of scenarios. In these scenarios, failures and and problems are artificially induced to test the robots abilities to behave autonomously. 
 
-\textit{Research gap is not named so far}
+%\textit{Research gap is not named so far}
 
 
 

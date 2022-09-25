@@ -1,19 +1,24 @@
 \chapter{Evaluation}
 \label{cha:ergebnisse}
 
-To test the efficacy of the behavior planning approach in relation to the requirements from chapter 3.xx, the robot is put into specific scenarios that should trigger the behavior responses. 
+To test the efficacy of the behavior planning approach in relation to the requirements from chapter 3.2, the robot is put into specific scenarios that should trigger the behavior responses. 
 
-The scenarios are executed in a simulated apartment environment as seen in figure xx and in a simulated world with small round obstacles in an enclosed space as depicted in figure xx. 
-
-\begin{figure}
-	\includegraphics[width=0.5\textwidth]{images/house_env.png}
+The scenarios are executed in a simulated apartment environment as seen in figure \ref{fig:house_gazebo} and in a simulated world with small round obstacles in an enclosed space as depicted in figure \ref{fig:world_gazebo}. 
+\begin{center}
+\begin{figure}[ht]
+	\label{fig:house_gazebo}
+	\includegraphics[width=0.75\textwidth]{images/house_env.png}
 	\caption{Apartment Environment in Gazebo}
 \end{figure}
+\end{center}
 
+\begin{center}
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{images/world_env.png}
+	\label{fig:world_gazebo}
+	\includegraphics[width=0.75\textwidth]{images/world_env.png}
 	\caption{Enclosed Environment in Gazebo}
 \end{figure}
+\end{center}
 
 The environments was mapped beforehand with the ROS2 "Slam Toolbox" package and provided via the Nav2 map server. 
 
@@ -21,7 +26,7 @@ In order to achieve comparability between test runs of each scenario the robot l
 
 \section{Scenarios}
 
-The scenarios are derived from the functional requirements and can be used to test multiple requirements.
+The scenarios are derived from the functional requirements and can be used to test multiple requirements and listed in the tables \ref{tab:sensor_scenarios} and \ref{tab:behavior_scenarios}.
 The acceptance criteria often contains multiple binary conditions that can only be met or failed. All acceptance criteria for a given scenario must be met, for the test to be counted as success.  
 
 For the Lidar, IMU and Odometry scenarios the sensor driver was shut down when reaching the desired speed as listed in the scenario. 
@@ -33,7 +38,8 @@ The Battery$\_$1 scenario tests if the robot tries to navigate towards a far awa
 
 
 
-\begin{table}[h!]
+\begin{table}[ht]
+\label{tab:sensor_scenarios}
 \caption{Scenarios}
 	\begin{tabular}{| m{0.1\textwidth} | m{0.13\textwidth}| m{0.33\textwidth} | m{0.34\textwidth}|} 
   	\hline
@@ -61,9 +67,12 @@ The Battery$\_$1 scenario tests if the robot tries to navigate towards a far awa
 \end{table} 	
   	
   	
-\begin{table}[h!]
+\begin{table}[ht]
+	\label{tab:behavior_scenarios}
 	\caption{Scenarios}
 	\begin{tabular}{| m{0.1\textwidth} | m{0.13\textwidth}| m{0.33\textwidth} | m{0.34\textwidth}|} 
+	\hline
+	Name & Related Requirements & Description & Success Criteria\\ 
   	\hline	
   	NoPath Found$\_$1 & fn$\_$req7 & Path to goal can not be calculated, robot is standing still &  
 Reset system, calculate path to goal, reach goal \\
@@ -85,10 +94,11 @@ Robot can get out of collision state, navigation to goals still working, undetec
 
 \section{Results}
 
-The results in table xx show an increase in the successful handling of the test scenarios for most test cases. The system supervision component is a very reliable component and enables the system to recover from an unexpected sensor failure. The more advanced behaviors that were implemented also show good improvements in the autonomous handling of the scenarios. The Battery Scenario was successful every time it was induced. However, the path planning behavior for finding alternative goals was not successful in about 50 percent of the time. The carried out test showed that alternative methods for finding new goals would probably have resulted in better performance. The collision behavior during driving worked really well and the map updates are a important feature for the success of the scenarios. Nevertheless, there is a lack of intelligence and autonomy when the robot is standing still and a collision is forced as it relies on the same mechanism as during the driving scenario. This led to a case in which the robot reversed into a wall because the collision turned the robot by about 90 degrees. This led to a failed test in which a operator would be needed to correct the robot. This apparent lack of robustness was not apparent in the driving collision scenario because the force of the robot was not enough to cause a major shift in orientation. 
+The results in table \ref{tab:results} show an increase in the successful handling of the test scenarios for most test cases. The system supervision component is a very reliable component and enables the system to recover from an unexpected sensor failure. The more advanced behaviors that were implemented also show good improvements in the autonomous handling of the scenarios. The Battery Scenario was successful every time it was induced. However, the path planning behavior for finding alternative goals was not successful in about 50 percent of the time. The carried out test showed that alternative methods for finding new goals would probably have resulted in better performance. The collision behavior during driving worked really well and the map updates are a important feature for the success of the scenarios. Nevertheless, there is a lack of intelligence and autonomy when the robot is standing still and a collision is forced as it relies on the same mechanism as during the driving scenario. This led to a case in which the robot reversed into a wall because the collision turned the robot by about 90 degrees. This led to a failed test in which a operator would be needed to correct the robot. This apparent lack of robustness was not apparent in the driving collision scenario because the force of the robot was not enough to cause a major shift in orientation. 
 
 
-\begin{table}[h!]
+\begin{table}[ht]
+\label{tab:results}
 \caption{Results}
 	\begin{tabular}{| m{0.11\textwidth} | m{0.13\textwidth}| m{0.33\textwidth} | m{0.33\textwidth}|} 
   	\hline
@@ -128,5 +138,5 @@ The results in table xx show an increase in the successful handling of the test 
 \end{table} 
 
 The non-functional requirements are mostly met by the architectural design choices. 
-The implementation of the whole behavior planning and system supervision system is eliminating a single point of failure for the system. Even when the whole Navigation2 system collapses is the robot able to move to a degree and more importantly stop completely (compare table 3.3, non$\_$fn$\_$req). The behavior tree itself and algorithms that are implemented in the behavior tree are all deterministic (non$\_$fn$\_$req3). The robots behavior goes beyond pure reactivity when navigating through environments, as the advanced behaviors are making use of a dedicated planning phase before the actions are carried out (non$\_$fn$\_$req4). 
+The implementation of the whole behavior planning and system supervision system is eliminating a single point of failure for the system. Even when the whole Navigation2 system collapses is the robot able to move to a degree and more importantly stop completely (compare table \ref{tab:tab:nonfn_req}, non$\_$fn$\_$req). The behavior tree itself and algorithms that are implemented in the behavior tree are all deterministic (non$\_$fn$\_$req3). The robots behavior goes beyond pure reactivity when navigating through environments, as the advanced behaviors are making use of a dedicated planning phase before the actions are carried out (non$\_$fn$\_$req4). 
 And finally, the performance of the system when checking the conditions of the BT is below the desired threshold of 10ms, as the whole system runs in multiple threads which allows the behavior tree to complete one complete cycle in about 5ms with current system (non$\_$fn$\_$req2). 
