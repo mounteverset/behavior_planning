@@ -1,15 +1,15 @@
-\BOOKMARK [0][-]{chapter*.1}{Abstract}{}% 1
-\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 2
-\BOOKMARK [0][-]{chapter.2}{State of the Art}{}% 3
-\BOOKMARK [1][-]{section.2.1}{Automated and Autonomous Vehicles}{chapter.2}% 4
-\BOOKMARK [1][-]{section.2.2}{Autonomous Driving Navigation Architectures}{chapter.2}% 5
-\BOOKMARK [1][-]{section.2.3}{Behavior Types}{chapter.2}% 6
-\BOOKMARK [2][-]{subsection.2.3.1}{Reactive}{section.2.3}% 7
-\BOOKMARK [2][-]{subsection.2.3.2}{Deliberative}{section.2.3}% 8
-\BOOKMARK [2][-]{subsection.2.3.3}{Hybrid}{section.2.3}% 9
-\BOOKMARK [1][-]{section.2.4}{Behavior Planning Approaches}{chapter.2}% 10
-\BOOKMARK [2][-]{subsection.2.4.1}{Finite State Machines}{section.2.4}% 11
-\BOOKMARK [2][-]{subsection.2.4.2}{Behavior Trees}{section.2.4}% 12
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{State of the Art}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Automated and Autonomous Vehicles}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Autonomous Driving Navigation Architectures}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Behavior Types}{chapter.2}% 5
+\BOOKMARK [2][-]{subsection.2.3.1}{Reactive}{section.2.3}% 6
+\BOOKMARK [2][-]{subsection.2.3.2}{Deliberative}{section.2.3}% 7
+\BOOKMARK [2][-]{subsection.2.3.3}{Hybrid}{section.2.3}% 8
+\BOOKMARK [1][-]{section.2.4}{Behavior Planning Approaches}{chapter.2}% 9
+\BOOKMARK [2][-]{subsection.2.4.1}{Finite State Machines}{section.2.4}% 10
+\BOOKMARK [2][-]{subsection.2.4.2}{Behavior Trees}{section.2.4}% 11
+\BOOKMARK [2][-]{subsection.2.4.3}{Partially Observable Markov Decision Processes}{section.2.4}% 12
 \BOOKMARK [0][-]{chapter.3}{Concept}{}% 13
 \BOOKMARK [1][-]{section.3.1}{Current State}{chapter.3}% 14
 \BOOKMARK [2][-]{subsection.3.1.1}{ROS}{section.3.1}% 15
