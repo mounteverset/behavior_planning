@@ -1,25 +1,26 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces SAE Levels Of Driving Automation \cite {J3016_202104}}}{5}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Common Autonomous Driving Architecture \cite {brooks1986} \cite {velasco2020}}}{6}{figure.2.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Hybrid Planning Architecture \cite {arkin1998}}}{8}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a finite state machine transition diagram \cite {wagner2006}}}{9}{figure.2.4}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of a behavior tree \cite {iovino2022}}}{11}{figure.2.5}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of a fully observable Markov Decision Process \cite {andrew1999reinforcement}}}{12}{figure.2.6}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces SAE Levels Of Driving Automation \cite {J3016_202104} }}{4}{figure.2.1}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Common Autonomous Driving Architecture \cite {brooks1986} \cite {velasco2020}}}{5}{figure.2.2}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Hybrid Planning Architecture \cite {arkin1998} }}{7}{figure.2.3}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a finite state machine transition diagram \cite {wagner2006} }}{8}{figure.2.4}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of a behavior tree \cite {iovino2022} }}{10}{figure.2.5}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Navigation2 Architecture \cite {macenski2020}}}{14}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Behavior Tree}}{15}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{16}{figure.3.3}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Use Case Diagram}}{19}{figure.3.4}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Navigation2 Architecture \cite {macenski2020}}}{12}{figure.3.1}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Behavior Tree}}{13}{figure.3.2}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{14}{figure.3.3}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{23}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure}}{24}{figure.4.2}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Lidar Fallback}}{25}{figure.4.3}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Collision Fallback Behavior}}{26}{figure.4.4}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Activity Diagram for the Collision Behavior}}{28}{figure.4.5}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Battery Fallback Behavior}}{29}{figure.4.6}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Path Planning Fallback Behavior}}{30}{figure.4.7}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Graph for the Sensor Driver nodes and topics}}{31}{figure.4.8}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{20}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure}}{21}{figure.4.2}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Lidar Fallback}}{22}{figure.4.3}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Collision Fallback Behavior}}{23}{figure.4.4}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Activity Diagram for the Collision Behavior}}{27}{figure.4.5}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Battery Fallback Behavior}}{28}{figure.4.6}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Path Planning Fallback Behavior}}{28}{figure.4.7}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Graph for the Sensor Driver nodes and topics}}{29}{figure.4.8}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Apartment Environment in Gazebo}}{31}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Enclosed Environment in Gazebo}}{32}{figure.5.2}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Apartment Environment in Gazebo}}{32}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Enclosed Environment in Gazebo}}{33}{figure.5.2}%
 \addvspace {10\p@ }

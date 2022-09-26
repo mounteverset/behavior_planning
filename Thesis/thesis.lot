@@ -1,18 +1,17 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\addvspace {10\p@ }
 \contentsline {table}{\numberline {2.1}{\ignorespaces The five types of nodes \cite {iovino2022}}}{10}{table.2.1}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces ROS Communication Options}}{11}{table.3.1}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Functional Requirements}}{15}{table.3.2}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Non-Functional Requirements}}{16}{table.3.3}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Control Nodes in BT.CPP}}{17}{table.3.4}%
-\contentsline {table}{\numberline {3.5}{\ignorespaces Decorator Nodes in BT.CPP}}{18}{table.3.5}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces ROS Communication Options}}{13}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Functional Requirements}}{17}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Non-Functional Requirements}}{18}{table.3.3}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Control Nodes in BT.CPP}}{20}{table.3.4}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Decorator Nodes in BT.CPP}}{20}{table.3.5}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Types of saved data}}{21}{table.4.1}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Implemented Custom Services}}{26}{table.4.2}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Types of saved data}}{24}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Implemented Custom Services}}{31}{table.4.2}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Scenarios}}{34}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Scenarios}}{35}{table.5.2}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Results}}{35}{table.5.3}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Sensor Scenarios}}{35}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Behavior Scenarios}}{36}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Results}}{36}{table.5.3}%
 \addvspace {10\p@ }

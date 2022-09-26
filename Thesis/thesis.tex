@@ -1,4 +1,4 @@
-\documentclass[12pt]{book} %[a4paper]
+\documentclass[12pt]{report} %[a4paper]
 \usepackage[twoside=true,margin=2.5cm]{geometry}
 
 \usepackage[utf8]{inputenc}
@@ -9,21 +9,29 @@
 \usepackage{array}
 \usepackage{notoccite}
 
+\renewcommand{\familydefault}{\rmdefault}
+
 % set wallpaper position for title page
-\addtolength{\wpXoffset}{0.0cm}
-\addtolength{\wpYoffset}{7.0cm}
+%\addtolength{\wpXoffset}{0.0cm}
+%\addtolength{\wpYoffset}{7.0cm}
 
 % define htw color for title page
 \definecolor{htwgreen}{RGB}{118,185,0}
 
 \begin{document}
+
 \input{text/titel}
-\frontmatter
-\input{text/abstract}
+%\frontmatter
+\pagenumbering{roman}
+\tableofcontents
 \listoffigures
 \listoftables
-\tableofcontents
-\mainmatter
+
+%\thispagestyle{empty}
+%\mainmatter
+\input{text/abstract}
+\pagenumbering{arabic}
+
 \input{text/einleitung}
 \input{text/verwandt}
 \input{text/methoden}
@@ -32,7 +40,7 @@
 \input{text/diskussion}
 \appendix
 \input{appendix/apA} % Appendix A
-\backmatter
+%\backmatter
 \bibliographystyle{IEEEtran}
 \bibliography{thesis}
 

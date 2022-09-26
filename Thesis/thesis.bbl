@@ -123,6 +123,28 @@ M.~Iovino, E.~Scukins, J.~Styrud, P.~Ögren, and C.~Smith, ``A survey of
   \url{https://www.sciencedirect.com/science/article/pii/S0921889022000513}
 \BIBentrySTDinterwordspacing
 
+\bibitem{feyzabadi2014riskaware}
+S.~Feyzabadi and S.~Carpin, ``Risk-aware path planning using hierarchical
+  constrained markov decision processes,'' vol. 2014, 08 2014.
+
+\bibitem{andrew1999reinforcement}
+A.~M. Andrew, ``Reinforcement learning: An introduction by richard s. sutton
+  and andrew g. barto, adaptive computation and machine learning series, mit
+  press (bradford book), cambridge, mass., 1998, xviii+ 322 pp, isbn
+  0-262-19398-1,(hardback,{\pounds} 31.95).'' \emph{Robotica}, vol.~17, no.~2,
+  pp. 229--235, 1999.
+
+\bibitem{tanwar2019markov}
+\BIBentryALTinterwordspacing
+S.~Tanwar. (2019) Markov chains and markov decision process. [Online].
+  Available:
+  \url{https://sanchittanwar75.medium.com/markov-chains-and-markov-decision-process-e91cda7fa8f2}
+\BIBentrySTDinterwordspacing
+
+\bibitem{krishnamurthy2016partially}
+V.~Krishnamurthy, \emph{Partially Observed Markov Decision Processes}.\hskip
+  1em plus 0.5em minus 0.4em\relax Cambridge university press, 2016.
+
 \bibitem{quigley2009}
 M.~Quigley, K.~Conley, B.~Gerkey, J.~Faust, T.~Foote, J.~Leibs, R.~Wheeler,
   A.~Y. Ng \emph{et~al.}, ``Ros: an open-source robot operating system,'' in

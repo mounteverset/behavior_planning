@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.8.24)  23 SEP 2022 17:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.8.24)  25 SEP 2022 23:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,10 +6,10 @@ entering extended mode
 (./thesis.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
-(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
-Document Class: book 2019/12/20 v1.4l Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/bk12.clo
-File: bk12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 )
 \c@part=\count167
 \c@chapter=\count168
@@ -278,22 +278,22 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -311,13 +311,13 @@ LaTeX Font Info:    ... okay on input line 19.
 * \textheight=652.70622pt
 * \oddsidemargin=-1.1381pt
 * \evensidemargin=-1.1381pt
-* \topmargin=-33.0119pt
+* \topmargin=-38.1381pt
 * \headheight=12.0pt
-* \headsep=19.8738pt
+* \headsep=25.0pt
 * \topskip=12.0pt
 * \footskip=30.0pt
-* \marginparwidth=98.0pt
-* \marginparsep=7.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
@@ -330,7 +330,7 @@ LaTeX Font Info:    ... okay on input line 19.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box49
-Package hyperref Info: Link coloring OFF on input line 19.
+Package hyperref Info: Link coloring OFF on input line 21.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
@@ -342,9 +342,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count194
 )
-LaTeX Info: Redefining \ref on input line 19.
-LaTeX Info: Redefining \pageref on input line 19.
-LaTeX Info: Redefining \nameref on input line 19.
+LaTeX Info: Redefining \ref on input line 21.
+LaTeX Info: Redefining \pageref on input line 21.
+LaTeX Info: Redefining \nameref on input line 21.
 
 (./thesis.out) (./thesis.out)
 \@outlinefile=\write3
@@ -381,110 +381,100 @@ Package pdftex.def Info: images/HTW_Logo_rgb.jpg  used on input line 4.
 (pdftex.def)             Requested size: 132.16817pt x 78.69296pt.
  [1
 
-
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/HTW_Logo_rgb.jpg>
-]) [2
-
-] (./text/abstract.tex) [1
-
-] [2
-
-] (./thesis.lof
+]) (./thesis.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 4.
+(Font)              <12> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 4.
+(Font)              <8> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 4.
-)
-\tf@lof=\write4
-\openout4 = `thesis.lof'.
+(Font)              <6> on input line 3.
+ [1
 
+])
+\tf@toc=\write4
+\openout4 = `thesis.toc'.
 
-[3] [4
+ [2] (./thesis.lof)
+\tf@lof=\write5
+\openout5 = `thesis.lof'.
+
+ [3
 
 ] (./thesis.lot)
-\tf@lot=\write5
-\openout5 = `thesis.lot'.
+\tf@lot=\write6
+\openout6 = `thesis.lot'.
 
- [5] [6
+(./text/abstract.tex [4
 
-] (./thesis.toc [7])
-\tf@toc=\write6
-\openout6 = `thesis.toc'.
-
- [8] (./text/einleitung.tex
-Chapter 1.
-) (./text/verwandt.texpdfTeX warning (ext4): destination with the same identifi
-er (name{page.1}) has been already used, duplicate ignored
+]) (./text/einleitung.texpdfTeX warning (ext4): destination with the same ident
+ifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
-            {State of the Art} [1
-
-
-]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {State of the Art} [2
+            {Introduction} [1
 
 ]
+Chapter 1.
+) (./text/verwandt.tex [2
+
+] [3]
 Chapter 2.
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--10
-
- []
-
-<images/j3016graphic_2021.png, id=322, 704.3916pt x 573.1011pt>
+<images/j3016graphic_2021.png, id=315, 2933.96124pt x 1931.215pt>
 File: images/j3016graphic_2021.png Graphic file (type png)
 <use images/j3016graphic_2021.png>
-Package pdftex.def Info: images/j3016graphic_2021.png  used on input line 13.
-(pdftex.def)             Requested size: 472.03123pt x 384.05444pt.
-<images/autonomous_driving_architecture.png, id=326, 811.03pt x 454.69875pt>
+Package pdftex.def Info: images/j3016graphic_2021.png  used on input line 9.
+(pdftex.def)             Requested size: 472.03123pt x 310.68039pt.
+<images/autonomous_driving_architecture.png, id=320, 811.03pt x 454.69875pt>
 File: images/autonomous_driving_architecture.png Graphic file (type png)
 <use images/autonomous_driving_architecture.png>
 Package pdftex.def Info: images/autonomous_driving_architecture.png  used on in
-put line 34.
+put line 27.
 (pdftex.def)             Requested size: 472.03123pt x 264.64822pt.
-[3] [4 <./images/j3016graphic_2021.png (PNG copy)>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[4
 
- [5 <./images/autonomous_driving_architecture.png>] [6]
-<images/Deliberative_hierarchical_planning.png, id=365, 626.34pt x 472.76625pt>
+] [5 <./images/j3016graphic_2021.png>] [6 <./images/autonomous_driving_architec
+ture.png>]
+<images/Deliberative_hierarchical_planning.png, id=353, 626.34pt x 472.76625pt>
 
 File: images/Deliberative_hierarchical_planning.png Graphic file (type png)
 <use images/Deliberative_hierarchical_planning.png>
 Package pdftex.def Info: images/Deliberative_hierarchical_planning.png  used on
- input line 80.
+ input line 72.
 (pdftex.def)             Requested size: 472.03123pt x 356.30513pt.
- [7 <./images/Deliberative_hierarchical_planning.png>]
-<images/fsm.png, id=375, 1146.2825pt x 471.7625pt>
+ [7] [8 <./images/Deliberative_hierarchical_planning.png>]
+<images/fsm.png, id=369, 1146.2825pt x 471.7625pt>
 File: images/fsm.png Graphic file (type png)
 <use images/fsm.png>
-Package pdftex.def Info: images/fsm.png  used on input line 102.
+Package pdftex.def Info: images/fsm.png  used on input line 95.
 (pdftex.def)             Requested size: 472.03123pt x 194.27328pt.
- [8 <./images/fsm.png>] [9]
-Underfull \hbox (badness 4193) in paragraph at lines 138--138
+ [9 <./images/fsm.png>]
+Underfull \hbox (badness 4193) in paragraph at lines 130--130
 []|\OT1/cmr/m/n/12 When im-pos-si-ble
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 138--139
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
 []|\OT1/cmr/m/n/12 During com-ple-
  []
 
-<images/bt_example.jpg, id=406, 237.33469pt x 78.62976pt>
+[10]
+<images/bt_example.jpg, id=400, 237.33469pt x 78.62976pt>
 File: images/bt_example.jpg Graphic file (type jpg)
 <use images/bt_example.jpg>
-Package pdftex.def Info: images/bt_example.jpg  used on input line 150.
+Package pdftex.def Info: images/bt_example.jpg  used on input line 141.
 (pdftex.def)             Requested size: 472.03123pt x 156.39883pt.
-) (./text/methoden.tex [10 <./images/bt_example.jpg>]
+<images/mdp.png, id=404, 868.24374pt x 288.07625pt>
+File: images/mdp.png Graphic file (type png)
+<use images/mdp.png>
+Package pdftex.def Info: images/mdp.png  used on input line 156.
+(pdftex.def)             Requested size: 472.03123pt x 156.61821pt.
+ [11 <./images/bt_example.jpg>]) (./text/methoden.tex [12 <./images/mdp.png (PN
+G copy)>]
 Chapter 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 18--18
-[]|\OT1/cmr/m/n/12 Communication
+[]|\OT1/cmr/bx/n/12 Communication
  []
 
 
@@ -517,44 +507,39 @@ Overfull \hbox (2.79395pt too wide) in paragraph at lines 16--27
 [][] 
  []
 
-[11
+[13
 
 ]
-<images/nav2_architecture.png, id=422, 940.51375pt x 603.25375pt>
+<images/nav2_architecture.png, id=430, 940.51375pt x 603.25375pt>
 File: images/nav2_architecture.png Graphic file (type png)
 <use images/nav2_architecture.png>
-Package pdftex.def Info: images/nav2_architecture.png  used on input line 40.
+Package pdftex.def Info: images/nav2_architecture.png  used on input line 39.
 (pdftex.def)             Requested size: 472.03123pt x 302.76753pt.
- [12 <./images/nav2_architecture.png>]
-<images/nav_bt-modified.png, id=432, 1386.17876pt x 723.70375pt>
+ [14 <./images/nav2_architecture.png>]
+<images/nav_bt-modified.png, id=441, 1386.17876pt x 723.70375pt>
 File: images/nav_bt-modified.png Graphic file (type png)
 <use images/nav_bt-modified.png>
-Package pdftex.def Info: images/nav_bt-modified.png  used on input line 48.
+Package pdftex.def Info: images/nav_bt-modified.png  used on input line 47.
 (pdftex.def)             Requested size: 472.03123pt x 246.44252pt.
 
 
-LaTeX Warning: Reference `fig:autonomous_driving_architectures' on page 13 unde
+LaTeX Warning: Reference `fig:autonomous_driving_architectures' on page 15 unde
 fined on input line 56.
 
-[13 <./images/nav_bt-modified.png>]
-<images/turtlebot_sim.png, id=444, 904.37875pt x 543.02875pt>
+[15 <./images/nav_bt-modified.png>]
+<images/turtlebot_sim.png, id=454, 904.37875pt x 543.02875pt>
 File: images/turtlebot_sim.png Graphic file (type png)
 <use images/turtlebot_sim.png>
-Package pdftex.def Info: images/turtlebot_sim.png  used on input line 76.
+Package pdftex.def Info: images/turtlebot_sim.png  used on input line 75.
 (pdftex.def)             Requested size: 330.42041pt x 198.39856pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 80--81
 
  []
 
-[14 <./images/turtlebot_sim.png>]
-Overfull \hbox (6.93451pt too wide) in paragraph at lines 92--92
-[]|\OT1/cmr/m/n/12 Priority| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 96--96
-[]|\OT1/cmr/m/n/12 Emergency
+[16 <./images/turtlebot_sim.png>]
+Overfull \hbox (4.20645pt too wide) in paragraph at lines 94--94
+[]|\OT1/cmr/bx/n/12 Priority| 
  []
 
 
@@ -564,218 +549,242 @@ Underfull \hbox (badness 10000) in paragraph at lines 98--98
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 100--100
-[]|\OT1/cmr/m/n/12 Override
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 100--100
-\OT1/cmr/m/n/12 Nav-i-ga-
+[]|\OT1/cmr/m/n/12 Emergency
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 102--102
+[]|\OT1/cmr/m/n/12 Override
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--102
+\OT1/cmr/m/n/12 Nav-i-ga-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--104
 []|\OT1/cmr/m/n/12 Maintain
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
+Underfull \hbox (badness 10000) in paragraph at lines 108--108
 []|\OT1/cmr/m/n/12 Control
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 106--106
+Underfull \hbox (badness 1902) in paragraph at lines 108--108
 \OT1/cmr/m/n/12 Path Plan-
  []
 
 
-Overfull \hbox (9.05392pt too wide) in paragraph at lines 106--106
-[]|\OT1/cmr/m/n/12 Medium| 
- []
-
-
-Overfull \hbox (9.05392pt too wide) in paragraph at lines 108--108
-[]|\OT1/cmr/m/n/12 Medium| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 110--110
+Underfull \hbox (badness 10000) in paragraph at lines 112--112
 []|\OT1/cmr/m/n/12 Robot
  []
 
 
-Overfull \hbox (9.05392pt too wide) in paragraph at lines 110--110
-[]|\OT1/cmr/m/n/12 Medium| 
- []
-
-
-Overfull \hbox (2.80115pt too wide) in paragraph at lines 90--113
+Overfull \hbox (2.80115pt too wide) in paragraph at lines 92--115
 [][] 
  []
 
 
-Overfull \hbox (8.92418pt too wide) in paragraph at lines 121--121
-[]|\OT1/cmr/bx/n/12 Priority| 
- []
-
-
-Overfull \hbox (2.76631pt too wide) in paragraph at lines 125--125
+Overfull \hbox (2.76631pt too wide) in paragraph at lines 127--127
 []|\OT1/cmr/m/n/12 Performance| 
  []
 
 
-Overfull \hbox (4.46352pt too wide) in paragraph at lines 127--127
+Overfull \hbox (4.46352pt too wide) in paragraph at lines 129--129
 []|\OT1/cmr/m/n/12 Determinism| 
  []
 
 
-Overfull \hbox (2.80115pt too wide) in paragraph at lines 119--132
+Underfull \hbox (badness 1571) in paragraph at lines 131--132
+[]|\OT1/cmr/m/n/12 The robot can ex-e-cute de-lib-er-a-tive be-hav-iors,
+ []
+
+
+Overfull \hbox (7.52606pt too wide) in paragraph at lines 121--134
 [][] 
  []
 
-[15] [16]
-Underfull \hbox (badness 4569) in paragraph at lines 186--186
+<images/use_case.png, id=464, 626.34pt x 753.81625pt>
+File: images/use_case.png Graphic file (type png)
+<use images/use_case.png>
+Package pdftex.def Info: images/use_case.png  used on input line 137.
+(pdftex.def)             Requested size: 330.42041pt x 397.68034pt.
+[17] [18] [19 <./images/use_case.png>]
+Underfull \hbox (badness 4569) in paragraph at lines 194--194
 []|\OT1/cmr/m/n/12 If the child re-turns
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 188--188
+Underfull \hbox (badness 10000) in paragraph at lines 196--196
 []|\OT1/cmr/m/n/12 ForceSuccess
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 188--189
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
 []|\OT1/cmr/m/n/12 If child re-turns
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 190--191
+Underfull \hbox (badness 10000) in paragraph at lines 198--199
 []|\OT1/cmr/m/n/12 If child re-turns
  []
 
 
-Underfull \hbox (badness 2181) in paragraph at lines 192--192
+Underfull \hbox (badness 2181) in paragraph at lines 200--200
 \OT1/cmr/m/n/12 max-i-mum num-ber of
  []
 
 
-Underfull \hbox (badness 2181) in paragraph at lines 194--194
+Underfull \hbox (badness 2181) in paragraph at lines 202--202
 \OT1/cmr/m/n/12 max-i-mum num-ber of
  []
 
 
-Overfull \hbox (2.79393pt too wide) in paragraph at lines 182--197
+Overfull \hbox (2.79393pt too wide) in paragraph at lines 190--205
 [][] 
  []
 
-[17]) (./text/implementierung.tex [18]
+[20]) (./text/implementierung.tex [21]
 Chapter 4.
-<images/component_diagram_bt.png, id=476, 1487.5575pt x 1200.485pt>
+<images/component_diagram_bt.png, id=494, 1487.5575pt x 1200.485pt>
 File: images/component_diagram_bt.png Graphic file (type png)
 <use images/component_diagram_bt.png>
-Package pdftex.def Info: images/component_diagram_bt.png  used on input line 14
+Package pdftex.def Info: images/component_diagram_bt.png  used on input line 13
 .
 (pdftex.def)             Requested size: 472.03123pt x 380.9391pt.
-[19
+[22
 
-] [20 <./images/component_diagram_bt.png>]
-<images/simplified_bt.png, id=489, 1840.8775pt x 465.74pt>
+] [23 <./images/component_diagram_bt.png>]
+<images/simplified_bt.png, id=507, 1840.8775pt x 465.74pt>
 File: images/simplified_bt.png Graphic file (type png)
 <use images/simplified_bt.png>
 Package pdftex.def Info: images/simplified_bt.png  used on input line 60.
 (pdftex.def)             Requested size: 472.03123pt x 119.41948pt.
- [21 <./images/simplified_bt.png>]
-<images/sensor_fallback.png, id=496, 1299.85625pt x 631.35875pt>
+
+
+LaTeX Warning: Reference `lidar_fallback' on page 24 undefined on input line 70
+.
+
+[24 <./images/simplified_bt.png>]
+<images/sensor_fallback.png, id=513, 1299.85625pt x 631.35875pt>
 File: images/sensor_fallback.png Graphic file (type png)
 <use images/sensor_fallback.png>
-Package pdftex.def Info: images/sensor_fallback.png  used on input line 74.
+Package pdftex.def Info: images/sensor_fallback.png  used on input line 73.
 (pdftex.def)             Requested size: 472.03123pt x 229.27353pt.
-[22 <./images/sensor_fallback.png>]
-<images/collision_fallback.png, id=502, 1495.5875pt x 561.09625pt>
+ [25 <./images/sensor_fallback.png>]
+<images/collision_fallback.png, id=519, 1495.5875pt x 561.09625pt>
 File: images/collision_fallback.png Graphic file (type png)
 <use images/collision_fallback.png>
-Package pdftex.def Info: images/collision_fallback.png  used on input line 93.
+Package pdftex.def Info: images/collision_fallback.png  used on input line 91.
 (pdftex.def)             Requested size: 472.03123pt x 177.08871pt.
- [23 <./images/collision_fallback.png>]
-<images/activity_diagram_collision.png, id=512, 1275.76625pt x 1978.39125pt>
+ [26 <./images/collision_fallback.png>]
+<images/activity_diagram_collision.png, id=530, 1275.76625pt x 1978.39125pt>
 File: images/activity_diagram_collision.png Graphic file (type png)
 <use images/activity_diagram_collision.png>
 Package pdftex.def Info: images/activity_diagram_collision.png  used on input l
-ine 121.
-(pdftex.def)             Requested size: 434.26787pt x 673.42902pt.
+ine 119.
+(pdftex.def)             Requested size: 377.62642pt x 585.58258pt.
 
 
-LaTeX Warning: Float too large for page by 47.5561pt on input line 123.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images/battery_fallback.png, id=514, 824.07875pt x 581.17125pt>
+<images/battery_fallback.png, id=532, 824.07875pt x 581.17125pt>
 File: images/battery_fallback.png Graphic file (type png)
 <use images/battery_fallback.png>
-Package pdftex.def Info: images/battery_fallback.png  used on input line 134.
+Package pdftex.def Info: images/battery_fallback.png  used on input line 132.
 (pdftex.def)             Requested size: 236.01561pt x 166.4425pt.
-[24]
-<images/global_planning_fallback.png, id=523, 1043.9pt x 781.92125pt>
+[27]
+
+LaTeX Warning: Text page 28 contains only floats.
+
+[28 <./images/activity_diagram_collision.png>]
+<images/global_planning_fallback.png, id=547, 1043.9pt x 781.92125pt>
 File: images/global_planning_fallback.png Graphic file (type png)
 <use images/global_planning_fallback.png>
 Package pdftex.def Info: images/global_planning_fallback.png  used on input lin
-e 157.
+e 155.
 (pdftex.def)             Requested size: 330.42041pt x 247.4996pt.
-<images/rqt_graph_sensor_drivers.png, id=525, 1332.98pt x 777.90625pt>
+ [29 <./images/battery_fallback.png>]
+<images/rqt_graph_sensor_drivers.png, id=556, 1332.98pt x 777.90625pt>
 File: images/rqt_graph_sensor_drivers.png Graphic file (type png)
 <use images/rqt_graph_sensor_drivers.png>
 Package pdftex.def Info: images/rqt_graph_sensor_drivers.png  used on input lin
-e 172.
+e 167.
 (pdftex.def)             Requested size: 354.02342pt x 206.59523pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 188--189
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
 []|\OT1/cmr/m/n/12 float charge, float
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 188--189
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
 \OT1/cmr/m/n/12 idle$[]$decrease$[]$per$[]$sec, float
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--193
+Underfull \hbox (badness 10000) in paragraph at lines 188--189
 []|\OT1/cmr/m/n/12 geometry$[]$msgs/Pose
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 194--195
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 []|\OT1/cmr/m/n/12 nav$[]$msgs/OccupancyGrid
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
+Underfull \hbox (badness 10000) in paragraph at lines 192--193
 []|\OT1/cmr/m/n/12 geometry$[]$msgs/Twist[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 198--198
+Underfull \hbox (badness 10000) in paragraph at lines 194--194
 []|\OT1/cmr/m/n/12 geometry$[]$msgs/Twist
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--200
+Underfull \hbox (badness 10000) in paragraph at lines 196--196
 []|\OT1/cmr/m/n/12 nav$[]$msgs/OccupancyGrid
  []
 
-) (./text/ergebnisse.tex [25] [26] [27 <./images/activity_diagram_collision.png
->] [28 <./images/battery_fallback.png> <./images/global_planning_fallback.png>]
-[29 <./images/rqt_graph_sensor_drivers.png>] [30
-
-]
+) (./text/ergebnisse.tex [30 <./images/global_planning_fallback.png>] [31 <./im
+ages/rqt_graph_sensor_drivers.png>]
 Chapter 5.
-<images/house_env.png, id=561, 2204.235pt x 1236.62pt>
+<images/house_env.png, id=571, 2204.235pt x 1236.62pt>
 File: images/house_env.png Graphic file (type png)
 <use images/house_env.png>
-Package pdftex.def Info: images/house_env.png  used on input line 10.
+Package pdftex.def Info: images/house_env.png  used on input line 9.
 (pdftex.def)             Requested size: 354.02342pt x 198.59914pt.
-<images/world_env.png, id=562, 1714.405pt x 1181.41376pt>
+<images/world_env.png, id=572, 1714.405pt x 1181.41376pt>
 File: images/world_env.png Graphic file (type png)
 <use images/world_env.png>
-Package pdftex.def Info: images/world_env.png  used on input line 18.
+Package pdftex.def Info: images/world_env.png  used on input line 17.
 (pdftex.def)             Requested size: 354.02342pt x 243.95802pt.
-[31 <./images/house_env.png>]
+[32
+
+ <./images/house_env.png>] [33 <./images/world_env.png>]
+Underfull \hbox (badness 7667) in paragraph at lines 44--44
+[]|\OT1/cmr/bx/n/12 Related Re-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
+[]|\OT1/cmr/m/n/12 fn$[]$req1,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
+\OT1/cmr/m/n/12 fn$[]$req2,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
+\OT1/cmr/m/n/12 fn$[]$req3,
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 48--48
 []|\OT1/cmr/m/n/12 fn$[]$req1,
  []
@@ -788,11 +797,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 48--48
 
 Underfull \hbox (badness 10000) in paragraph at lines 48--48
 \OT1/cmr/m/n/12 fn$[]$req3,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 48--48
-\OT1/cmr/m/n/12 fn$[]$req4,
  []
 
 
@@ -811,21 +815,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 50--50
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--50
-\OT1/cmr/m/n/12 fn$[]$req4,
- []
-
-
-Underfull \hbox (badness 6961) in paragraph at lines 50--50
-[]|\OT1/cmr/m/n/12 Navigating with 0.25 m/s
- []
-
-
-Underfull \hbox (badness 6348) in paragraph at lines 50--50
-\OT1/cmr/m/n/12 straight to-wards goal (1m
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 52--52
 []|\OT1/cmr/m/n/12 fn$[]$req1,
  []
@@ -838,11 +827,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 52--52
 
 Underfull \hbox (badness 10000) in paragraph at lines 52--52
 \OT1/cmr/m/n/12 fn$[]$req3,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 52--52
-\OT1/cmr/m/n/12 fn$[]$req4,
  []
 
 
@@ -861,11 +845,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--54
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 54--54
-\OT1/cmr/m/n/12 fn$[]$req4,
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 56--56
 []|\OT1/cmr/m/n/12 fn$[]$req1,
  []
@@ -878,21 +857,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--56
 
 Underfull \hbox (badness 10000) in paragraph at lines 56--56
 \OT1/cmr/m/n/12 fn$[]$req3,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 56--56
-\OT1/cmr/m/n/12 fn$[]$req4,
- []
-
-
-Underfull \hbox (badness 6961) in paragraph at lines 56--56
-[]|\OT1/cmr/m/n/12 Navigating with 0.25 m/s
- []
-
-
-Underfull \hbox (badness 6348) in paragraph at lines 56--56
-\OT1/cmr/m/n/12 straight to-wards goal (1m
  []
 
 
@@ -911,8 +875,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 58--58
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--58
-\OT1/cmr/m/n/12 fn$[]$req4,
+Underfull \hbox (badness 6876) in paragraph at lines 58--58
+[]|\OT1/cmr/m/n/12 Robot is stand-ing still,
  []
 
 
@@ -931,11 +895,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--60
-\OT1/cmr/m/n/12 fn$[]$req4,
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 62--62
 []|\OT1/cmr/m/n/12 fn$[]$req1,
  []
@@ -951,165 +910,134 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--62
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--62
-\OT1/cmr/m/n/12 fn$[]$req4,
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+[]|\OT1/cmr/bx/n/12 Related
  []
 
 
-Underfull \hbox (badness 6961) in paragraph at lines 62--62
-[]|\OT1/cmr/m/n/12 Navigating with 0.25 m/s
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+\OT1/cmr/bx/n/12 Re-quire-
  []
 
 
-Underfull \hbox (badness 6348) in paragraph at lines 62--62
-\OT1/cmr/m/n/12 straight to-wards goal (1m
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--64
-[]|\OT1/cmr/m/n/12 fn$[]$req1,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--64
-\OT1/cmr/m/n/12 fn$[]$req2,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--64
-\OT1/cmr/m/n/12 fn$[]$req3,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--64
-\OT1/cmr/m/n/12 fn$[]$req4,
- []
-
-
-Overfull \hbox (2.80113pt too wide) in paragraph at lines 44--67
-[][] 
- []
-
-
-LaTeX Warning: Float too large for page by 52.52687pt on input line 67.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 77--77
+Underfull \hbox (badness 10000) in paragraph at lines 75--75
 []|\OT1/cmr/m/n/12 NoPath
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--80
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 []|\OT1/cmr/m/n/12 NoPath
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--80
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 []|\OT1/cmr/m/n/12 fn$[]$req7,
  []
 
 
-Overfull \hbox (7.3526pt too wide) in paragraph at lines 82--82
+Overfull \hbox (7.3526pt too wide) in paragraph at lines 80--80
 []|\OT1/cmr/m/n/12 Collision$[]$1| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
+Underfull \hbox (badness 10000) in paragraph at lines 80--80
 []|\OT1/cmr/m/n/12 fn$[]$req2,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
+Underfull \hbox (badness 10000) in paragraph at lines 80--80
 \OT1/cmr/m/n/12 fn$[]$req4,
  []
 
 
-Underfull \hbox (badness 1348) in paragraph at lines 82--82
+Underfull \hbox (badness 1348) in paragraph at lines 80--80
 []|\OT1/cmr/m/n/12 Robot is stand-ing still and
  []
 
 
-Overfull \hbox (7.3526pt too wide) in paragraph at lines 84--84
+Overfull \hbox (7.3526pt too wide) in paragraph at lines 82--82
 []|\OT1/cmr/m/n/12 Collision$[]$2| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--84
+Underfull \hbox (badness 10000) in paragraph at lines 82--82
 []|\OT1/cmr/m/n/12 fn$[]$req2,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--84
+Underfull \hbox (badness 10000) in paragraph at lines 82--82
 \OT1/cmr/m/n/12 fn$[]$req4,
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 85--86
+Underfull \hbox (badness 1571) in paragraph at lines 83--84
 []|\OT1/cmr/m/n/12 Robot can get out of col-li-
  []
 
 
-Overfull \hbox (2.22627pt too wide) in paragraph at lines 87--87
+Overfull \hbox (2.22627pt too wide) in paragraph at lines 85--85
 []|\OT1/cmr/m/n/12 Battery$[]$1| 
  []
 
 
-Underfull \hbox (badness 1097) in paragraph at lines 87--88
-[]|\OT1/cmr/m/n/12 The robot will not drive to
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 87--87
 []|\OT1/cmr/m/n/12 fn$[]$req2,
  []
 
 
-Overfull \hbox (2.80113pt too wide) in paragraph at lines 73--93
+Overfull \hbox (2.80113pt too wide) in paragraph at lines 71--91
 [][] 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [32 <./images/world_env.png>]
-Underfull \hbox (badness 3713) in paragraph at lines 105--105
-[]|\OT1/cmr/m/n/12 Number of
+Underfull \hbox (badness 10000) in paragraph at lines 104--104
+[]|\OT1/cmr/bx/n/12 Number
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--125
+Underfull \hbox (badness 10000) in paragraph at lines 104--104
+[]|\OT1/cmr/bx/n/12 Percentage Suc-ces-ful
+ []
+
+
+Underfull \hbox (badness 2245) in paragraph at lines 104--104
+\OT1/cmr/bx/n/12 With-out Be-hav-ior Plan-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--124
 []|\OT1/cmr/m/n/12 NoPath
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--127
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
 []|\OT1/cmr/m/n/12 NoPath
  []
 
 
-Overfull \hbox (2.63487pt too wide) in paragraph at lines 129--129
+Overfull \hbox (2.63487pt too wide) in paragraph at lines 128--128
 []|\OT1/cmr/m/n/12 Collision$[]$1| 
  []
 
 
-Overfull \hbox (2.63487pt too wide) in paragraph at lines 131--131
+Overfull \hbox (2.63487pt too wide) in paragraph at lines 130--130
 []|\OT1/cmr/m/n/12 Collision$[]$2| 
  []
 
 
-Overfull \hbox (2.80115pt too wide) in paragraph at lines 103--138
+Overfull \hbox (2.80115pt too wide) in paragraph at lines 102--137
 [][] 
  []
 
 
-LaTeX Warning: Reference `tab:tab:nonfn_req' on page 33 undefined on input line
- 141.
+LaTeX Warning: Reference `tab:tab:nonfn_req' on page 34 undefined on input line
+ 140.
 
-) (./text/diskussion.tex [33] [34] [35] [36
-
-]
+) (./text/diskussion.tex [34] [35] [36]
 Chapter 6.
-[37]) (./appendix/apA.tex) [38] (./thesis.bbl
+[37
+
+]) (./appendix/apA.tex) (./thesis.bbl [38]
 Underfull \hbox (badness 1052) in paragraph at lines 54--58
 []\OT1/cmr/m/n/12 M. Reke, D. Pe-ter, J. Schulte-Tigges, S. Schif-fer, A. Fer-r
 ein, T. Wal-ter, and
@@ -1123,40 +1051,44 @@ Underfull \hbox (badness 2951) in paragraph at lines 54--58
 
 [39
 
+]
+Underfull \hbox (badness 3838) in paragraph at lines 139--143
+[]\OT1/cmr/m/n/12 S. Tan-war. (2019) Markov chains and markov de-ci-
+ []
 
-])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 39.
- [40]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 39.
+[40])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 47.
+ [41]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 47.
  (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 39.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 39.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 47.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 47.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: CAFE5D357CF2B924C464E456D03E2A0D;2352.
+(rerunfilecheck)             Checksum: E45616635CB63CECED5300F4C2D9482A;2407.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 39.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 47.
  ) 
 Here is how much of TeX's memory you used:
- 6955 strings out of 483140
- 105764 string characters out of 5965151
- 388431 words of memory out of 5000000
- 21637 multiletter control sequences out of 15000+600000
- 537897 words of font info for 42 fonts, out of 8000000 for 9000
+ 6978 strings out of 483140
+ 106275 string characters out of 5965151
+ 389162 words of memory out of 5000000
+ 21651 multiletter control sequences out of 15000+600000
+ 537882 words of font info for 42 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 40i,14n,45p,1502b,440s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+ 40i,14n,45p,1484b,443s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/luke/.texlive2019/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600p
+k></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on thesis.pdf (50 pages, 6160719 bytes).
+f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on thesis.pdf (46 pages, 6144425 bytes).
 PDF statistics:
- 684 PDF objects out of 1000 (max. 8388607)
- 585 compressed objects within 6 object streams
- 169 named destinations out of 1000 (max. 500000)
- 392 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 698 PDF objects out of 1000 (max. 8388607)
+ 600 compressed objects within 6 object streams
+ 177 named destinations out of 1000 (max. 500000)
+ 402 words of extra memory for PDF output out of 10000 (max. 10000000)
 

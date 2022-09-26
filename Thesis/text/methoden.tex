@@ -11,11 +11,11 @@ The Robot Operating System (ROS) is an open-source middleware for creating robot
 ROS can handle the communication between different programs (called nodes) with standardized interfaces and network protocols. Nodes can communicate via topics, services, and actions, which differ in their application domain (compare table \ref{tab:ros_interfaces}). 
 
 \begin{table}[ht]
-	\label{tab:ros_interfaces}
 	\caption{ROS Communication Options}
+	\label{tab:ros_interfaces}
 	\begin{tabular}{ | m{0.15\textwidth} | m{0.2\textwidth}| m{0.35\textwidth} | m{0.2\textwidth}|} 
   	\hline
-  	Name & Communication Pattern & Area of Use & Cardinality \\ 
+  	\textbf{Name} & \textbf{Communication Pattern} & \textbf{Area of Use} & \textbf{Cardinality} \\ 
   	\hline
   	Topics & Publisher/ Subscriber & Continuous stream of data e.g. sensor data &  n:m \\ 
   	\hline
@@ -36,17 +36,17 @@ The ROS Navigation2 Stack (Nav2) combines different packages that allow mobile r
 The stack contains tools that save and load occupancy maps, localize the robot, plan paths, execute the path, provide cost maps, build behaviors and execute recoveries \cite{macenski2020}. 
 
 \begin{figure}[ht]
-	\label{fig:nav_architecture}
 	\includegraphics[width=1.0\textwidth]{images/nav2_architecture.png}
 	\caption{Navigation2 Architecture \cite{macenski2020}}
+	\label{fig:nav_architecture}
 \end{figure}
 \subparagraph*{}
 These packages are often integrating a SLAM method to build or enlarge maps. Path planning and execution capabilities, which correspond to the global and local planner described in section 2.2, are further supported by ready-to-use planning plugins that use A* and Dijkstra algorithms for path planning and a dynamic window approach for path execution. The system sequencing is done in a hierarchical structure as a central behavior tree calls asynchronous actions from the respective planners after another, as seen in figure \ref{fig:nav_architecture}. 
 
 \begin{figure}[ht]
-	\label{fig:bt_nav}
 	\includegraphics[width=1.0\textwidth]{images/nav_bt-modified.png}
 	\caption{Navigation2 Behavior Tree}
+	\label{fig:bt_nav}
 \end{figure}
 \subparagraph*{}
 The behavior tree depicted in figure \ref{fig:bt_nav} is the one that is the default Nav2 behavior and has a set of recovery behaviors already implemented (spin, wait, back up, clear map). These behaviors are executed if the robot can not make progress towards the set goal. 
@@ -71,10 +71,10 @@ The equipped sensors and easy simulation capabilities make the robot well suited
 
 %The robot specifications are specified in table xx.  \\
 
-\begin{figure}[ht]
-    \label{fig:turtlebot}
+\begin{figure}[ht]   
 	\includegraphics[width=0.7\textwidth]{images/turtlebot_sim.png}
 	\caption{Turtlebot3 model in Gazebo simulator}
+	\label{fig:turtlebot}
 \end{figure}
 
 The turtlebot will be used for the analysis of the current state of mobile navigation. Furthermore, the simulated turtlebot will be the platform on which the behavior planning will be implemented and tested.\\
@@ -83,13 +83,15 @@ The turtlebot will be used for the analysis of the current state of mobile navig
 \section{Requirements}
 
 The software requirements that improve the robot's behavior are derived from the current limitations of the standard ROS and Navigation2 setup for mobile robots described in the previous chapter. 
+The functional requirements and their acceptance criteria are listed in \ref{tab:fn_req}. The non-functional requirements are listed seperately in \ref{tab:nonfn_req}. 
+To better contextualize the context of the systems requirements, figure \ref{fig:use_case} depicts a Use-Case diagram with the needed functions to improve the system's autonomy.
 
 \begin{table}[ht]
-\label{tab:fn_req}
 \caption{Functional Requirements}
-	\begin{tabular}{| m{0.08\textwidth} | m{0.13\textwidth}| m{0.07\textwidth} | m{0.62\textwidth}|} 
+\label{tab:fn_req}
+	\begin{tabular}{| m{0.08\textwidth} | m{0.13\textwidth}| m{0.09\textwidth} | m{0.60\textwidth}|} 
   	\hline
-  	Nr. & Name & Priority & Description/Acceptance Criteria \\ 
+  	\textbf{Nr.} & \textbf{Name} & \textbf{Priority} & \textbf{Description/Acceptance Criteria} \\ 
   	\hline
   	fn$\_$req1 & Sensor Failure & High & The system detects sensor failure. Ensure that the system can restart sensors and decrease the speed during the time the sensor delivers limited information \\ 
   	\hline
@@ -116,7 +118,7 @@ The software requirements that improve the robot's behavior are derived from the
 \begin{table}[ht]
 	\caption{Non-Functional Requirements}
 	\label{tab:nonfn_req}
-	\begin{tabular}{ | m{0.13\textwidth} | m{0.13\textwidth}| m{0.08\textwidth} | m{0.56\textwidth} |} 
+	\begin{tabular}{ | m{0.13\textwidth} | m{0.13\textwidth}| m{0.1\textwidth} | m{0.55\textwidth} |} 
   	\hline
   	\textbf{Nr.} & \textbf{Name} & \textbf{Priority} & \textbf{Description} \\ 
   	\hline
@@ -130,6 +132,12 @@ The software requirements that improve the robot's behavior are derived from the
   	\hline
 	\end{tabular}
 \end{table}
+
+\begin{figure}[ht]   
+	\includegraphics[width=0.7\textwidth]{images/use_case.png}
+	\caption{Use Case Diagram}
+	\label{fig:use_case}
+\end{figure}
 
 
 \section{System Solution}
@@ -158,7 +166,7 @@ Additionally to the types of control nodes that are mentioned in chapter 2.4.2, 
 	\label{tab:control_nodes_bt}
 	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
   	\hline
-  	Name & Child returns Failure & Child Returns Running \\ 
+  	\textbf{Name }& \textbf{Child returns Failure} & \textbf{Child Returns Running} \\ 
   	\hline
   	Sequence & Restart & Tick Again\\ 
   	\hline
@@ -181,7 +189,7 @@ Also, it offers Decorator Nodes which allow more control over the child node and
 	\label{tab:decorators_bt}
 	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
   	\hline
-  	Name & Succeeds & Fails & Running \\ 
+  	\textbf{Name} & \textbf{Succeeds} & \textbf{Fails} & \textbf{Running} \\ 
   	\hline
   	Inverter Node & If the child returns false & If child return success &  If the child returns running \\ 
   	\hline
