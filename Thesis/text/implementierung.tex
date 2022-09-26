@@ -6,6 +6,7 @@
 The system architecture, depicted in figure \ref{fig:component_diagram}, integrates the behavior tree into the existing architecture. 
 The already existing components are colored in gray, and the newly added components are colored in blue.
 The new components and their functions are described in the following sections of this chapter.  
+
 %This is done with the addition of the Decision Gate, that can selectively forward speed commands to the robot controller. The behavior tree's commands have a higher priority and disable the forwarding of the Navigation2 commands. 
 %The behavior tree can access the sensor data when needed through the Data Backup component. The System Supervision component controls the health of all components, but the connections are not depicted in the component diagram for reasons of clarity and comprehensibility.
 
@@ -56,24 +57,36 @@ If the Decision Gate receives messages from Nav2 and the BT, it will prioritize 
 \section{Behavior Tree Structure}
 
 A simplified behavior tree only depicting the top-level behavior control fallback nodes is shown in figure \ref{fig:top_level_bt}. The tree receives the initial tick signal from the root in an infinite loop. 
+
 \begin{figure}[ht]
 	\includegraphics[width=1.0\textwidth]{images/simplified_bt.png}
 	\caption{Top Level Behavior Tree Structure}
 	\label{fig:top_level_bt}
 \end{figure}
+
 The root control node is a sequence node. The root node is a simple sequence because the whole system must function with increasing complexity in the tree's later parts (on the right side). The complex behaviors require that all previous components and conditions work as they should. The root sequence will not allow the execution of higher-level behaviors if the system detects problems on more fundamental levels. The root sequence is the first step for increasing the system's robustness to combat competing reactive and deliberative behaviors that could endanger the robot's safety and other actors in its environment. 
 
 \subsection{BT System Supervision}
 
+The design pattern of the system supervisor is an "Watchdog" pattern. This pattern is depicted in figure \ref{fig:watchdog_pattern}. The pattern is used to monitor a system from the outside and directly take corrective measures when problems are detected. 
+
+\begin{figure}[ht]
+	\includegraphics[width=0.4\textwidth]{images/watchdog_pattern.png}
+	\caption{Examiner pattern for the system supervisor component \cite{konrad2003defining}}
+	\label{fig:watchdog_pattern}
+\end{figure}
+
 The system supervisor component is partly outsourced into a component outside of the BT's thread for the same reasons as the sensor backup component discussed in the previous section. The synchronous executor would stop the execution of the whole behavior tree, which is why the component needs to be moved inside of a new thread. The system supervisor, also called the execution checker, is receiving messages from nodes not implemented as ROS2 lifecycle nodes. If a node stops sending messages or responding completely, the external execution checker can inform the BT via a provided service of a problem with the node. ROS2 lifecycle nodes provide information about their health via an FSM implementation inside the node. The current node state can be requested via a service call. However, the node's output needs to be checked, too, because it might be that the FSM inside of the node did not pick up on an error and failed to change the internal lifecycle state. 
 The system supervision is constantly checking the system's health. The BT is using service calls to get the health information about the components checked inside Condition Nodes. 
 The components get checked by the BT inside of a Fallback. If the condition for the execution is met, the Condition Node returns "Success", and the fallback would exit to move on to the next fallback and execution condition check (see fig. \ref{lidar_fallback}). If the execution checker detects a node failure, a sequence to react to the sensor failure is executed in which the robot slows down to a minimum and tries to restart the sensor. Should the restart fail twice, the robot will not be able to navigate safely anymore and will come to a complete stop. This behavior pattern is realized for the lidar, the IMU, and the wheel odometry. 
-
+\begin{center}
 \begin{figure}[ht]
 	\includegraphics[width=1.0\textwidth]{images/sensor_fallback.png}
 	\caption{Lidar Fallback}
 	\label{fig:lidar_fallback}
 \end{figure}
+\end{center}
+
 
 The timeout period for the execution checker to declare a node failed after receiving no message is set at one second. 
 After that period, the goal is to enable the robot to continue progressing towards the goal. However, if the system can not restart the sensor in a short time after failure, the robot has to come to a stop as a sensor failure is a severe function loss for the robot.
@@ -115,7 +128,7 @@ A 25 by 25 cm square with 100 percent occupation at the collision point is added
 \subparagraph*{}
 The original goal is then republished to replan the global path on the updated map. A more detailed view of the whole behavior is depicted in figure \ref{fig:activity_diagram_collision}.
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 	\includegraphics[width=0.8\textwidth]{images/activity_diagram_collision.png}
 	\caption{Activity Diagram for the Collision Behavior}
 	\label{fig:activity_diagram_collision}
@@ -160,6 +173,7 @@ The goal gets moved on a straight vector towards the robot. Other strategies for
 
 \section{System Support Tools}
 \subsection{Gazebo Sensor Drivers}
+%\label{sec:gazebo_driver}
 For testing purposes, the simulated sensor data is not published directly on the actual topic by Gazebo. An intermediary node is used, which subscribes to the Gazebo topic and republishes the information on the original topic. The failure of a sensor can be simulated this way by stopping the execution of the intermediary node. Figure \ref{fig:rqt_graph} shows the RQT graph, which depicts the ROS nodes and their subscribed/published topics. 
 
 \begin{center}

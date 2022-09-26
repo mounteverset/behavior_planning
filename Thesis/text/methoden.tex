@@ -29,7 +29,7 @@ ROS can handle the communication between different programs (called nodes) with 
 This design choice makes robotic applications built with ROS highly reusable and interchangeable, allowing developers to integrate foreign libraries more easily into their applications. 
 Due to the availability of many high-quality open-source libraries for many different use cases, ROS has become the leading methodology for creating robotic applications in the research environment \cite{quigley2009}. 
 
-With ROS2, the framework received fundamental changes and updates to its architecture and design to gain more acceptance and use in the industry. These changes allow for real-time safety, simpler certification, and security when building industrial applications and products using ROS2 \cite{ros2022}. 
+With ROS2, the framework received fundamental changes and updates to its architecture and design to gain more acceptance and use in the industry. These changes allow for real-time safety, simpler certification, and security when building industrial applications and products using ROS2 \cite{ros2022}.  
 
 \subsection{Navigation2}
 The ROS Navigation2 Stack (Nav2) combines different packages that allow mobile robots to navigate from point A to point B. Navigation2 is the de-facto standard for mobile navigation with a wide range of supported robots. Supported robot types are holonomic, differential-drive, legged, and ackerman (car-like). For the mobile robot to make use of the Nav2 stack, it has to be set up in a certain way to be able to generate plans and execute commands in the right way. Nav2 requires the mobile robot to possess a laser scan or point cloud sensor, an odometry source (such as an IMU or wheel encoders), and a set of transformations for planning and navigation. 
@@ -67,17 +67,46 @@ The Turtlebot3 is a standard mobile research platform with an available ROS inte
 The robot has two motors with attached wheel encoders to drive and steer, classifying it as a differential drive robot. A third omnidirectional wheel stabilizes the robot. 
 \subparagraph*{}
 The manufacturer provides an open-source model for simulating the robot in physics-based simulators like Gazebo, as depicted in figure \ref{fig:turtlebot}, which enables faster development and testing for the robot. 
-The equipped sensors and easy simulation capabilities make the robot well suited for using the Nav2 stack and further development for behavior planning. 
-
-%The robot specifications are specified in table xx.  \\
-
+\begin{center}
 \begin{figure}[ht]   
 	\includegraphics[width=0.7\textwidth]{images/turtlebot_sim.png}
 	\caption{Turtlebot3 model in Gazebo simulator}
 	\label{fig:turtlebot}
 \end{figure}
+\end{center}
+The equipped sensors and easy simulation capabilities make the robot well suited for using the Nav2 stack and further development for behavior planning. 
 
-The turtlebot will be used for the analysis of the current state of mobile navigation. Furthermore, the simulated turtlebot will be the platform on which the behavior planning will be implemented and tested.\\
+The robot specifications are specified in table \ref{tab:turtlebot_spec}. 
+
+\begin{table}[ht]
+\caption{Turtlebot3 Specifications}
+\label{tab:turtlebot_spec}
+	\begin{tabular}{| m{0.3\textwidth} | m{0.3\textwidth} |} 
+  	\hline
+  	\textbf{Specification} & \textbf{Value} \\ 
+  	\hline
+  	Maximum translational velocity & 0.26 m/s \\ 
+  	\hline
+  	Maximum rotational velocity & 1.82 rad/s (104.27 deg/s) \\
+  	\hline
+  	Maximum payload & 30kg \\
+  	\hline
+  	Size (L x W x H) & 281mm x 306mm x 141mm \\
+  	\hline
+  	Weight & 1.8 kg \\
+  	\hline
+  	Singe Board Computer & Raspberry Pi (3 or 4) \\
+  	\hline
+  	Laser Distance Sensor & 360 Degree Laser Distance Sensor LDS-01 \\
+  	\hline
+  	IMU & Gyroscope 3 Axis, Accelerometer 3 Axis \\
+  	\hline
+  	Actuators & XM430-W210 \\
+  	\hline
+	\end{tabular}
+\end{table}
+
+The turtlebot will be used for the analysis of the current state of mobile navigation. Furthermore, the simulated turtlebot will be the platform on which the behavior planning will be implemented and tested.
 
 
 \section{Requirements}
@@ -144,13 +173,21 @@ To better contextualize the context of the systems requirements, figure \ref{fig
 
 For a Turtlebot3 running Nav2 to appropriately deal with the listed requirements, the system needs to be extended with new external modules. To eliminate a single point of failure for the system, one needs to create an independent second system outside the existing one. This is to create a robust fallback behavior that does not rely on Nav2 to move. Also, an external system can more reliably monitor other systems when its execution is detached from the performance and execution of other systems. 
 A suitable name for the second system is the "autonomy layer", as it aims to increase the robustness and autonomy of the whole system. 
-The autonomy layer has to provide a broad system supervisor that monitors all components' health (sensors, navigation, robot controller). The constant execution monitoring equips the system with the ability to deal with the event of node failures and component malfunctions. 
+The autonomy layer has to provide a comprehensive system supervisor that monitors all components' health (sensors, navigation, robot controller). The constant execution monitoring equips the system with the ability to deal with the event of node failures and component malfunctions.
 \subparagraph*{}
 Another required addition to the autonomy layer is a data storage of relevant system information. The stored data includes sensor data and generated maps, cost maps, positions, and speed commands. Using past data points allows behaviors to become more deliberative in their approach and opens up many possibilities for intelligent behaviors like movement predictions of obstacles. 
 \subparagraph*{}
 A third component to the autonomy layer is a behavior planner largely independent of Nav2 execution and planning. This behavior planner must be capable of overriding the Nav2 behaviors if needed. The component processes information from the execution checker, Nav2, and past and present sensor data to decide if and how to override the default behaviors. Based on this information, the behavior planner can make a deliberative, strategic decision to increase robustness and autonomy, thus decreasing reliance on human supervision.
 \subparagraph*{}
-Additionally, a component to switch intelligently between speed commands from Nav2 and the autonomy layer is needed. This component could be realized as a decision gate that receives speed commands from Nav2 and the new behavior planning component and can forward, block or modify commands sent to the controller. This modification aspect allows high-quality local planning capabilities but enables more deliberative behaviors to happen upon this planning.
+Additionally, a component to switch intelligently between speed commands from Nav2 and the autonomy layer is needed. This component could be realized as a decision gate that receives speed commands from Nav2 and the new behavior planning component and can forward, block or modify commands sent to the controller. This modification aspect allows high-quality local planning capabilities but enables more deliberative behaviors to happen upon this planning. A simplified system block diagram is depicted in figure \ref{fig:block_diagram}. The proposed additional components, discussed in this chapter are colored in blue. Existing components, discussed in chapter 3.1, are colored in gray. 
+
+\begin{center}
+\begin{figure}[ht]   
+	\includegraphics[width=1.0\textwidth]{images/block_diagram.png}
+	\caption{System Block Diagram}
+	\label{fig:block_diagram}
+\end{figure}
+\end{center}
 
 
 \section{Software and Simulation}
@@ -181,7 +218,7 @@ Additionally to the types of control nodes that are mentioned in chapter 2.4.2, 
 	\end{tabular}
 \end{table}
 
-Also, it offers Decorator Nodes which allow more control over the child node and its output. These Decorator Nodes can only have one child node each. A comprehensive list of the available nodes and descriptions is in table \ref{tab:decorators_bt}.
+Also, it offers Decorator Nodes which allow more control over the child node and its output. These Decorator Nodes can only have one child node each. A comprehensive list of the available Decorators and descriptions is presented in table \ref{tab:decorators_bt}.
 
 \begin{center}
 \begin{table}[ht]
@@ -219,4 +256,35 @@ The development and testing of behaviors will be done with the Gazebo simulator 
 Using a simulator allows slowing down or speeding up the environment time. The time control allows more intricate observation of fast reactive type behaviors in slow motion while also enabling the observation of the long-time robustness of the system during extended tests. 
 The ROS community offers many different simulation environments to test the robot in. The environments range from simple geometric structurs, to office spaces up to complete race tracks. 
 
+\subsection{OS and Software Versions}
+The software versions used to implment and test the system on are listed below in table \ref{tab:versions}. Many of the software versions are determined by the choice of the ROS distribution (distro). ROS2 Foxy is not the newest ROS2 distribution but is well supported and developed, so the decision was made to use this distribution. The decision why the turtlebot is used is laid out in chapter 3.1.3. Although Python and C++ can be used to develop applications with ROS2, the behavior tree library relies on C++, which is why C++ was used for developing the whole system. 
 
+\begin{center}
+\begin{table}[ht]
+	\caption{Decorator Nodes in BT.CPP}
+	\label{tab:versions}
+	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
+  	\hline
+  	\textbf{Name} & \textbf{Version / Release} & \textbf{Comments} \\ 
+  	\hline
+  	Operating System & Ubuntu 20.04 LTS &  \\ 
+  	\hline
+  	ROS & ROS2 Foxy & Long-Term-Supported Distribution \\ 
+  	\hline
+  	Navigation2 & Foxy-devel & Newest Release for ROS2 Foxy\\
+  	\hline
+  	Simulation & Gazebo 11 & Determined by choice of ROS Distro \\
+  	\hline  	
+  	Robot & Turtlebot3 &  \\
+  	\hline
+  	Behavior Tree & BT.CPP 3.7 & \\
+  	\hline
+  	Programming Language & C++ 14 & Determined by choice of ROS Distro \\
+  	\hline
+  	Build System & CMake and Colcon & Determined by choice of ROS Distro \\
+  	\hline
+  	Development Environment & Visual Studio Code & Offers IDE debugging options for ROS \\
+  	\hline
+	\end{tabular}
+\end{table}
+\end{center}

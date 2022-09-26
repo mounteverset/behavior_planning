@@ -10,17 +10,20 @@
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Navigation2 Architecture \cite {macenski2020}}}{14}{figure.3.1}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Behavior Tree}}{15}{figure.3.2}%
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{16}{figure.3.3}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Use Case Diagram}}{19}{figure.3.4}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Use Case Diagram}}{20}{figure.3.4}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces System Block Diagram}}{21}{figure.3.5}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{23}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure}}{24}{figure.4.2}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Lidar Fallback}}{25}{figure.4.3}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Collision Fallback Behavior}}{26}{figure.4.4}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Activity Diagram for the Collision Behavior}}{28}{figure.4.5}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Battery Fallback Behavior}}{29}{figure.4.6}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Path Planning Fallback Behavior}}{30}{figure.4.7}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Graph for the Sensor Driver nodes and topics}}{31}{figure.4.8}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{24}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure}}{26}{figure.4.2}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Examiner pattern for the system supervisor component \cite {konrad2003defining}}}{27}{figure.4.3}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Lidar Fallback}}{28}{figure.4.4}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Collision Fallback Behavior}}{28}{figure.4.5}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Activity Diagram for the Collision Behavior}}{32}{figure.4.6}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Battery Fallback Behavior}}{33}{figure.4.7}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Path Planning Fallback Behavior}}{33}{figure.4.8}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Graph for the Sensor Driver nodes and topics}}{34}{figure.4.9}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Apartment Environment in Gazebo}}{32}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Enclosed Environment in Gazebo}}{33}{figure.5.2}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Apartment Environment in Gazebo}}{35}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Enclosed Environment in Gazebo}}{36}{figure.5.2}%
+\addvspace {10\p@ }
 \addvspace {10\p@ }
