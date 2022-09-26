@@ -1,33 +1,34 @@
-\chapter{Summary}
+\chapter{Conclusion}
 \label{cha:diskussion}
 \paragraph*{}
 
-This thesis demonstrated a way on how to incorporate advanced behavior planning in ROS2 mobile robots. The goal was to achieve higher levels of autonomy and robustness. The implemented behaviors and the system supervision component have shown to improve the behavior in the simulated scenarios. With the additional components, the system is able to react and recover from multiple scenarios. 
+This thesis demonstrated how to incorporate advanced behavior planning in ROS2 mobile robots. The goal was to achieve higher levels of autonomy and robustness by reducing the number of scenarios in which a human operator is needed. Implementing the system supervisor component improves the system's robustness and provides a safe basis for executing more intelligent behaviors. The implemented behaviors to react to sensor failures and robot collisions are valuable improvements to the system and improve current ROS2 mobile robots significantly. The layout of the behavior tree is structured to allow more complex behaviors to be safely executed because possible scenarios that interfere with a correct environment representation are checked and dealt with before complex behaviors get executed based on that representation. 
+The implemented layout choice for the tree is not mentioned in the literature. However, it has proven to be a sensible approach to model robot behavior safely and robustly. 
+%The implemented behaviors and the system supervision component have improved the behavior in the simulated scenarios. The system can react and recover from multiple scenarios with additional components. 
+\paragraph*{}
+Furthermore, the system architecture is a good base for further development without facing problems or limitations in the later stages of developing behaviors. The architecture shows a novel way that works with the asynchronous ROS2 executor properties and allows fast execution of both the behavior planner and the system components. 
+
+Nevertheless, the behavior tree design could be modified to use blackboard values more effectively to increase the information flow between action nodes in the tree. Also, the tree does not utilize the reactive control flow nodes, and no action node in the tree is designed to allow multiple threads at the current state. Incorporating so-called stateful nodes into the tree's structure to allow co-routines would increase the possibility of creating better and more deliberative behaviors. 
+
+
+
+
+
+
+
+\chapter{Outlook}
+\label{cha:outlook}
+
+The implemented behaviors are a first step to increasing autonomy, but the behavior planner needs to create many more behaviors and fallbacks. Some behaviors not implemented in this thesis incorporate the Intel RSS rules for autonomous driving, like keeping appropriate distances, right-of-way rules, and adaptable speed based on occlusions.
+Another area of future work is the creation of dedicated behaviors for multi-robot systems. E.g., sharing sensor data with other robots to overcome complete sensor failures or intelligent path planning to avoid collisions when robots can access the planned paths of other robots. 
+Also, more work is needed to define a robot's safe state or position after triggering an emergency stop. Reaching these minimum risk states after emergencies is then the duty of the behavior planner. 
+
+
 \paragraph*{}
 
-The used system architecture is a good base upon which more development can take place without running into problems or limitations in later stages of the development. Nevertheless, the design of the behavior tree could be modified to make more use of blackboard values to increase the information flow between action node in the tree. Also, the tree does not utilize the reactive control flow nodes and no action node in the tree is designed to allow multiple threads right now. The incorporation of so-called stateful nodes into the structure of the tree to allow co-routines would increase the possibility to create better and more deliberative behaviors. 
-The implemented behaviors are a first step to increase the autonomy, but many more behaviors and fallbacks need to be created for the behavior planner. Some behaviors which were not implemented in this thesis are the incorporation of the Intel RSS rules for autonomous driving, like keeping appropriate distances, right of way rules, and adaptable speed based on occlusions.
-Another are of future work are special behaviors for multi-robot system like sharing sensor data with other robots to overcome complete sensor failures or intelligent path planning to avoid collisions when robots can access the planned paths of other robots. 
-Also, more work is needed to define what is considered to be a safe state or position for the robot to be in after an emergency stop is triggered. Reaching these minimum risk states after emergencies is then the duty of the behavior planner. 
+The behaviors must be more deliberative and robust to achieve more independence from human operators. One key question in autonomous driving is the responsibility of a vehicle in a crash because, with higher levels of automation, the human is not needed anymore. However, a machine can not be responsible for its action because it was programmed to do so. Nevertheless, intelligent, robust, and independent decision-making almost always involves machine learning which makes decisions based on training with dedicated datasets and not explicitly written lines of code. Because a system in which the outcome for a high-risk scenario is unclear, machine learning behaviors may not be suited to be used independently. Therefore, an important work area is incorporating machine learning algorithms into a deterministic system, like a behavior tree. A behavior tree could execute and monitor the behaviors to safeguard the indeterministic behaviors and override them if necessary.
+%Further research is needed on how behavior trees can manage a system with autonomous machine learning behaviors inside the tree.
 
 \paragraph*{}
 
-To achieve more independence of human operators, the behaviors need to be smarter and more robust in general. One of the key question in autonomous driving is the responsibility of a vehicle in a crash, because with higher levels of automation the human is not needed, but a machine can not be made responsible for its action, because it is programmed to do so. But smart, robust and independent decision making almost always involves machine learning which makes decisions based on a training with dedicated datasets and not programmed lines of code. Because a system in which the outcome for a high-risk scenario is unclear, machine learning behaviors may not be suited to be used on their own. A way to allow a system to make use of machine learning behaviors for smarter decisions and still maintain a deterministic character would be to have a behavior planner, like a behavior tree, to execute and monitor the behaviors and equip the planner with highly automated, but still deterministic, behaviors to ensure safety in case the learned behavior can not guarantee it to be deterministic. Research is needed on how behavior trees can manage a system with autonomous machine learning behaviors inside of the tree.
-
-\paragraph*{}
-
-Lastly, the results must to be reproduced on a real mobile robot. The layout of the behavior tree will stay the same, but further effort is needed to adapt the action nodes of the tree for a real system. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Lastly, the results must be reproduced on an actual mobile robot. The layout of the behavior tree will stay the same, but further effort is needed to adapt the action nodes of the tree for a real system. 
