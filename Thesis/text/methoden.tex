@@ -53,7 +53,7 @@ The behavior tree depicted in figure \ref{fig:bt_nav} is the one that is the def
 Nav2 uses a node lifecycle management system to start, activate, deactivate, and shut down nodes in a controlled way. The lifecycle approach allows the system degree to monitor the system node's startups, executions, and failures. 
 \subparagraph*{}
 With this quantity of functions and hierarchical architecture, the ROS Navigation2 stack is an excellent basis for achieving high levels of robot autonomy. The software can be modified and expanded with plugins to fit the users' needs. 
-When comparing the functionalities of the software stack to the proposed autonomous system architecture in figure \ref{fig:autonomous_driving_architectures}, the things that Nav2 is missing are a system-wide supervision layer and a more deliberative approach to behavior planning, as mentioned in chapter 2.3.
+When comparing the functionalities of the software stack to the proposed autonomous system architecture in figure 2.2, the things that Navigation2 is missing are a system-wide supervision layer and a more deliberative approach to behavior planning, as mentioned in chapter 2.3.
 \subparagraph*{}
 The absence of these components leads to a limited set of circumstances in which the robot can perform navigation reliably. One of the core problems behavior-based robots face is generating a dependable environment representation. An accurate representation is the basis for the last steps in the planning part of the "Sense - Think - Act" cycle. Unforeseen events can severely limit the reliability of the environment representation without the robot being aware of it. Examples of such events currently not handled appropriately are slipping wheels, orientation changes by external influences, or undetected, more specifically, undetectable obstacles. 
 %\textit{Add statistics about random sensor failures every ~10000h} 
@@ -69,7 +69,7 @@ The robot has two motors with attached wheel encoders to drive and steer, classi
 The manufacturer provides an open-source model for simulating the robot in physics-based simulators like Gazebo, as depicted in figure \ref{fig:turtlebot}, which enables faster development and testing for the robot. 
 \begin{center}
 \begin{figure}[ht]   
-	\includegraphics[width=0.7\textwidth]{images/turtlebot_sim.png}
+	\includegraphics[width=0.5\textwidth]{images/turtlebot_sim.png}
 	\caption{Turtlebot3 model in Gazebo simulator}
 	\label{fig:turtlebot}
 \end{figure}
@@ -191,8 +191,7 @@ Additionally, a component to switch intelligently between speed commands from Na
 
 
 \section{Software and Simulation}
-A comparison and assessment of the behavior planning approach were made in chapter 2.4. The decision on which approach to take fell on the behavior tree method. The reason for this is mainly the increased flexibility when creating and expanding the behavior planning compared to FSMs. Also, behavior trees allow complete determinism and introspection.
-%which is why POMPDs are not suitable as the behavior planning approach for the specified requirements. 
+A comparison and assessment of the behavior planning approach were made in chapter 2.4. The decision on which approach to take fell on the behavior tree method. The reason for this is mainly the increased flexibility when creating and expanding the behavior planning compared to FSMs. Also, behavior trees allow complete determinism and introspection which is why POMPDs are not suitable as the behavior planning approach for the specified requirements. 
 
 \subsection{Behaviortree.CPP}
 The Navigation2 stack uses a behavior tree to coordinate the planning layer. The behavior tree that is used is an expansion of the Behaviortree.CPP (BT.CPP) library. This library offers a fast way to create, execute, monitor, and edit behavior trees. 
@@ -247,7 +246,15 @@ To allow the tree nodes to communicate, the library provides the developer with 
 
 \subsection{Groot}
 
-Groot is a software to create, edit, monitor, and debug behavior trees with a graphical user interface. The software allows the creation of behavior trees in XML files which can be directly loaded into and used by the BT.CPP library. Groot can monitor the live execution of behavior trees and allows the introspection of how the tree reacts to different scenarios.
+Groot is a software to create, edit, monitor, and debug behavior trees with a graphical user interface. The software allows the creation of behavior trees in XML files which can be directly loaded into and used by the BT.CPP library. Groot can monitor the live execution of behavior trees and allows the introspection of how the tree reacts to different scenarios (compare fig. \ref{fig:groot}).
+
+\begin{center}
+	\begin{figure}[ht]   
+		\includegraphics[width=0.7\textwidth]{images/groot.png}
+		\caption{Live monitoring of behavior trees with Groot}
+		\label{fig:groot}
+	\end{figure}
+\end{center}
 
 %\textit{Screenshot of live monitoring}
 
@@ -261,7 +268,7 @@ The software versions used to implment and test the system on are listed below i
 
 \begin{center}
 \begin{table}[ht]
-	\caption{Decorator Nodes in BT.CPP}
+	\caption{Used Software Versions}
 	\label{tab:versions}
 	\begin{tabular}{ | m{0.2\textwidth} | m{0.25\textwidth}| m{0.25\textwidth} | m{0.2\textwidth} |} 
   	\hline
