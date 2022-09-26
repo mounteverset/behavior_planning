@@ -12,6 +12,7 @@
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator}}{16}{figure.3.3}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Use Case Diagram}}{20}{figure.3.4}%
 \contentsline {figure}{\numberline {3.5}{\ignorespaces System Block Diagram}}{21}{figure.3.5}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Live monitoring of behavior trees with Groot}}{23}{figure.3.6}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture}}{24}{figure.4.1}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure}}{26}{figure.4.2}%
