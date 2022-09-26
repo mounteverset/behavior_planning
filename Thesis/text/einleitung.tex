@@ -2,23 +2,31 @@
 \label{cha:introduction}
 
 Mobile robots are becoming more widespread in many domains. They are marketed as autonomous mobile robots, but their autonomy is often limited to particular environments and requires frequent human help to function correctly. This reliance on a human operator hardly qualifies the robot to be labeled autonomous. 
-\subparagraph*{}
-One of the quickest and most popular ways to build and program a robot is to use the Robot Operating System (ROS). ROS offers many tools and functionalities to create and program robots, but a standard robot needs human supervision during the operation to ensure proper function and safety. 
-There are ROS packages to safely navigate from point A to point B, but currently, typical robots cannot react to unforeseen events. The robot needs to be able to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment. These can be either other robots or humans. 
-\subparagraph*{}
-In theory, the robot can perform fully autonomous navigation, including mapping and localization. However, when something unexpected happens, the robot's autonomy can not be guaranteed any more. 
-A default robot cannot represent all possible fail states and does not detect failures on a systematic level but only inside its navigation-related subsystems. Moreover, when failures inside these subsystems are discovered, the options to handle these problems are minimal and often do not deal with the problems in an autonomous way. The reliance on external problem-solving decreases the robot's usefulness when tasked with tangible goals. 
-Therefore, this thesis centers around the research question of how behavior planning can increase the robustness and autonomy of a robot running ROS2. 
-Behavior planning enables the robot to react to failures and problems of the system and can decide alternative courses of action to mitigate risks and finish the given tasks.
 
+One of the quickest and most popular ways to build and program a robot is to use the Robot Operating System (ROS). ROS offers many tools and functionalities to create and program robots, but a standard robot needs human supervision during the operation to ensure proper function and safety. There are ROS packages to safely navigate from point A to point B, but currently, typical robots cannot react to unforeseen events. The robot needs to be able to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment. These can be either other robots or humans. 
 
-\subparagraph*{}
-This thesis will explore possibilities for improving current systems by adding a dedicated behavior planning component. Furthermore, the thesis will provide an implementation of exemplary behaviors and provide a system architecture to incorporate behavior planning in other robots, too.
+In theory, the robot can perform fully autonomous navigation, including mapping and localization. However, when something unexpected happens, the robot's autonomy can not be guaranteed any more. A default robot cannot represent all possible fail states and does not detect failures on a systematic level but only inside its navigation-related subsystems. Moreover, when failures inside these subsystems are discovered, the options to handle these problems are minimal and often do not deal with the problems in an autonomous way. The reliance on external problem-solving decreases the robot's usefulness when tasked with tangible goals. 
+Therefore, this thesis centers around the research question of how behavior planning can increase the robustness and autonomy of a robot running ROS2. Behavior planning enables the robot to react to failures and problems of the system and can decide alternative courses of action to mitigate risks and finish the given tasks.
 
-\subparagraph*{}
-The desired outcomes of this implemented software will be an increase in robustness and a decrease in required human actions during several scenarios. In these scenarios, failures and problems are artificially induced to test the robot's abilities to behave autonomously. 
+This thesis explores possibilities for improving current systems by adding a dedicated behavior planning component. Furthermore, the thesis provides an implementation of exemplary behaviors and provide a system architecture to incorporate behavior planning in other robots, too.
 
+The desired outcomes of this implemented software is an increase in robustness and a decrease in required human actions during several scenarios. In these scenarios, failures and problems are artificially induced to test the robot's abilities to behave autonomously. 
 
+The remainder of this thesis is organized as follows:
+
+\begin{itemize}
+	\item Chapter \ref{cha:state of the art} presents the state of the art and compares the different behavior planning approaches
+	
+	\item Chapter \ref{cha:methoden} compares the current systems and derives requirements from the key problem areas
+	
+	\item Chapter \ref{cha:implementierung} describes the implemented software approach including the overall system architecture 
+	
+	\item Chapter \ref{cha:ergebnisse} shows the obtained results from all selected scenarios and discusses the acceptance criteria of the requirements 
+	
+	\item Chapter \ref{cha:diskussion} summarizes the thesis novelty by showing how the implemented approach answers the research question
+	
+	\item Chapter \ref{cha:outlook} provides an outlook of future work and recommendations
+\end{itemize}
 
 % BEFORE GRAMMARLY BELOW
 
@@ -26,10 +34,10 @@ The desired outcomes of this implemented software will be an increase in robustn
 %\label{cha:introduction}
 %
 %Mobile robots are becoming more widespread in many domains. They are marketed as autonomous mobile robots, but often the autonomy of the robot is limited to very specific environments and require frequent human help to function correctly. This hardly qualifies the robot to be labeled autonomous. 
-%\subparagraph*{}
+%
 %One of the quickest and most popular ways to build and program a robot is to use the Robot Operating System (ROS). ROS offers many tools and functionalities to create and program robots, but even then a normal robot needs human supervision during the operation to ensure the proper function and safety. 
 %There are ROS packages to safely navigate from point A to point B, but currently they are lacking the ability to react to unforeseen events. It is important for the robot to possess the ability to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment, these can be other robots and humans. 
-%\subparagraph*{}
+%
 %In theory, the robot can perform fully autonomous navigation including mapping and localization but as soon as something out of the ordinary happens the robots autonomy is not guaranteed to be reliable anymore. 
 %Default robot is not able to represent all possible fail states and does not detect failures on a systematic level, but only inside its navigation related subsystem. And even when failures inside this subsystems are discovered, the options to handle these problems are very limited and often do not deal with the problems in an autonomous way. The reliance on human-needed problem solving decreases the robots usefulness when tasked with real goals. 
 %Therefore, this thesis centers around the research question how behavior planning can increase the robustness and autonomy of a robot running ROS2. 
@@ -60,13 +68,13 @@ The desired outcomes of this implemented software will be an increase in robustn
 %%In the robotic world exists a need for a deterministic system which can enhance and override the decision making process and navigation capabilities of the robot. 
 %%
 %%Planned solution:\\
-%\subparagraph*{}
+%
 %This thesis will explore possibilities how current systems can be improved through the addition of a dedicated behavior planning component. Furthermore, the thesis will provide an implementation of examplatory behaviors and provide a system architecture to incorporate behavior planning in other robots, too
 %
 %%The thesis will explore how an extension of the current software architecture and behavior planning capabilities for an autonomous mobile robot that is running ROS2 can improve the autonomy of the robot. 
 %%
 %%Expected results:\\
-%\subparagraph*{}
+%
 %The desired outcomes of these implemented software will be an increase of robustness and decrease of required human actions during a number of scenarios. In these scenarios, failures and problems are artificially induced to test the robots abilities to behave autonomously. 
 %
 %

@@ -2,13 +2,14 @@
 \usepackage[twoside=true,margin=2.5cm]{geometry}
 
 \usepackage[utf8]{inputenc}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \usepackage{wallpaper}
 \usepackage{textpos}
 \usepackage{array}
 \usepackage{notoccite}
-
+\usepackage{caption}
+\usepackage{subcaption}
 \renewcommand{\familydefault}{\rmdefault}
 
 % set wallpaper position for title page
@@ -25,7 +26,9 @@
 \pagenumbering{roman}
 \tableofcontents
 \listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
 
 %\thispagestyle{empty}
 %\mainmatter
@@ -43,5 +46,7 @@
 %\backmatter
 \bibliographystyle{IEEEtran}
 \bibliography{thesis}
+
+\addcontentsline{toc}{chapter}{Bibliography}
 
 \end{document}
