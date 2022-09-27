@@ -3,14 +3,14 @@
 
 \section{System Architecture}
 
-The system architecture, depicted in figure \ref{fig:component_diagram}, integrates the behavior tree into the existing architecture. The already existing components are colored in gray, and the newly added components are colored in blue. The new components and their functions are described in the following sections of this chapter. 
+The system architecture, depicted in figure \ref{fig:component_diagram}, integrates the autonomy layer discussed in section \ref{sec:System Solution} into the existing architecture. The already existing components are colored in gray, and the newly added components are colored in blue. The new components and their functions are described in the following sections of this chapter. 
 
 %This is done with the addition of the Decision Gate, that can selectively forward speed commands to the robot controller. The behavior tree's commands have a higher priority and disable the forwarding of the Navigation2 commands. 
 %The behavior tree can access the sensor data when needed through the Data Backup component. The System Supervision component controls the health of all components, but the connections are not depicted in the component diagram for reasons of clarity and comprehensibility.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/component_diagram_bt.png}
+	\includegraphics[width=0.92\textwidth]{images/component_diagram_bt.png}
 	\caption{Component Diagram of System Architecture}
 	\label{fig:component_diagram}
 \end{figure}
@@ -50,6 +50,8 @@ This spinning has to be done in regular intervals. Otherwise, the node might mis
 	%}
 \end{table}
 
+
+
 \section{Command Velocity Decision Gate}
 
 This component is responsible for modifying or blocking the Velocity Commands from Nav2. The component receives messages from Navigation2 on the "/cmd$\_$vel$\_$nav" topic and the "/cmd$\_$vel$\_$bt" topic from the behavior tree. This component publishes the received messages on the actual topic "/cmd$\_$vel" which is subscribed by the robot controller.  The BT can modify the Decision Gate parameters to either disregard incoming messages of Nav2 entirely or to modify them. The modification is helpful when the situation demands the robot to slow down. 
@@ -62,7 +64,7 @@ A simplified behavior tree only depicting the top-level behavior control fallbac
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/simplified_bt.png}
+	\includegraphics[width=0.95\textwidth]{images/simplified_bt_inverted.png}
 	\caption{Top Level Behavior Tree Structure}
 	\label{fig:top_level_bt}
 \end{figure}
@@ -72,7 +74,7 @@ The root control node is a sequence node. The root node is a simple sequence bec
 \subsection{BT System Supervision}
 \label{subsec:BT System Supervision}
 
-The design pattern of the system supervisor is an "Watchdog" pattern. This pattern is depicted in figure \ref{fig:watchdog_pattern}. The pattern is used to monitor a system from the outside and directly take corrective measures when problems are detected. 
+The design pattern of the system supervisor is a "Watchdog" pattern. This pattern is depicted in figure \ref{fig:watchdog_pattern}. The pattern is used to monitor a system from the outside and directly take corrective measures when problems are detected. 
 
 \begin{figure}[ht]
 	\centering
@@ -87,7 +89,7 @@ ROS2 lifecycle nodes provide information about their health via an FSM implement
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/sensor_fallback.png}
+	\includegraphics[width=0.9\textwidth]{images/sensor_fallback_inverted.png}
 	\caption{Lidar Fallback}
 	\label{fig:lidar_fallback}
 \end{figure}
@@ -108,7 +110,7 @@ In order to combat this weakness, the robot must be able to detect that a collis
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{images/collision_fallback.png}
+	\includegraphics[width=0.95\textwidth]{images/collision_fallback_inverted.png}
 	\caption{Collision Fallback Behavior}
 	\label{fig:collision_fallback}
 \end{figure}
@@ -151,7 +153,7 @@ The battery behavior has the goal of monitoring the robot's battery and has to d
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{images/battery_fallback.png}
+	\includegraphics[width=0.6\textwidth]{images/battery_fallback_inverted.png}
 	\caption{Battery Fallback Behavior}
 	\label{fig:battery_fallback}
 \end{figure}
@@ -173,7 +175,7 @@ If the location is still unreachable, the goal gets moved further away from the 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{images/global_planning_fallback.png}
+	\includegraphics[width=0.6\textwidth]{images/global_planning_fallback_inverted.png}
 	\caption{Path Planning Fallback Behavior}
 	\label{fig:global_planning_fallback}
 \end{figure}
@@ -200,8 +202,8 @@ Because of the necessity to have ROS nodes spinning outside of the BT thread, as
 	\caption{Implemented Custom Services}
 	\label{tab:custom_interfaces}
 	\renewcommand{\arraystretch}{1.5}
-	\resizebox{0.9\textwidth}{!}{%
-		\begin{tabular}{ | m{0.2\textwidth} | m{0.33\textwidth}| m{0.33\textwidth} | m{0.2\textwidth} |} 
+	\resizebox{0.95\textwidth}{!}{%
+		\begin{tabular}{ | m{0.2\textwidth} | m{0.42\textwidth}| m{0.45\textwidth} |} 
 	 	\hline
 	 	\textbf{Name} & \textbf{Request} & \textbf{Response} \\ 
 	 	\hline

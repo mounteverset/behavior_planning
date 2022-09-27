@@ -16,7 +16,7 @@ The Robot Operating System (ROS) is an open-source middleware for creating robot
 	\label{tab:ros_interfaces}
 	\renewcommand{\arraystretch}{1.5}
 	\resizebox{0.9\textwidth}{!}{%
-		\begin{tabular}{ | m{0.15\textwidth} | m{0.3\textwidth}| m{0.3\textwidth} | m{0.2\textwidth}|} 
+		\begin{tabular}{ | m{0.12\textwidth} | m{0.37\textwidth}| m{0.3\textwidth} | m{0.139\textwidth}|} 
 	 	\hline
 	 	\textbf{Name} & \textbf{Communication Pattern} & \textbf{Area of Use} & \textbf{Cardinality} \\ 
 	 	\hline
@@ -24,7 +24,7 @@ The Robot Operating System (ROS) is an open-source middleware for creating robot
 	 	\hline
 	 	Services & Request / Response & Get specific data only once & One service, many clients \\ 
 	 	\hline
-	 	Actions & Request / Response and Publish/ Subscribe & Trigger executing of asynchronous goal-driven processes and receive updates & One action, many clients \\
+	 	Actions & Request / Response and Publish / Subscribe & Trigger executing of asynchronous goal-driven processes and receive updates & One action, many clients \\
 	 	\hline
 		\end{tabular}
 	}
@@ -38,6 +38,7 @@ With ROS2, the framework received fundamental changes and updates to its archite
 
 The ROS Navigation2 Stack (Nav2) combines different packages that allow mobile robots to navigate from point A to point B. Navigation2 is the de-facto standard for mobile navigation with a wide range of supported robots. Supported robot types are holonomic, differential-drive, legged, and ackerman (car-like). For the mobile robot to make use of the Nav2 stack, it has to be set up in a certain way to be able to generate plans and execute commands in the right way. Nav2 requires the mobile robot to possess a laser scan or point cloud sensor, an odometry source (such as an IMU or wheel encoders), and a set of transformations for planning and navigation. 
 The stack contains tools that save and load occupancy maps, localize the robot, plan paths, execute the path, provide cost maps, build behaviors and execute recoveries \cite{macenski2020}. 
+
 
 \begin{figure}[ht]
 	\centering
@@ -75,7 +76,7 @@ The manufacturer provides an open-source model for simulating the robot in physi
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/turtlebot_sim.png}
+	\includegraphics[width=0.3\textwidth]{images/turtlebot_sim.png}
 	\caption{Turtlebot3 model in Gazebo simulator}
 	\label{fig:turtlebot}
 \end{figure}
@@ -87,7 +88,7 @@ The equipped sensors and easy simulation capabilities make the robot well suited
 	\caption{Turtlebot3 Specifications}
 	\label{tab:turtlebot_spec}
 	\renewcommand{\arraystretch}{1.5}
-	\resizebox{0.9\textwidth}{!}{%
+	\resizebox{0.8\textwidth}{!}{%
 		\begin{tabular} {| l | l |} 
 			%{| m{0.3\textwidth} | m{0.3\textwidth} |} 
 	 	\hline
@@ -100,8 +101,6 @@ The equipped sensors and easy simulation capabilities make the robot well suited
 %	 	Maximum payload & 30kg \\
 	 	\hline
 	 	Size (L x W x H) & 281mm x 306mm x 141mm \\
-	 	\hline
-	 	Weight & 1.8 kg \\
 	 	\hline
 	 	Singe Board Computer & Raspberry Pi (3 or 4) \\
 	 	\hline
@@ -128,13 +127,13 @@ The software requirements that improve the robot's behavior are derived from the
 	\label{tab:nonfn_req}
 	\renewcommand{\arraystretch}{1.5}
 	\resizebox{0.9\textwidth}{!}{%
-		\begin{tabular}{ | m{0.13\textwidth} | m{0.13\textwidth}| m{0.1\textwidth} | m{0.55\textwidth} |} 
+		\begin{tabular}{ | m{0.11\textwidth} | m{0.14\textwidth}| m{0.1\textwidth} | m{0.7\textwidth} |} 
 			\hline
 			\textbf{Nr.} & \textbf{Name} & \textbf{Priority} & \textbf{Description} \\ 
 			\hline
 			non$\_$freq1 & Single Point of Failure & High & The system does not have a single point of failure	When parts of the system fail, the system maintains operability to a degree \\ 
 			\hline
-			non$\_$freq2 & Performance & High & The system's control loop guarantees fast reactions. The average frequency with which the system checks the sensors/navigation2 is higher than 100Hz (10ms) \\ 
+			non$\_$freq2 & Performance & High & The system's control loop guarantees fast reactions. The average frequency with which the system operates is higher than 100Hz (10ms) \\ 
 			\hline
 			non$\_$freq3 & Determinism & High & The outcome for a given set of inputs must be deterministic, meaning that the behavior is always executed similarly. \\
 			\hline
@@ -187,6 +186,7 @@ The software requirements that improve the robot's behavior are derived from the
 
 
 \section{System Solution}
+\label{sec:System Solution}
 
 For a Turtlebot3 running Nav2 to appropriately deal with the listed requirements, the system needs to be extended with new external modules. To eliminate a single point of failure for the system, one needs to create an independent second system outside the existing one. This is to create a robust fallback behavior that does not rely on Nav2 to move. Also, an external system can more reliably monitor other systems when its execution is detached from the performance and execution of other systems.
 
