@@ -1,20 +1,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces The five types of nodes \cite {iovino2022}\relax }}{10}{table.caption.9}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces The five types of behavior tree nodes \cite {iovino2022}\relax }}{11}{table.caption.9}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces ROS Communication Options\relax }}{13}{table.caption.12}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Turtlebot3 Specifications\relax }}{17}{table.caption.16}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Non-Functional Requirements\relax }}{17}{table.caption.17}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Functional Requirements\relax }}{18}{table.caption.18}%
-\contentsline {table}{\numberline {3.5}{\ignorespaces Control Nodes in BT.CPP\relax }}{21}{table.caption.21}%
-\contentsline {table}{\numberline {3.6}{\ignorespaces Decorator Nodes in BT.CPP\relax }}{21}{table.caption.22}%
-\contentsline {table}{\numberline {3.7}{\ignorespaces Used Software Versions\relax }}{23}{table.caption.24}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces ROS Communication Options\relax }}{16}{table.caption.12}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Turtlebot3 Specifications\relax }}{19}{table.caption.16}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Non-Functional Requirements\relax }}{19}{table.caption.17}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Functional Requirements\relax }}{20}{table.caption.18}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Control Nodes in BT.CPP\relax }}{23}{table.caption.21}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Decorator Nodes in BT.CPP\relax }}{23}{table.caption.22}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces Used Software Versions\relax }}{25}{table.caption.24}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Types of saved data\relax }}{25}{table.caption.26}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Implemented Custom Services\relax }}{33}{table.caption.38}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Types of saved data\relax }}{28}{table.caption.26}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Implemented Custom Services\relax }}{36}{table.caption.38}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Sensor Scenarios\relax }}{35}{table.caption.40}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Behavior Scenarios\relax }}{36}{table.caption.41}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Results\relax }}{37}{table.caption.42}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Sensor Scenarios\relax }}{38}{table.caption.40}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Behavior Scenarios\relax }}{40}{table.caption.41}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Results\relax }}{41}{table.caption.42}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
