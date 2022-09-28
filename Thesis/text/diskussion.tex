@@ -12,8 +12,8 @@ Nevertheless, the behavior tree design could have been modified to use blackboar
 \chapter{Outlook}
 \label{cha:outlook}
 
-The implemented behaviors are a first step to increasing autonomy, but the behavior planner needs to create many more behaviors and fallbacks. Some behaviors not implemented in this thesis incorporate the Intel RSS rules for autonomous driving, like keeping appropriate distances, right-of-way rules, and adaptable speed based on occlusions.
-Another area of future work is the creation of dedicated behaviors for multi-robot systems. E.g., sharing sensor data with other robots to overcome complete sensor failures or intelligent path planning to avoid collisions when robots can access the planned paths of other robots. 
+The implemented behaviors were a first step to increasing autonomy, but the behavior planner needs more behaviors and fallbacks. Some behaviors that are not implemented in this thesis incorporate the Intel RSS rules for autonomous driving, like keeping appropriate distances, right-of-way rules, and adaptable speed based on occlusions.
+Another area of future work is the creation of dedicated behaviors for multi-robot systems. For example the sharing sensor data with other robots to overcome complete sensor failures or intelligent path planning to avoid collisions when robots can access the planned paths of other robots. 
 Also, more work is needed to define a robot's safe state or position after triggering an emergency stop. Reaching these minimum risk states after emergencies is then the duty of the behavior planner.
 
 The results must be reproduced on an actual mobile robot. The layout of the behavior tree will stay the same, but further effort is needed to adapt the action nodes of the tree for a real system. 
