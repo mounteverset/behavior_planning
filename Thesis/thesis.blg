@@ -15,45 +15,45 @@ Warning--missing publisher in wagner2006
 Warning--empty booktitle in feyzabadi2014riskaware
 
 Done.
-You've used 25 entries,
+You've used 26 entries,
             4087 wiz_defined-function locations,
-            975 strings with 13005 characters,
-and the built_in function-call counts, 18442 in all, are:
-= -- 1414
-> -- 553
+            979 strings with 13186 characters,
+and the built_in function-call counts, 18790 in all, are:
+= -- 1442
+> -- 557
 < -- 111
-+ -- 288
-- -- 115
-* -- 886
-:= -- 2773
-add.period$ -- 51
-call.type$ -- 25
-change.case$ -- 21
++ -- 290
+- -- 116
+* -- 895
+:= -- 2840
+add.period$ -- 53
+call.type$ -- 26
+change.case$ -- 22
 chr.to.int$ -- 228
-cite$ -- 27
-duplicate$ -- 1338
-empty$ -- 1537
-format.name$ -- 134
-if$ -- 4311
+cite$ -- 28
+duplicate$ -- 1365
+empty$ -- 1571
+format.name$ -- 135
+if$ -- 4387
 int.to.chr$ -- 0
-int.to.str$ -- 25
-missing$ -- 278
-newline$ -- 110
-num.names$ -- 27
-pop$ -- 675
+int.to.str$ -- 26
+missing$ -- 285
+newline$ -- 115
+num.names$ -- 28
+pop$ -- 697
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1437
+skip$ -- 1465
 stack$ -- 0
 substring$ -- 579
-swap$ -- 1060
+swap$ -- 1077
 text.length$ -- 35
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 25
+type$ -- 26
 warning$ -- 2
-while$ -- 70
-width$ -- 27
-write$ -- 272
+while$ -- 71
+width$ -- 28
+write$ -- 282
 (There were 2 warnings)

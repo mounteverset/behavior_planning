@@ -16,8 +16,8 @@
 \BOOKMARK [0][-]{chapter.3}{Concept}{}% 16
 \BOOKMARK [1][-]{section.3.1}{Current State}{chapter.3}% 17
 \BOOKMARK [2][-]{subsection.3.1.1}{ROS}{section.3.1}% 18
-\BOOKMARK [2][-]{subsection.3.1.2}{Navigation2}{section.3.1}% 19
-\BOOKMARK [2][-]{subsection.3.1.3}{Turtlebot3}{section.3.1}% 20
+\BOOKMARK [2][-]{subsection.3.1.2}{Turtlebot3}{section.3.1}% 19
+\BOOKMARK [2][-]{subsection.3.1.3}{Navigation2}{section.3.1}% 20
 \BOOKMARK [1][-]{section.3.2}{Requirements}{chapter.3}% 21
 \BOOKMARK [1][-]{section.3.3}{System Solution}{chapter.3}% 22
 \BOOKMARK [1][-]{section.3.4}{Software and Simulation}{chapter.3}% 23
@@ -30,7 +30,7 @@
 \BOOKMARK [1][-]{section.4.2}{Data Backup}{chapter.4}% 30
 \BOOKMARK [1][-]{section.4.3}{Command Velocity Decision Gate}{chapter.4}% 31
 \BOOKMARK [1][-]{section.4.4}{Behavior Tree Structure}{chapter.4}% 32
-\BOOKMARK [2][-]{subsection.4.4.1}{BT System Supervision}{section.4.4}% 33
+\BOOKMARK [2][-]{subsection.4.4.1}{System Supervision}{section.4.4}% 33
 \BOOKMARK [2][-]{subsection.4.4.2}{BT Advanced Behaviors}{section.4.4}% 34
 \BOOKMARK [1][-]{section.4.5}{System Support Tools}{chapter.4}% 35
 \BOOKMARK [2][-]{subsection.4.5.1}{Gazebo Sensor Drivers}{section.4.5}% 36
