@@ -1,9 +1,9 @@
 \chapter{Evaluation}
 \label{cha:ergebnisse}
 
-The robot is put into specifically designed scenarios that should trigger behavior responses from the behavior tree component. The scenario testing is done to evaluate the efficacy of the implemented behaviors in relation to the functional requirements listed in section \ref{sec:Requirements}.
+The robot is put into specifically designed scenarios to trigger behavior responses from the behavior tree component. The scenario testing is done to evaluate the efficacy of the implemented behaviors in relation to the functional requirements listed in section \ref{sec:Requirements}.
 
-The scenarios are executed in a simulated apartment environment as seen in figure \ref{fig:house_gazebo} and a simulated world with small round obstacles in an enclosed space as depicted in figure \ref{fig:world_gazebo}. The environments were mapped beforehand with the ROS2 "Slam Toolbox" package and provided via the Nav2 map server. 
+The scenarios are executed in a simulated apartment environment as seen in figure \ref{fig:house_gazebo} and a simulated world with small round obstacles in an enclosed space as depicted in figure \ref{fig:world_gazebo}. The environments were mapped beforehand with the ROS2 "Slam Toolbox" package and provided by the Nav2 map server. 
  
 \begin{figure}[ht]
 	\centering
@@ -24,7 +24,7 @@ The scenarios are executed in a simulated apartment environment as seen in figur
 	\label{fig:three graphs}
 \end{figure}
 
-The robot location and navigation goals are defined in another ROS Node, which programmatically spawns the robot into the environment and sets the goal this way. This way, the same scenario can be run with and without behavior planning. To test the behavior of the sensor failure fallbacks, the respective sensor driver, mentioned in section \ref{subsec:gazebo_driver}, was shut down to emulate the sensor's failure. 
+The robot location and navigation goals are defined in another ROS node, which programmatically spawns the robot into the environment and sets the goal this way. This way, the same scenario can be run with and without behavior planning. To test the behavior of the sensor failure fallbacks, the respective sensor driver, mentioned in section \ref{subsec:gazebo_driver}, was shut down to emulate the sensor's failure. 
 
 \section{Scenarios}
 
@@ -35,48 +35,32 @@ The scenarios are derived from the functional requirements and can be used to te
 	\caption{Sensor Scenarios}
 	\label{tab:sensor_scenarios}
 	\renewcommand{\arraystretch}{1.5}
-	\resizebox{0.9\textwidth}{!}{%
-		\begin{tabular}{| m{0.1\textwidth} | m{0.18\textwidth}| m{0.3\textwidth} | m{0.3\textwidth}|} 
+	\resizebox{0.99\textwidth}{!}{%
+		\begin{tabular}{| m{0.11\textwidth}| m{0.1\textwidth} | m{0.183\textwidth}| m{0.3\textwidth} | m{0.3\textwidth}|} 
 			\hline
-			\textbf{Name} & \textbf{Requirements }& \textbf{Description} & \textbf{Success Criteria}\\ 
+			\textbf{Sensor Tested} & \textbf{Name} & \textbf{Requirements }& \textbf{Description} & \textbf{Success Criteria}\\ 
 			\hline
-			Lidar$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Lidar node crashes & Reset the system\\ 
+			 & Lidar$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Lidar node crashes & Reset the system\\ 
+			\cline{2-5}
+			Lidar &Lidar$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			\cline{2-5}
+			& Lidar$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
 			\hline
-			Lidar$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			 & IMU$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, IMU node crashes & Reset system \\
+			\cline{2-5}
+			IMU &IMU$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			\cline{2-5}
+			&IMU$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
 			\hline
-			Lidar$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
-			\hline
-			IMU$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, IMU node crashes & Reset system \\
-			\hline
-			IMU$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
-			\hline
-			IMU$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
-			\hline
-			Odom$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Odom node crashes & Reset the system\\ 
-			\hline
-			Odom$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
-			\hline
-			Odom$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
+			 & Odom$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Odom node crashes & Reset the system\\ 
+			\cline{2-5}
+			Odometry &Odom$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			\cline{2-5}
+			&Odom$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
 			\hline
 		\end{tabular}
 	}
-\end{table} 	
-
-The scenarios execution is done as follows: 
-
-\begin{itemize}
-	\item For the Lidar, IMU, and Odometry scenarios, the sensor driver was shut down when reaching the desired speed listed in the scenario. 
-
-	\item Scenario NoPathFound1 is a scenario in which the lifecycle state gets transitioned into "inactive" and can not execute the planning action anymore when triggered. The BT has to recover from the inability to plan in this scenario.
-
-	\item NoPathFound$\_$2 is simulating the scenario when the planner is active but fails to find a collision-free path to the desired goal. This scenario tests the ability to find alternative goals and navigate to a nearby goal. 
-
-	\item In the Collision$\_$1 scenario, an obstacle gets moved so close to the robot that a collision is registered. The forced collision tests the ability to escape a collision and resume navigation afterward. A new navigation goal is published after the behavior tree exits the Collision Fallback Routine.
-
-	\item Collision$\_$2 scenario is testing the same behavior but during active navigation. A flat obstacle is spawned in the path of the robot. The obstacle is too low to be detected by the laserscanner, and a collision occurs. The robot must be able to recover from the crash and keep on navigating towards the goal with an updated global path in this scenario. 
-
-	\item The Battery$\_$1 scenario tests if the robot tries to navigate toward a distant goal with a low battery charge. The simulated battery is emptied to a low level, and a new navigation goal is set. If the battery charge runs below zero percent during the navigation, the test fails. 
-\end{itemize}
+\end{table} 
 
 \begin{table}[ht]
 	\centering
@@ -85,26 +69,38 @@ The scenarios execution is done as follows:
 	\renewcommand{\arraystretch}{1.5}
 	\resizebox{0.9\textwidth}{!}{%
 		\begin{tabular}{| m{0.1\textwidth} | m{0.19\textwidth}| m{0.4\textwidth} | m{0.3\textwidth}|} 
-		\hline
-		\textbf{Name} & \textbf{Requirements} & \textbf{Description} & \textbf{Success Criteria}\\ 
-	 	\hline	
-	 	NoPath Found$\_$1 & fn$\_$req7 & Path to goal can not be calculated, robot is standing still & 
-	Reset system, calculate path to goal, reach goal \\
-		\hline
-		NoPath Found$\_$2 & fn$\_$req7, fn$\_$req8 & Goal is unreachable, robot is standing still & Alternative goals, close to the original are tested to be reachable \\
-		\hline
-		Collision$\_$1 & fn$\_$req2, fn$\_$req4, fn$\_$req6 & Robot is standing still and a collision with the robot is caused & Robot can get out of collision state, navigation to goals still working \\
-		\hline
-		Collision$\_$2 & fn$\_$req2, fn$\_$req4, fn$\_$req6 & The robot is driving and collides with an undetected obstacle (0.25m/s) & 
-	Robot can get out of collision state, navigation to goals still working, undetected obstacle gets added to map \\
-		\hline
-		Battery$\_$1 & fn$\_$req9 & The robot battery runs low & The robot will not drive to a goal that is outside of its reachable range \\
-		\hline
-		Motor$\_$1 & fn$\_$req2, fn$\_$req5 & Hardware failure on the motors & n.a. \\
-		\hline	
+			\hline
+			\textbf{Name} & \textbf{Requirements} & \textbf{Description} & \textbf{Success Criteria}\\ 
+			\hline	
+			NoPath Found$\_$1 & fn$\_$req7 & Path to goal can not be calculated, robot is standing still & 
+			Reset system, calculate path to goal, reach goal \\
+			\hline
+			NoPath Found$\_$2 & fn$\_$req7, fn$\_$req8 & Goal is unreachable, robot is standing still & Alternative goals, close to the original are tested to be reachable \\
+			\hline
+			Collision$\_$1 & fn$\_$req2, fn$\_$req4, fn$\_$req6 & Robot is standing still and a collision with the robot is caused & Robot can get out of collision state, navigation to goals still working \\
+			\hline
+			Collision$\_$2 & fn$\_$req2, fn$\_$req4, fn$\_$req6 & The robot is driving and collides with an undetected obstacle (0.25m/s) & 
+			Robot can get out of collision state, navigation to goals still working, undetected obstacle gets added to map \\
+			\hline
+			Battery$\_$1 & fn$\_$req9 & The robot battery runs low & The robot will not drive to a goal that is outside of its reachable range \\
+			\hline	
 		\end{tabular}
 	}
-\end{table}
+\end{table}	
+
+The scenarios execution is done as follows: 
+
+For the Lidar, IMU, and Odometry scenarios, the sensor driver was shut down when reaching the desired speed listed in the scenario. 
+
+Scenario NoPathFound1 is a scenario in which the lifecycle state gets transitioned into "inactive" and can not execute the planning action anymore when triggered. The BT has to recover from the inability to plan in this scenario.
+
+NoPathFound$\_$2 is simulating the scenario when the planner is active but fails to find a collision-free path to the desired goal. This scenario tests the ability to find alternative goals and navigate to a nearby goal. 
+
+In the Collision$\_$1 scenario, an obstacle gets moved so close to the robot that a collision is registered. The forced collision tests the ability to escape a collision and resume navigation afterward. A new navigation goal is published after the behavior tree exits the Collision Fallback Routine.
+
+Collision$\_$2 scenario is testing the same behavior but during active navigation. A flat obstacle is spawned in the path of the robot. The obstacle is too low to be detected by the laserscanner, and a collision occurs. The robot must be able to recover from the crash and keep on navigating towards the goal with an updated global path in this scenario. 
+
+The Battery$\_$1 scenario tests if the robot tries to navigate toward a distant goal with a low battery charge. The simulated battery is emptied to a low level, and a new navigation goal is set. If the battery charge runs below zero percent during the navigation, the test fails. 
 
 \section{Results}
 

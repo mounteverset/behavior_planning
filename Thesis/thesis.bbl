@@ -82,6 +82,12 @@ R.~Arkin, R.~Arkin, and R.~Arkin, \emph{Behavior-based Robotics}, ser. Bradford
 F.~Wagner, R.~Schmuki, T.~Wagner, and P.~Wolstenholme, \emph{Modeling Software
   with Finite State Machines: A Practical Approach}, 05 2006.
 
+\bibitem{park2013}
+H.-W. Park, A.~Ramezani, and J.~W. Grizzle, ``A finite-state machine for
+  accommodating unexpected large ground-height variations in bipedal robot
+  walking,'' \emph{IEEE Transactions on Robotics}, vol.~29, no.~2, pp.
+  331--345, 2013.
+
 \bibitem{fourakis2014}
 M.~Foukarakis, A.~Leonidis, M.~Antona, and C.~Stephanidis, ``Combining finite
   state machine and decision-making tools for adaptable robot behavior,'' in
@@ -102,12 +108,6 @@ J.~Ziegler, P.~Bender, M.~Schreiber, H.~Lategahn, T.~Strauss, C.~Stiller,
 D.~C. Conner and J.~Willis, ``Flexible navigation: Finite state machine-based
   integrated navigation and control for ros enabled robots,'' in
   \emph{SoutheastCon 2017}, 2017, pp. 1--8.
-
-\bibitem{park2013}
-H.-W. Park, A.~Ramezani, and J.~W. Grizzle, ``A finite-state machine for
-  accommodating unexpected large ground-height variations in bipedal robot
-  walking,'' \emph{IEEE Transactions on Robotics}, vol.~29, no.~2, pp.
-  331--345, 2013.
 
 \bibitem{florez2009}
 G.~Florez-Puga, M.~A. Gomez-Martin, P.~P. Gomez-Martin, B.~Diaz-Agudo, and
@@ -133,6 +133,13 @@ A.~M. Andrew, ``Reinforcement learning: An introduction by richard s. sutton
   press (bradford book), cambridge, mass., 1998, xviii+ 322 pp, isbn
   0-262-19398-1,(hardback,{\pounds} 31.95).'' \emph{Robotica}, vol.~17, no.~2,
   pp. 229--235, 1999.
+
+\bibitem{banerjee2021real}
+\BIBentryALTinterwordspacing
+S.~Banerjee. (2021) Real world applications of markov decision process.
+  [Online]. Available:
+  \url{https://towardsdatascience.com/real-world-applications-of-markov-decision-process-mdp-a39685546026}
+\BIBentrySTDinterwordspacing
 
 \bibitem{tanwar2019markov}
 \BIBentryALTinterwordspacing

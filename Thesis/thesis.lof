@@ -5,25 +5,25 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Hybrid Planning Architecture \cite {arkin1998}\relax }}{9}{figure.caption.7}%
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a finite state machine transition diagram \cite {wagner2006}\relax }}{10}{figure.caption.8}%
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Example of a behavior tree \cite {iovino2022}\relax }}{12}{figure.caption.10}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of a fully observable Markov Decision Process \cite {andrew1999reinforcement}\relax }}{13}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of a fully observable Markov Decision Process \cite {andrew1999reinforcement, banerjee2021real}\relax }}{13}{figure.caption.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Navigation2 Architecture \cite {macenski2020}\relax }}{16}{figure.caption.13}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Behavior Tree\relax }}{17}{figure.caption.14}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Turtlebot3 model in Gazebo simulator\relax }}{18}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Turtlebot3 model in Gazebo simulator\relax }}{16}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Navigation2 Architecture \cite {macenski2020}\relax }}{17}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Navigation2 Behavior Tree\relax }}{18}{figure.caption.16}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Use Case Diagram\relax }}{21}{figure.caption.19}%
 \contentsline {figure}{\numberline {3.5}{\ignorespaces System Block Diagram\relax }}{22}{figure.caption.20}%
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Live monitoring of behavior trees with Groot\relax }}{24}{figure.caption.23}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture\relax }}{26}{figure.caption.25}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure\relax }}{28}{figure.caption.27}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Examiner pattern for the system supervisor component \cite {konrad2003defining}\relax }}{29}{figure.caption.28}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Lidar Fallback\relax }}{30}{figure.caption.29}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Collision Fallback Behavior\relax }}{31}{figure.caption.31}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Activity Diagram for the Collision Behavior\relax }}{33}{figure.caption.32}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Battery Fallback Behavior\relax }}{34}{figure.caption.34}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Path Planning Fallback Behavior\relax }}{35}{figure.caption.36}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Graph for the Sensor Driver nodes and topics\relax }}{35}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Component Diagram of System Architecture\relax }}{27}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Top Level Behavior Tree Structure\relax }}{30}{figure.caption.27}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Examiner pattern for the system supervisor component \cite {konrad2003defining}\relax }}{30}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Lidar Fallback\relax }}{31}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Collision Fallback Behavior\relax }}{32}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Activity Diagram for the Collision Behavior\relax }}{34}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Battery Fallback Behavior\relax }}{35}{figure.caption.34}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Path Planning Fallback Behavior\relax }}{36}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Graph for the Sensor Driver Nodes and Topics\relax }}{37}{figure.caption.37}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Gazebo World Environment\relax }}{37}{figure.caption.39}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Gazebo World Environment\relax }}{38}{figure.caption.39}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
