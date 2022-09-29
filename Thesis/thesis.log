@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.8.24)  29 SEP 2022 14:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.8.24)  29 SEP 2022 18:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -817,22 +817,16 @@ Chapter 6.
 Chapter 7.
 ) (./appendix/apA.tex) (./thesis.bbl [44
 
+] [45
+
 ]
-Underfull \hbox (badness 1371) in paragraph at lines 54--58
-\OT1/cmr/m/n/12 D. Math-eis, ``A self-driving car ar-chi-tec-ture in ros2,'' in
- \OT1/cmr/m/it/12 2020 In-ter-na-tional
- []
-
-[45
-
-] [46]
-Underfull \hbox (badness 1024) in paragraph at lines 139--143
+Underfull \hbox (badness 1024) in paragraph at lines 131--135
 []\OT1/cmr/m/n/12 S. Baner-jee. (2021) Real world ap-pli-ca-tions of markov de-
 
  []
 
-
-Underfull \hbox (badness 3019) in paragraph at lines 146--150
+[46]
+Underfull \hbox (badness 3019) in paragraph at lines 138--142
 []\OT1/cmr/m/n/12 S. Tan-war. (2019) Markov chains and markov de-ci-
  []
 
@@ -848,10 +842,10 @@ Package rerunfilecheck Info: File `thesis.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 55.
  ) 
 Here is how much of TeX's memory you used:
- 8221 strings out of 483140
- 129357 string characters out of 5965151
+ 8220 strings out of 483140
+ 129349 string characters out of 5965151
  406142 words of memory out of 5000000
- 22894 multiletter control sequences out of 15000+600000
+ 22893 multiletter control sequences out of 15000+600000
  538182 words of font info for 43 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  41i,15n,45p,1201b,502s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -863,9 +857,9 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmti12.pfb>
-Output written on thesis.pdf (52 pages, 5006407 bytes).
+Output written on thesis.pdf (52 pages, 5005462 bytes).
 PDF statistics:
- 795 PDF objects out of 1000 (max. 8388607)
+ 794 PDF objects out of 1000 (max. 8388607)
  672 compressed objects within 7 object streams
  159 named destinations out of 1000 (max. 500000)
  460 words of extra memory for PDF output out of 10000 (max. 10000000)

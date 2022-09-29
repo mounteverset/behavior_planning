@@ -22,9 +22,8 @@
 \BIBdecl
 
 \bibitem{efi2018}
-E.~F. und Innovation~(EFI), ``Gutachten zu forschung, innovation und
-  technologischer leistungsfaehigkeit deutschlands 2018,'' EFI, Berlin, Tech.
-  Rep., 2018.
+E.~F. und Innovation~(EFI), ``Gutachten zu {F}orschung, {I}nnovation und
+  technologischer {L}eistungsfaehigkeit {D}eutschlands 2018,'' 2018.
 
 \bibitem{J3016_202104}
 \BIBentryALTinterwordspacing
@@ -35,8 +34,8 @@ SAEInternational, \emph{Taxonomy and Definitions for Terms Related to Driving
 
 \bibitem{murphy2000}
 \BIBentryALTinterwordspacing
-R.~Murphy, R.~Murphy, and R.~Arkin, \emph{Introduction to AI Robotics}, ser. A
-  Bradford book.\hskip 1em plus 0.5em minus 0.4em\relax MIT Press, 2000.
+R.~Murphy, R.~Murphy, and R.~Arkin, \emph{Introduction to {AI} {R}obotics},
+  ser. A Bradford book.\hskip 1em plus 0.5em minus 0.4em\relax MIT Press, 2000.
   [Online]. Available: \url{https://books.google.de/books?id=RVlnL\_X6FrwC}
 \BIBentrySTDinterwordspacing
 
@@ -52,7 +51,7 @@ G.~Velasco-Hernandez, D.~J. Yeong, J.~Barry, and J.~Walsh, ``Autonomous driving
 
 \bibitem{reke2020}
 M.~Reke, D.~Peter, J.~Schulte-Tigges, S.~Schiffer, A.~Ferrein, T.~Walter, and
-  D.~Matheis, ``A self-driving car architecture in ros2,'' in \emph{2020
+  D.~Matheis, ``A self-driving car architecture in {ROS2},'' in \emph{2020
   International SAUPEC/RobMech/PRASA Conference}.\hskip 1em plus 0.5em minus
   0.4em\relax IEEE, 2020, pp. 1--6.
 
@@ -83,7 +82,7 @@ F.~Wagner, R.~Schmuki, T.~Wagner, and P.~Wolstenholme, \emph{Modeling Software
   with Finite State Machines: A Practical Approach}, 05 2006.
 
 \bibitem{park2013}
-H.-W. Park, A.~Ramezani, and J.~W. Grizzle, ``A finite-state machine for
+H.-W. Park, A.~Ramezani, and J.~W. Grizzle, ``A {F}inite-{S}tate {M}achine for
   accommodating unexpected large ground-height variations in bipedal robot
   walking,'' \emph{IEEE Transactions on Robotics}, vol.~29, no.~2, pp.
   331--345, 2013.
@@ -96,17 +95,13 @@ M.~Foukarakis, A.~Leonidis, M.~Antona, and C.~Stephanidis, ``Combining finite
   0.4em\relax Cham: Springer International Publishing, 2014, pp. 625--635.
 
 \bibitem{ziegler2014}
-J.~Ziegler, P.~Bender, M.~Schreiber, H.~Lategahn, T.~Strauss, C.~Stiller,
-  T.~Dang, U.~Franke, N.~Appenrodt, C.~G. Keller, E.~Kaus, R.~G. Herrtwich,
-  C.~Rabe, D.~Pfeiffer, F.~Lindner, F.~Stein, F.~Erbs, M.~Enzweiler,
-  C.~Knöppel, J.~Hipp, M.~Haueis, M.~Trepte, C.~Brenk, A.~Tamke, M.~Ghanaat,
-  M.~Braun, A.~Joos, H.~Fritz, H.~Mock, M.~Hein, and E.~Zeeb, ``Making bertha
-  drive—an autonomous journey on a historic route,'' \emph{IEEE Intelligent
-  Transportation Systems Magazine}, vol.~6, no.~2, pp. 8--20, 2014.
+J.~e.~a. Ziegler, ``{M}aking {B}ertha {D}rive — {A}n autonomous journey on a
+  historic route,'' \emph{IEEE Intelligent Transportation Systems Magazine},
+  vol.~6, no.~2, pp. 8--20, 2014.
 
 \bibitem{conner2017}
-D.~C. Conner and J.~Willis, ``Flexible navigation: Finite state machine-based
-  integrated navigation and control for ros enabled robots,'' in
+D.~C. Conner and J.~Willis, ``{F}lexible {N}avigation: Finite state
+  machine-based integrated navigation and control for ros enabled robots,'' in
   \emph{SoutheastCon 2017}, 2017, pp. 1--8.
 
 \bibitem{florez2009}
@@ -118,8 +113,8 @@ G.~Florez-Puga, M.~A. Gomez-Martin, P.~P. Gomez-Martin, B.~Diaz-Agudo, and
 \bibitem{iovino2022}
 \BIBentryALTinterwordspacing
 M.~Iovino, E.~Scukins, J.~Styrud, P.~Ögren, and C.~Smith, ``A survey of
-  behavior trees in robotics and ai,'' \emph{Robotics and Autonomous Systems},
-  vol. 154, p. 104096, 2022. [Online]. Available:
+  {B}ehavior {T}rees in {R}obotics and {AI},'' \emph{Robotics and Autonomous
+  Systems}, vol. 154, p. 104096, 2022. [Online]. Available:
   \url{https://www.sciencedirect.com/science/article/pii/S0921889022000513}
 \BIBentrySTDinterwordspacing
 
@@ -128,11 +123,8 @@ S.~Feyzabadi and S.~Carpin, ``Risk-aware path planning using hierarchical
   constrained markov decision processes,'' vol. 2014, 08 2014.
 
 \bibitem{andrew1999reinforcement}
-A.~M. Andrew, ``Reinforcement learning: An introduction by richard s. sutton
-  and andrew g. barto, adaptive computation and machine learning series, mit
-  press (bradford book), cambridge, mass., 1998, xviii+ 322 pp, isbn
-  0-262-19398-1,(hardback,{\pounds} 31.95).'' \emph{Robotica}, vol.~17, no.~2,
-  pp. 229--235, 1999.
+A.~M. Andrew, ``{R}einforcement {L}earning: An introduction,'' \emph{Robotica},
+  vol.~17, no.~2, pp. 229--235, 1999.
 
 \bibitem{banerjee2021real}
 \BIBentryALTinterwordspacing
@@ -154,22 +146,22 @@ V.~Krishnamurthy, \emph{Partially Observed Markov Decision Processes}.\hskip
 
 \bibitem{quigley2009}
 M.~Quigley, K.~Conley, B.~Gerkey, J.~Faust, T.~Foote, J.~Leibs, R.~Wheeler,
-  A.~Y. Ng \emph{et~al.}, ``Ros: an open-source robot operating system,'' in
+  A.~Y. Ng \emph{et~al.}, ``{ROS}: an open-source robot operating system,'' in
   \emph{ICRA workshop on open source software}, vol.~3, no. 3.2.\hskip 1em plus
   0.5em minus 0.4em\relax Kobe, Japan, 2009, p.~5.
 
 \bibitem{ros2022}
 \BIBentryALTinterwordspacing
-S.~Macenski, T.~Foote, B.~Gerkey, C.~Lalancette, and W.~Woodall, ``Robot
-  operating system 2: Design, architecture, and uses in the wild,''
+S.~Macenski, T.~Foote, B.~Gerkey, C.~Lalancette, and W.~Woodall, ``{R}obot
+  {O}perating {S}ystem 2: Design, architecture, and uses in the wild,''
   \emph{Science Robotics}, vol.~7, no.~66, p. eabm6074, 2022. [Online].
   Available: \url{https://www.science.org/doi/abs/10.1126/scirobotics.abm6074}
 \BIBentrySTDinterwordspacing
 
 \bibitem{macenski2020}
-S.~Macenski, F.~Martin, R.~White, and J.~Ginés~Clavero, ``The marathon 2: A
-  navigation system,'' in \emph{2020 IEEE/RSJ International Conference on
-  Intelligent Robots and Systems (IROS)}, 2020.
+S.~Macenski, F.~Martin, R.~White, and J.~Ginés~Clavero, ``The {M}arathon 2:
+  {A} {N}avigation {S}ystem,'' in \emph{2020 IEEE/RSJ International Conference
+  on Intelligent Robots and Systems (IROS)}, 2020.
 
 \bibitem{konrad2003defining}
 S.~J. Konrad, \emph{Defining and using requirements patterns for embedded
