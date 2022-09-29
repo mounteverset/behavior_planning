@@ -5,10 +5,10 @@ Mobile robots are becoming more widespread in many domains, like warehouse logis
 
 One of the quickest and most popular ways to build and program a robot is to use the Robot Operating System (ROS). ROS offers many tools and functionalities to create and program robots, but a standard robot needs human supervision during the operation to ensure proper function and safety. The robot needs to be able to navigate in an uncertain environment to guarantee the safety of the robot itself and all other actors in its environment. There are ROS packages to enable safe navigation capabilities, but currently, typical ROS-based robots cannot react to unforeseen events.
 
-In theory, the robot can perform fully autonomous navigation, including mapping and localization. However, when something unexpected happens, the robot's autonomy can not be guaranteed. A default robot cannot represent all possible fail states and does not detect failures on a systematic level but only inside its navigation-related subsystems. Moreover, when failures inside these subsystems are discovered, the options to handle these problems are minimal and often do not deal with the problems in an autonomous way. The reliance on external problem-solving decreases the robot's usefulness when tasked with tangible goals. 
+In theory, the robot can perform fully autonomous navigation, including mapping and localization. However, the robot's autonomy can not be guaranteed when something unexpected happens. A default robot cannot represent all possible fail states and does not detect failures on a systematic level but only inside its navigation-related subsystems. Moreover, when failures inside these subsystems are discovered, the options to handle these problems are minimal and often do not deal with the problems in an autonomous way. The reliance on external problem-solving decreases the robot's usefulness when tasked with tangible goals. 
 Therefore, this thesis centers around the research question of how behavior planning can increase the robustness and autonomy of a robot running ROS2. Behavior planning enables the robot to react to failures and problems of the system and can decide alternative courses of action to mitigate risks and finish the given tasks.
 
-This thesis will explore possibilities for improving current systems by adding a dedicated behavior planning component. Furthermore, the thesis seeks to provide an implementation of exemplary behaviors and a system architecture to incorporate behavior planning in other robots, too.
+This thesis will explore possibilities for improving current systems by adding a dedicated behavior planning component. Furthermore, the thesis seeks to provide an implementation of exemplary behaviors and a system architecture to incorporate behavior planning in other robots.
 
 The desired outcomes of this implemented software will be an increase in robustness and a decrease in required human actions during several scenarios. In these scenarios, failures and problems will be artificially induced to test the robot's abilities to behave autonomously. 
 
@@ -17,9 +17,9 @@ The remainder of this thesis is organized as follows:
 \begin{itemize}
 	\item Chapter \ref{cha:state of the art} presents the state of the art and compares the different behavior planning approaches
 	
-	\item Chapter \ref{cha:methoden} analyzes the current robotic systems and derives requirements from the key problem areas
+	\item Chapter \ref{cha:methoden} analyzes the current robotic systems and derives requirements from the critical problem areas
 	
-	\item Chapter \ref{cha:implementierung} describes the implemented software approach including the overall system architecture 
+	\item Chapter \ref{cha:implementierung} describes the implemented software approach, including the overall system architecture 
 	
 	\item Chapter \ref{cha:ergebnisse} shows the obtained results from all selected scenarios and discusses the acceptance criteria of the requirements 
 	
@@ -82,7 +82,7 @@ The remainder of this thesis is organized as follows:
 
 
 
-	
-	
+
+
 
 
