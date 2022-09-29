@@ -21,7 +21,7 @@
 \contentsline {section}{\numberline {3.2}Requirements}{19}{section.3.2}%
 \contentsline {section}{\numberline {3.3}System Solution}{20}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Software and Simulation}{22}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Behaviortree.CPP}{22}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.1}Behaviortree.CPP}{23}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Groot}{24}{subsection.3.4.2}%
 \contentsline {subsection}{\numberline {3.4.3}Gazebo Simulation Environment}{25}{subsection.3.4.3}%
 \contentsline {subsection}{\numberline {3.4.4}OS and Software Versions}{25}{subsection.3.4.4}%
@@ -40,7 +40,7 @@
 \contentsline {subsection}{\numberline {4.5.2}Custom ROS Interfaces}{36}{subsection.4.5.2}%
 \contentsline {chapter}{\numberline {5}Evaluation}{38}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Scenarios}{39}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Results}{41}{section.5.2}%
+\contentsline {section}{\numberline {5.2}Results}{40}{section.5.2}%
 \contentsline {chapter}{\numberline {6}Conclusion}{43}{chapter.6}%
 \contentsline {chapter}{\numberline {7}Outlook}{44}{chapter.7}%
-\contentsline {chapter}{Bibliography}{47}{appendix*.43}%
+\contentsline {chapter}{Bibliography}{47}{appendix*.42}%
