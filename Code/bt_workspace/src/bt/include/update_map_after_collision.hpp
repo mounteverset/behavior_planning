@@ -133,15 +133,15 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
     {
         if(debug)
             RCLCPP_INFO(node_->get_logger(), "Converting to vector 2d.");
-        for (size_t i = 0; i < map.info.width-1; i++)
+        for (size_t i = 0; i < map.info.height - 1; i++) // columns are the outer loop
         {   
             // if(debug)
                 // RCLCPP_INFO(node_->get_logger(), "i: %d", i);
-            for (size_t j = 0; j < map.info.height -1; j++)
+            for (size_t j = 0; j < map.info.width -1; j++) // rows are the inner loop
             {   
                 // if(debug)
                     // RCLCPP_INFO(node_->get_logger(), "j: %d", j);
-                vec_2d.at(i).at(j) = map.data.at(i * map.info.height + j);
+                vec_2d.at(i).at(j) = map.data.at(i * map.info.width + j);
             }            
         }       
     }
@@ -210,9 +210,9 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         // then it should modify the costmap by adding a 5x5 square at the location of the crash  
         if(debug)
             RCLCPP_INFO(node_->get_logger(), "Adding occupation to costmap vector."); 
-        for (size_t i = x_px -2; i < x_px +2; i++)
+        for (size_t i = y_px -2; i < y_px +2; i++)
         {
-            for (size_t j = y_px -2; j < y_px +2; j++)
+            for (size_t j = x_px -2; j < x_px +2; j++)
             {
                 costmap_2d.at(i).at(j) = 100; 
             }
@@ -230,11 +230,11 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
             RCLCPP_INFO(node_->get_logger(), "Converting to one dimensional data array and putting it into the map msg.");
         std::vector<int8_t> data((map.info.height * map.info.width), -1);
 
-        for (size_t i = 0; i < costmap_vector_2d.size(); i++) //Rows
+        for (size_t i = 0; i < costmap_vector_2d.size(); i++) //Columns outer loop
         {   
             // if(debug)
                 // RCLCPP_INFO(node_->get_logger(), "i: %d", i);
-            for (size_t j = 0; j < costmap_vector_2d.at(i).size(); j++) // Columns
+            for (size_t j = 0; j < costmap_vector_2d.at(i).size(); j++) // Rows inner loop
             {
                 // data.push_back(costmap_vector_2d.at(i).at(j));
                 // if(debug)
@@ -260,7 +260,7 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
                 // if(debug)
                 //     RCLCPP_INFO(node_->get_logger(), "i: %d, j: %d", i, j);
 
-                data.at(map.info.height * i + j ) = costmap_vector_2d.at(i).at(j);                
+                data.at(map.info.width * i + j ) = costmap_vector_2d.at(i).at(j);                
             }            
         }
         if(data.size() == map.info.width * map.info.height)
@@ -289,8 +289,8 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
 
         // std::vector<std::vector<int>> costmap_vector_2d(map.info.width, std::vector<int>(map.info.height, 0));
 
-        std::vector<int> row(map.info.height, 0);
-        std::vector<std::vector<int>> costmap_vector_2d(map.info.width, row);
+        std::vector<int> row(map.info.width, 0); // rows, travel along the x axis
+        std::vector<std::vector<int>> costmap_vector_2d(map.info.height, row); // columns, travel allong the y axis
 
         convert_data_to_vector(map, costmap_vector_2d);
 
@@ -311,7 +311,7 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         int y_px = (goal_point.y - map.info.origin.position.y) / map.info.resolution;
         
         if(debug)
-            RCLCPP_INFO(node_->get_logger(), "X Pixel: %d \n Y Pixel: %d", x_px, y_px);
+            RCLCPP_INFO(node_->get_logger(), "\nX Pixel: %d \n Y Pixel: %d", x_px, y_px);
          
         add_occupation_to_costmap(costmap_vector_2d, x_px, y_px);
 
