@@ -54,7 +54,7 @@ void BehaviorTester::spawn_entity()
 
 
 
-  auto result = spawn_client_handle_->async_send_request()
+  // auto result = spawn_client_handle_->async_send_request();
 }
 
 int main(int argc, char ** argv)
