@@ -54,9 +54,10 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
 
     // topics_qos = rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(); // Transient Local Sub Settings
     sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, std::bind(&ExecutionCheckerService::lidar_callback, this, std::placeholders::_1));
-    sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>("imu", 10, std::bind(&ExecutionCheckerService::imu_callback, this, std::placeholders::_1));
-    sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>("odom", 10, std::bind(&ExecutionCheckerService::odom_callback, this, std::placeholders::_1));
-    sub_collision_ = this->create_subscription<gazebo_msgs::msg::ContactsState>("bumper_states", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
+    sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>("imu_broadcaster/imu", 10, std::bind(&ExecutionCheckerService::imu_callback, this, std::placeholders::_1));
+    sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>("odometry/filtered", 10, std::bind(&ExecutionCheckerService::odom_callback, this, std::placeholders::_1));
+    sub_collision_ = this->create_subscription<std_msgs::msg::Bool>("collision", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
+    //sub_rollover_ = this->create_subscription<std_msgs::msg::Bool>("rollover", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
     sub_path_ = this->create_subscription<nav_msgs::msg::Path>("plan", 1, std::bind(&ExecutionCheckerService::goal_callback, this, std::placeholders::_1));
     //sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 1, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
     sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 10, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
@@ -209,9 +210,17 @@ void ExecutionCheckerService::OdomExecutionCheckServiceCallback(
 }
 
 // Collision Check
-void ExecutionCheckerService::collision_callback(const gazebo_msgs::msg::ContactsState::SharedPtr msg)
+void ExecutionCheckerService::collision_callback(const std_msgs::msg::Bool::SharedPtr msg)
 {
-    if(msg->states.size() > 0)
+    if(msg->data == true)
+    {
+        last_msg_received_collision_ = this->get_clock()->now();
+    }
+}
+
+void ExecutionCheckerService::rollover_callback(const std_msgs::msg::Bool::SharedPtr msg)
+{
+    if(msg->data == true)
     {
         last_msg_received_collision_ = this->get_clock()->now();
     }
@@ -222,7 +231,6 @@ void ExecutionCheckerService::collision_service_callback(
     const std_srvs::srv::SetBool_Response::SharedPtr response)
 {
     collision_time_difference = (this->get_clock()->now().seconds() - last_msg_received_collision_.seconds());
-
     if (collision_time_difference < MAX_COLLISION_LOOKBACK_TIME)
     {
         collision_detected_ = true;
@@ -241,7 +249,7 @@ void ExecutionCheckerService::collision_service_callback(
         auto response = save_collision_pose_client->async_send_request(std::make_shared<std_srvs::srv::Empty::Request>());
         
     }
-    
+    collision_detected_ = false;
 }
 
 void ExecutionCheckerService::orientation_checker_service_callback(

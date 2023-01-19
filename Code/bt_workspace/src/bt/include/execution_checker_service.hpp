@@ -17,6 +17,7 @@
 #include "geometry_msgs/msg/pose_with_covariance_stamped.hpp"
 #include "bt_msgs/srv/get_distance.hpp"
 #include "action_msgs/msg/goal_status_array.hpp"
+#include "std_msgs/msg/bool.hpp"
 // #include "tf2_conversion_helpers.hpp"
 // #include "tf2_helpers/tf2_conversion_helpers.hpp"
 
@@ -73,15 +74,20 @@ class ExecutionCheckerService : public rclcpp::Node
 
 
         // Collision Related
-        void collision_callback(const gazebo_msgs::msg::ContactsState::SharedPtr msg);
+        void collision_callback(const std_msgs::msg::Bool::SharedPtr msg);
+
+        void rollover_callback(const std_msgs::msg::Bool::SharedPtr msg);
 
         void collision_service_callback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
             const std_srvs::srv::SetBool_Response::SharedPtr response);
 
+        
+
         rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr collision_service_;
         rclcpp::Client<std_srvs::srv::Empty>::SharedPtr save_collision_pose_client;
-        rclcpp::Subscription<gazebo_msgs::msg::ContactsState>::SharedPtr sub_collision_;
+        rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr sub_collision_;
+        rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr sub_rollover_;
         rclcpp::Time last_msg_received_collision_;
         bool collision_detected_;
         float collision_time_difference;
