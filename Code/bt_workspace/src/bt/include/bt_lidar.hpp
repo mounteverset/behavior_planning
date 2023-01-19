@@ -36,9 +36,6 @@
 #include "publish_closer_goal.hpp"
 #include "path_possible_check.hpp"
 
-
-
-
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "behaviortree_cpp_v3/loggers/bt_file_logger.h"
