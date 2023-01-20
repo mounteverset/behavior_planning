@@ -29,7 +29,7 @@ class LoadUpdatedMap : public BT::SyncActionNode
         }
 
         auto request = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-        request->map_url = "/home/luke/map_updated.yaml";
+        request->map_url = "./src/bt/maps/map_updated.yaml";
 
         auto result = map_service_client_->async_send_request(request);
 

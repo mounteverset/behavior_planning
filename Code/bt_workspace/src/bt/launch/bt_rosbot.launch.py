@@ -5,8 +5,8 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='bt',
-            executable='bt_lidar',
-            name='bt_lidar',
+            executable='bt_rosbot',
+            name='bt_rosbot',
             # parameters=[{'use_sim_time': True}]
         )
     ])

@@ -1,4 +1,5 @@
-#include "bt_lidar.hpp"
+#include "bt_rosbot.hpp"
+#include <filesystem>
 
 int main(int argc, const char* argv[])
 {   
@@ -51,7 +52,9 @@ int main(int argc, const char* argv[])
     factory.registerNodeType<PublishCloserGoal>("PublishCloserGoal");
 
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT"); 
-    auto tree = factory.createTreeFromFile("/home/luke/behavioural-planning/Code/bt_workspace/src/bt/resources/save_new_map.xml");
+    // std::string a = std::filesystem::current_path();
+    // RCLCPP_INFO(rclcpp::get_logger("root"), a.c_str()); 
+    auto tree = factory.createTreeFromFile("./src/bt/resources/save_new_map.xml");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Created BT");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT Publisher"); 
 
