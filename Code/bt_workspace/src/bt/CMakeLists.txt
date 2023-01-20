@@ -39,8 +39,8 @@ find_package(lifecycle_msgs REQUIRED)
 add_executable(bt_test src/bt_test.cpp)
 ament_target_dependencies(bt_test rclcpp behaviortree_cpp_v3)
 
-add_executable(bt_lidar src/bt_lidar.cpp)
-ament_target_dependencies(bt_lidar 
+add_executable(bt_rosbot src/bt_rosbot.cpp)
+ament_target_dependencies(bt_rosbot 
   rclcpp 
   behaviortree_cpp_v3 
   std_msgs
@@ -83,7 +83,7 @@ include_directories(
 # rclcpp_components_register_node(action_client PLUGIN "CancelNavGoal" EXECUTABLE fibonacci_action_client)
 
 install(
-  TARGETS bt_test bt_lidar execution_checker_service
+  TARGETS bt_test bt_rosbot execution_checker_service
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -30,7 +30,7 @@ class SaveUpdatedMap : public BT::SyncActionNode
 
         auto request = std::make_shared<nav2_msgs::srv::SaveMap::Request>();
         request->map_topic = "map_updated";
-        request->map_url = "/home/luke/map_updated";
+        request->map_url = "./src/bt/maps/map_updated";
 
         auto result = map_service_client_->async_send_request(request);
 
