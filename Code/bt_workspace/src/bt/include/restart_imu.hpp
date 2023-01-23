@@ -23,14 +23,24 @@ class RestartImu : public BT::SyncActionNode
 
     BT::NodeStatus tick() override
     {
+        if(debug)
+            RCLCPP_INFO(rclcpp::get_logger("restart_imu"), "Trying to restart IMU");
         try
         {
-            system("gnome-terminal -e 'sh -c \"ros2 run gazebo_sensor_drivers imu_driver; exec bash\"'");
-            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            int i, ret = system("gnome-terminal -e 'sh -c \"bash src/bt/scripts/ssh_microros.sh ; exec bash\"'");
 
-            if(debug)
-                RCLCPP_INFO(rclcpp::get_logger("restart_imu"), "Trying to restart IMU");
-            return BT::NodeStatus::SUCCESS;
+            i = WEXITSTATUS(ret);
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(11000));
+            
+            if (i == 0)
+            {
+                return BT::NodeStatus::SUCCESS;
+            }
+            else 
+            {
+                return BT::NodeStatus::FAILURE;
+            }
         }
         catch(const std::exception& e)
         {   
