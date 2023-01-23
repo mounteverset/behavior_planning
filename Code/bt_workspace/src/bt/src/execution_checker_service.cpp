@@ -68,7 +68,10 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
     debug = false;
     debug_orientation = false;
     debug_distance = false;
-
+    // Subtract 2 seconds from the current timestamp
+    rclcpp::Time current = this->get_clock()->now();
+    rclcpp::Duration two_secs = rclcpp::Duration((int32_t)2, (uint32_t)0);
+    this->last_msg_received_collision_ = current - two_secs;
 
     //Set all execution variables to false
     this->collision_detected_ = false;
@@ -227,15 +230,6 @@ void ExecutionCheckerService::collision_callback(const std_msgs::msg::Bool::Shar
     }
 }
 
-void ExecutionCheckerService::rollover_callback(const std_msgs::msg::Bool::SharedPtr msg)
-{
-    // if(msg->data == true)
-    // {
-    //     //last_msg_received_collision_ = this->get_clock()->now();
-    //     this->all_wheels_on_the_ground = 
-    // }
-    this->all_wheels_on_the_ground = msg->data;
-}
 
 void ExecutionCheckerService::collision_service_callback(
     const std_srvs::srv::SetBool_Request::SharedPtr request,
@@ -261,6 +255,16 @@ void ExecutionCheckerService::collision_service_callback(
         
     }
     collision_detected_ = false;
+}
+
+void ExecutionCheckerService::rollover_callback(const std_msgs::msg::Bool::SharedPtr msg)
+{
+    // if(msg->data == true)
+    // {
+    //     //last_msg_received_collision_ = this->get_clock()->now();
+    //     this->all_wheels_on_the_ground = 
+    // }
+    this->all_wheels_on_the_ground = msg->data;
 }
 
 void ExecutionCheckerService::orientation_checker_service_callback(

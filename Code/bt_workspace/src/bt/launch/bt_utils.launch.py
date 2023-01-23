@@ -49,6 +49,14 @@ def generate_launch_description():
         parameters=[param_file]
     )
 
+    imu_collision_cmd = Node(
+        package="imu_collision",
+        executable="imu_collision",
+        output="screen",
+        parameters=[param_file]
+    )
+
+    ld.add_action(imu_collision_cmd)
     ld.add_action(decision_gate_cmd)
     ld.add_action(robot_battery_cmd)
     ld.add_action(execution_checker_cmd)
