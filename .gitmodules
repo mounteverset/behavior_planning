@@ -1,0 +1,3 @@
+[submodule "Code/bt_workspace/src/imu-collision-detection"]
+	path = Code/bt_workspace/src/imu-collision-detection
+	url = ssh://git@gitlab.iav.com:2200/digital-lab/autonome-systeme/rosbot/imu-collision-detection.git
