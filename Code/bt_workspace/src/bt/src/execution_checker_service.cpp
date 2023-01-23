@@ -68,14 +68,21 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
     debug = false;
     debug_orientation = false;
     debug_distance = false;
+
+
+    //Set all execution variables to false
+    this->collision_detected_ = false;
+    this->all_wheels_on_the_ground = false;
+    this->is_lidar_running_ = false;
+    this->is_imu_running_ = false;
+    this->is_odom_running_ = false;
 }
 
 ExecutionCheckerService::~ExecutionCheckerService() = default;
 
 // Service and Topic Callbacks
 
-//Lidar
-
+// Lidar 
 void ExecutionCheckerService::LidarExecutionCheckServiceCallback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
             const std_srvs::srv::SetBool_Response::SharedPtr response)
@@ -97,6 +104,8 @@ void ExecutionCheckerService::LidarExecutionCheckServiceCallback(
     response->success = is_lidar_running_;  
 }
 
+// Subsribes to Scan Topic and saves the timestamp
+// The timestamp gets compared in the LidarExecutionServiceCallback with the current time
 void ExecutionCheckerService::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
 {   
     if(debug_callback)
@@ -127,14 +136,14 @@ void ExecutionCheckerService::imu_callback(const sensor_msgs::msg::Imu::SharedPt
     last_msg_received_imu_ = this->get_clock()->now();
     
     // Orientation Check
-    tf2::Quaternion quat(msg->orientation.x,
-                        msg->orientation.y,
-                        msg->orientation.z,
-                        msg->orientation.w);
+    // tf2::Quaternion quat(msg->orientation.x,
+    //                     msg->orientation.y,
+    //                     msg->orientation.z,
+    //                     msg->orientation.w);
     
-    tf2::Matrix3x3 m(quat);
-    double roll,pitch,yaw;
-    m.getRPY(roll, pitch, yaw);
+    // tf2::Matrix3x3 m(quat);
+    // double roll,pitch,yaw;
+    // m.getRPY(roll, pitch, yaw);
 
     // if(debug_orientation)
     // {
@@ -149,14 +158,14 @@ void ExecutionCheckerService::imu_callback(const sensor_msgs::msg::Imu::SharedPt
         
     // }
 
-    if(roll > -0.1 && roll < 0.1 && pitch > -0.1 && pitch < 0.1) //Robot is standing parallel to the ground within some margin (~6°)
-    {
-        all_wheels_on_the_ground = true;
-    }
-    else
-    {
-        all_wheels_on_the_ground = false;
-    }
+    // if(roll > -0.1 && roll < 0.1 && pitch > -0.1 && pitch < 0.1) //Robot is standing parallel to the ground within some margin (~6°)
+    // {
+    //     all_wheels_on_the_ground = true;
+    // }
+    // else
+    // {
+    //     all_wheels_on_the_ground = false;
+    // }
 
 }
 
@@ -220,10 +229,12 @@ void ExecutionCheckerService::collision_callback(const std_msgs::msg::Bool::Shar
 
 void ExecutionCheckerService::rollover_callback(const std_msgs::msg::Bool::SharedPtr msg)
 {
-    if(msg->data == true)
-    {
-        last_msg_received_collision_ = this->get_clock()->now();
-    }
+    // if(msg->data == true)
+    // {
+    //     //last_msg_received_collision_ = this->get_clock()->now();
+    //     this->all_wheels_on_the_ground = 
+    // }
+    this->all_wheels_on_the_ground = msg->data;
 }
 
 void ExecutionCheckerService::collision_service_callback(
@@ -263,7 +274,7 @@ void ExecutionCheckerService::orientation_checker_service_callback(
         
     // }
     response->message = "";
-    response->success = all_wheels_on_the_ground;
+    response->success = this->all_wheels_on_the_ground;
     
     if(debug_orientation)
     {
@@ -287,6 +298,7 @@ void ExecutionCheckerService::calc_distance()
     }
 }
 
+
 void ExecutionCheckerService::goal_callback(const nav_msgs::msg::Path::SharedPtr msg)
 {
     if(debug_distance)
@@ -309,6 +321,7 @@ void ExecutionCheckerService::goal_callback(const nav_msgs::msg::Path::SharedPtr
     calc_distance();
 }
 
+
 void ExecutionCheckerService::pose_update_callback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg)
 {
     if(debug_distance)
@@ -328,6 +341,7 @@ void ExecutionCheckerService::pose_update_callback(const geometry_msgs::msg::Pos
     // calc_distance();
 }
 
+
 void ExecutionCheckerService::goal_distance_service_callback(
     const bt_msgs::srv::GetDistance_Request::SharedPtr request,
     const bt_msgs::srv::GetDistance_Response::SharedPtr response)
@@ -335,8 +349,8 @@ void ExecutionCheckerService::goal_distance_service_callback(
     response->distance_in_meter = distance_to_goal;
 }
 
-// Global Path Possible Related
 
+// Global Path Possible Related
 void ExecutionCheckerService::plan_possible_service_callback(   
     const std_srvs::srv::SetBool_Request::SharedPtr request,
     const std_srvs::srv::SetBool_Response::SharedPtr response)
@@ -344,6 +358,7 @@ void ExecutionCheckerService::plan_possible_service_callback(
     response->message="";
     response->success = is_global_plan_possible;    
 }   
+
 
 void ExecutionCheckerService::global_planner_goal_states_callback(const action_msgs::msg::GoalStatusArray::SharedPtr msg)
 {
