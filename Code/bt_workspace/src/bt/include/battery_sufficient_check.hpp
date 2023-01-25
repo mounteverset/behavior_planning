@@ -32,7 +32,7 @@ public:
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "Constructor BatterySufficientCheck finished.");
 
-        avrg_speed_ = 0.2;
+        avrg_speed_ = 0.4;
         safety_factor_ = 1.5;
     }
 
@@ -66,7 +66,7 @@ public:
         }
     }
 
-    bool charge_service_call(float &charge, float &idle_decrease, float &drive_decrease)
+    bool charge_service_call(float &charge)
     {   
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "Charge Service Call");
@@ -89,8 +89,8 @@ public:
         if(rclcpp::spin_until_future_complete(node_, charge_result) == rclcpp::FutureReturnCode::SUCCESS)
         {   
             charge = charge_result.get()->charge;
-            idle_decrease = charge_result.get()->idle_decrease_per_sec;
-            drive_decrease = charge_result.get()->drive_decrease_per_sec;
+            //idle_decrease = charge_result.get()->idle_decrease_per_sec;
+            //drive_decrease = charge_result.get()->drive_decrease_per_sec;
             return true;
         }
         else
@@ -112,9 +112,9 @@ public:
         if(distance == 0.0)
             return BT::NodeStatus::SUCCESS;
         
-        float charge, idle_decrease, drive_decrease;
+        float charge;
 
-        if(!charge_service_call(charge, idle_decrease, drive_decrease))
+        if(!charge_service_call(charge))
             return BT::NodeStatus::FAILURE;
         
         if (debug)
@@ -122,7 +122,7 @@ public:
 
         float time = distance / avrg_speed_;
 
-        float consumption = time * (idle_decrease + drive_decrease);
+        float consumption = time * charge;
 
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "Consumption: %f", consumption);
