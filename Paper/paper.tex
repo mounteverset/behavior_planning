@@ -197,12 +197,12 @@ The system supervisor component uses a Watchdog design pattern to monitor the sy
 
 The top-level behavior control fallback nodes of a simplified behavior tree are shown in Figure \ref{fig:top_level_bt}. The tree receives the tick signal from a sequence root node. The root node functions to increase the system's robustness by ensuring all fundamental components are functioning properly before executing higher-level behaviors. Details for each behavior will follow.
 
-\begin{figure}[ht]
+\begin{figure*}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/simplified_bt_inverted.png}
 	\caption{Top Level Behavior Tree Structure}
 	\label{fig:top_level_bt}
-\end{figure}
+\end{figure*}
 
 The robot's collision behavior is meant to handle collisions and react to them. Collisions occur due to inadequate sensor coverage or a lack of detection capabilities. The collision behavior involves detecting a collision, getting out of the collision state, updating the map, and resetting all costmaps to generate a new path to the goal. The collision checker uses a simulated sensor and is integrated into the system supervisor. The behavior tree (BT) requests the most recent command velocities and modifies them to reverse out of the collision. The map needs to be updated with a new obstacle at the collision point and republished. The estimated collision point is simplified to be directly in front of the robot, and a square with 100\% occupancy is added to the map. The original goal is then republished to replan the global path.
 
@@ -219,13 +219,153 @@ The ROSBot robot requires several crucial modules to be developed for successful
 \section{Results and Discussion}
 \label{sec:ResultsAndDiscussion}
 
+\subsection{Setup}
 
+The efficacy of the behavior tree component in the robot was evaluated through scenario testing in a simulated apartment environment (as shown in Figure \ref{fig:house_gazebo}) and a simulated world with small round obstacles in an enclosed space (as shown in Figure \ref{fig:world_gazebo}). These scenarios were designed to trigger behavior responses from the component and to assess its ability to meet the functional requirements specified earlier. The environments were pre-mapped using the ROS2 "SLAM Toolbox" package and provided by the Nav2 map server. The robot location and navigation goals were defined in a separate ROS node, which programmatically positioned the robot within the environment and set its goals. This approach allowed the same scenario to be run with and without behavior planning. To test the behavior of the sensor failure fallbacks, the relevant sensor driver was shut down to emulate sensor failure.
+
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{Figures/house_env.png}
+		\caption{Apartment Environment}
+		\label{fig:house_gazebo}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{Figures/world_env.png}
+		\caption{Enclosed Environment}
+		\label{fig:world_gazebo}
+	\end{subfigure}
+	\caption{Gazebo World Environment}
+	\label{fig:three graphs}
+\end{figure}
+
+\subsection{Scenarios}
+
+The scenarios, derived from functional requirements, test multiple requirements as listed in tables \ref{tab:behavior_scenarios} and \ref{tab:sensor_scenarios}. To be counted as a success, all acceptance criteria for a scenario must be met. The scenarios are conducted by shutting down sensor drivers, publishing navigation goals, and simulating obstacles and battery conditions. Examples include: NoPathFound$_1$ tests recovery from inability to plan, NoPathFound$_2$ tests alternative goal navigation, Collision$_1$ tests maneuvering out of collisions, Collision$_2$ tests recovering from crashes, and Battery$_1$ tests low battery navigation.
+
+\begin{table}[ht]
+	\centering
+	\caption{Behavior Scenarios}
+	\label{tab:behavior_scenarios}
+	\renewcommand{\arraystretch}{1.25}
+	\resizebox{0.95\linewidth}{!}{%
+		\begin{tabular}{| m{0.11\linewidth} | m{0.19\linewidth}| m{0.4\linewidth} | m{0.3\linewidth}|} 
+			\hline
+			\textbf{Name} & \textbf{Requirements} & \textbf{Description} & \textbf{Success Criteria}\\ 
+			\hline	
+			NoPath Found$\_$1 & fn$\_$req7 & Path to goal can not be calculated, robot is standing still & 
+			Reset system, calculate path to goal, reach goal \\
+			\hline
+			NoPath Found$\_$2 & fn$\_$req7, fn$\_$req8 & Goal is unreachable, robot is standing still & Alternative goals, close to the original are tested to be reachable \\
+			\hline
+			Collision$\_$1 & fn$\_$req2, fn$\_$req4, fn$\_$req6 & Robot is standing still and a collision with the robot is caused & Robot can get out of collision state, navigation to goals still working \\
+			\hline
+			Collision$\_$2 & fn$\_$req2, fn$\_$req4, fn$\_$req6 & The robot is driving and collides with an undetected obstacle (0.25m/s) & 
+			Robot can get out of collision state, navigation to goals still working, undetected obstacle gets added to map \\
+			\hline
+			Battery$\_$1 & fn$\_$req9 & The robot battery runs low & The robot will not drive to a goal that is outside of its reachable range \\
+			\hline	
+		\end{tabular}
+	}
+\end{table}	
+
+\begin{table}[ht]
+	\centering
+	\caption{Sensor Scenarios}
+	\label{tab:sensor_scenarios}
+	\renewcommand{\arraystretch}{1.25}
+	\resizebox{0.95\linewidth}{!}{%
+		\begin{tabular}{| m{0.1\linewidth}| m{0.1\linewidth} | m{0.2\linewidth}| m{0.3\linewidth} | m{0.3\textwidth}|} 
+			\hline
+			\textbf{Sensor Tested} & \textbf{Name} & \textbf{Requirements }& \textbf{Description} & \textbf{Success Criteria}\\ 
+			\hline
+			& Lidar$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Lidar node crashes & Reset the system\\ 
+			\cline{2-5}
+			Lidar &Lidar$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			\cline{2-5}
+			& Lidar$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
+			\hline
+			& IMU$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, IMU node crashes & Reset system \\
+			\cline{2-5}
+			IMU &IMU$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			\cline{2-5}
+			&IMU$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
+			\hline
+			& Odom$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Odom node crashes & Reset the system\\ 
+			\cline{2-5}
+			Odometry &Odom$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
+			\cline{2-5}
+			&Odom$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
+			\hline
+		\end{tabular}
+	}
+\end{table} 
+
+\subsection{Results}
+
+The results in table \ref{tab:results} show an increase in the successful handling of the test scenarios for the majority of test cases. The system supervision component is very reliable and enables the system to recover from an unexpected sensor failure. The more advanced behaviors can improve the autonomous handling of the scenarios. The battery scenario was successful every time it was induced.
+
+\begin{table}[ht]
+	\centering
+	\caption{Results}
+	\label{tab:results}
+	\renewcommand{\arraystretch}{1.5}
+	\resizebox{0.95\linewidth}{!}{%
+		\begin{tabular}{| m{0.25\linewidth} | m{0.15\linewidth}| m{0.3\linewidth} | m{0.3\linewidth}|} 
+			\hline
+			\multirow{2}{*}{\textbf{Name}} & \multirow{2}{0.11\textwidth}{\textbf{Number of Runs}} & \multicolumn{2}{|c|}{\textbf{Percentage Successful}} \\
+			\cline{3-4}
+			& & \textbf{Without BT} & \textbf{With BT} \\
+			\hline
+			Lidar$\_$1 & 5 & 0 & 100 \\ 
+			\hline
+			Lidar$\_$2 & 5 & 0 & 100 \\ 
+			\hline
+			Lidar$\_$3 & 5 & 0 & 100 \\ 
+			\hline
+			IMU$\_$1 & 5 & 0 & 100 \\ 
+			\hline
+			IMU$\_$2 & 5 & 0 & 100 \\ 
+			\hline
+			IMU$\_$3 & 5 & 0 & 100 \\ 
+			\hline
+			Odom$\_$1 & 5 & 0 & 100 \\ 
+			\hline
+			Odom$\_$2 & 5 & 0 & 100 \\ 
+			\hline
+			Odom$\_$3 & 5 & 0 & 100 \\ 
+			\hline
+			NoPath Found$\_$1 & 20 & 0 & 100 \\ 
+			\hline
+			NoPath Found$\_$2 & 20 & 0 & 55 \\ 
+			\hline
+			Collision$\_$1 & 20 & 0 & 95 \\ 
+			\hline
+			Collision$\_$2 & 20 & 0 & 100 \\ 
+			\hline
+			Battery$\_$1 & 10 & 0 & 100 \\ 
+			\hline
+		\end{tabular}
+	}
+\end{table} 
+
+However, there is a lack of intelligence and autonomy when the robot stands still, and a collision is forced. The test showed potential shortcomings of the implemented collision behavior. The results show that the functional requirements (as defined in \ref{tab:fn_req}) are met in almost all cases, with the exception of fn$_req6$ and fn$_req8$. The architectural design choices meet all the non-functional requirements. The system's performance when checking the conditions of the BT is below the desired threshold of $10ms$, allowing for efficient execution of behavior tree cycles. 
+
+The system also performed well in terms of performance, with the whole system running in multiple threads, allowing the behavior tree to complete one complete execution cycle in about 5ms. Overall, the results suggest that the implemented behavior planning and system supervision system is a promising solution for autonomous navigation in complex environments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion and Future Recommendations}
 \label{sec:Conclusion}
 
+This paper aimed to improve the autonomy and robustness of ROS2 mobile robots by incorporating advanced behavior planning. The implementation of a system supervisor component improved the system's robustness and provided a safe basis for executing more intelligent behaviors. The behavior tree was structured to allow for safe execution of complex behaviors and to check for possible scenarios that could interfere with the correct representation of the environment. The system architecture provides a good base for future development and showed a novel way of working with the ROS2 executor properties for fast execution of the behavior planner and system components.
+
+The behavior tree design could have been improved by using blackboard values more effectively to increase information flow between action nodes. Additionally, incorporating stateful nodes into the tree structure would have increased the possibility of creating better and more deliberative behaviors. The tree did not utilize reactive control flow nodes, and no action node was designed to allow multiple threads at the current state. These modifications would have further increased the level of autonomy and robustness of the system.
+
+Further efforts are needed to improve the autonomy of the behavior planner by adding more behaviors and fallbacks. To increase robustness, the implementation of Intel RSS rules for autonomous driving \cite{gassmann2019towards}, like maintaining safe distances, right-of-way rules, and adaptable speed based on occlusions is crucial. The collision detection system also needs to be refined to allow for collision point detection. The strategy for finding alternative goals in the path planning behavior needs to be modified to sample more points in all directions around the given goal. Additionally, there is a need for dedicated behaviors for multi-robot systems, such as sharing sensor data and intelligent path planning to avoid collisions. Future work should also focus on defining a safe state for the robot after triggering an emergency stop. The integration of machine learning algorithms into the behavior tree is another important area of future work, as this will allow for intelligent, robust, and independent decision-making.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\vfill
