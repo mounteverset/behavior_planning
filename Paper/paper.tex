@@ -113,16 +113,106 @@ POMDPs are a more sophisticated approach for decision-making in uncertain enviro
 In conclusion, the behavior planning module of an autonomous driving system plays a crucial role in determining the best behavior to execute in a given environment. The behavior planning approach can range from reactive to deliberative to a hybrid of both. FSMs and BTs are two popular approaches for behavior planning in robotics, while POMDPs are a more sophisticated approach for decision-making in uncertain environments. FSMs are fast and easy to implement, while BTs provide a flexible and intuitive representation of complex AI behaviors. POMDPs are more complex but provide a robust and flexible way to handle uncertainty. The proposed approach for this study will use a BT approach for the behavior planning module, offering a hierarchical structure for modeling AI and a flexible representation of complex behaviors.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Proposed Approach}
 \label{sec:ProposedApproach}
 
+In this work, the Robot Operating System 2.0 (ROS2) \cite{ros2022} framework was selected as the platform to test the hypothesis. ROS2 is a newer version of the open-source middleware, Robot Operating System (ROS) \cite{quigley2009}, that has received updates to its architecture and design for improved real-time safety, certification, and security for industrial applications. ROS2's Nav2 package, which is used for navigation and localization, has some limitations. For example, it may not handle events such as slipping wheels or orientation changes by external influences appropriately. This can lead to erratic movement of the robot, as well as incorrect planning commands. In severe cases, the robot may continue to drive despite incorrect interpretation of its surroundings, which is highly unsafe and requires manual intervention. Therefore, to achieve higher levels of autonomy, it is necessary to define requirements that address these limitations and elevate the level of safety and reliability.
 
+\subsection{Requirements}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experimental Work}
-\label{sec:ExperimentalWork}
+The limitations of the standard ROS and Navigation2 setup for mobile robots were identified and used to derive software requirements for improving the robot's behavior. The non-functional requirements and their descriptions are listed in Table \ref{tab:fn_req}. The functional requirements and their acceptance criteria are also listed in the same table, with prioritization based on the severity of consequences for the system. The first six functional requirements prioritize safety and robustness, while functional requirements seven to nine focus on increasing robot autonomy with lower risk potential.
 
+\begin{table*}[ht]
+	\centering
+	\caption{Non-Functional and Functional Requirements}
+	\label{tab:fn_req}
+	\renewcommand{\arraystretch}{1.25}
+		\begin{tabular}{|m{0.06\textwidth}|m{0.15\textwidth}|m{0.05\textwidth}|m{0.64\textwidth}|} 
+			\hline
+			\textbf{Nr.} & \textbf{Name} & \textbf{Priority} & \textbf{Description/Acceptance criteria} \\ 
+			\hline
+			non$\_$freq1 & Single Point of Failure & High & The system does not have a single point of failure. If parts of the system fail, the system maintains some level of functionality. \\ 
+			\hline
+			non$\_$freq2 & Performance & High & The control loop of the system guarantees fast reactions. The average frequency at which the system operates is higher than 100Hz (10ms). \\ 
+			\hline
+			non$\_$freq3 & Determinism & High & The outcome for a given set of inputs must be deterministic, which means that the behavior will always be executed in a similar way. \\
+			\hline
+			non$\_$freq4 & Deliberate & High & The robot is able to perform deliberative behaviors, which means that the newly implemented behaviors go beyond the reaction to the sensor input and have a planning aspect. \\
+			\hline
+			fn$\_$req1 & Sensor Failure & High & The system detects sensor failure. Ensure that the system can restart sensors and decrease the speed during the time the sensor delivers limited information. \\ 
+			\hline
+			fn$\_$req2 & Emergency Detection & High & The system detects emergency. Ensure that the system can detect when the continuation on the calculated path is no longer safe (sensor failures, blockage). \\
+			\hline
+			fn$\_$req3 & Emergency Stop & High & The system can initiate emergency stops. Ensure that the system can override all commands and stop in case an emergency is detected. \\
+			\hline 	
+			fn$\_$req4 & Override Navigation2 & High & The system can override navigation2. Ensure that the system's commands can always override the commands coming from navigation2. \\
+			\hline
+			fn$\_$req5 & Maintain operability & High & The robot executes commands as long as it is safe. Ensure that the robot keeps driving if it is safe even when system functions are not working correctly. \\
+			\hline
+			fn$\_$req6 & Recovery & High & The system can recover from crashes. Ensure that the system can successfully reach goals despite previous crashes.\\ 
+			\hline 
+			fn$\_$req7 & Control Path Planning & Medium & The system controls and rates the quality of the planned paths. \\
+			\hline	
+			fn$\_$req8 & Reset Goals & Medium & The system can reset and override goals set by the user so that the goal is reachable by planners. \\
+			\hline
+			fn$\_$req9 & Robot Range & Medium & Ensure that the robot will not run out of battery during navigation to a goal. \\	
+			\hline
+		\end{tabular}
+\end{table*}
 
+\subsection{System Solution}
+
+This work focuses on extending the capabilities of a mobile robot system by adding an autonomous layer to the existing navigation setup. The requirements for improving the robot's behavior were derived from the limitations of the current setup and are prioritized based on their severity. The autonomy layer is designed to increase the robustness and autonomy of the whole system and includes three main components: a system supervisor, a data storage system, and a behavior planner. The system supervisor monitors the health of all components, including sensors and navigation, and provides constant execution monitoring. The data storage system stores relevant system information and data, allowing for more deliberative behaviors. The behavior planner processes information from the execution checker, the navigation system, and sensor data to make decisions on how to increase autonomy. Finally, a decision gate is needed to intelligently switch between speed commands from the navigation system and the autonomy layer. A block diagram of the proposed system is shown in Figure \ref{fig:block_diagram}.
+
+\begin{figure}[ht]
+	\centering 
+	\includegraphics[width=0.9\linewidth]{Figures/block_diagram.png}
+	\caption{Proposed System Block Diagram: The additional components, discussed in this work, are colored blue while the existing components are colored gray}
+	\label{fig:block_diagram}
+\end{figure}
+
+\subsection{Software and Simulation}
+
+The paper compares and assesses behavior planning approaches, eventually choosing the behavior tree method for its increased flexibility and determinism. The Nav2 stack implements behavior trees using the Behaviortree.CPP (BT.CPP) library, which provides a way to create, execute, monitor, and edit behavior trees and allows communication between nodes. The behavior trees can be created using the Groot software, which is a graphical user interface for creating, editing, and debugging behavior trees. The behavior trees are developed and tested using the Gazebo simulator and the Turtlebot3 model. The simulator allows for easier testing and offers control over the simulation time. The software versions used are with the choice of using ROS2 Foxy and C++ for development.
+
+\subsection{System Architecture}
+
+The system architecture in Figure \ref{fig:component_diagram} shows the integration of the autonomy layer into current architecture, with existing components in gray and new components (Data Backup, Decision Gate, Behavior Tree, and System Supervisor) in blue. The System Supervisor is explained in the BT section, as it's part of the behavior tree's functionality.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/component_diagram_bt.png}
+	\caption{Component Diagram of System Architecture}
+	\label{fig:component_diagram}
+\end{figure}
+
+The data backup component gathers data from system components and provides it to the behavior tree for past data points. It subscribes to sensor data and saves the messages in a queue data structure. The array size is limited to decrease network load and computational requirements. The behavior tree accesses the saved data through a service call to one of the component's services. The data backup component operates in a separate ROS node to avoid blocking the execution of the autonomy system.
+
+The decision gate component modifies or blocks velocity commands from Nav2. It receives messages from Nav2 and the behavior tree, and prioritizes messages from the behavior tree. The component is an added safety measure in case Nav2 is not responsive to a cancellation command.
+
+The system supervisor component uses a Watchdog design pattern to monitor the system and take corrective measures when problems are detected. The component operates partly outside the behavior tree's thread to avoid blocking its execution. The component receives messages from nodes and informs the behavior tree of problems with a node through a provided service. The behavior tree uses service calls to check component health in Condition Nodes. If a node fails, the robot slows down and tries to restart the sensor. If the restart fails twice, the robot stops. The timeout for declaring a node failed is set to one second.
+
+\subsection{Behavior Tree Structure}
+
+The top-level behavior control fallback nodes of a simplified behavior tree are shown in Figure \ref{fig:top_level_bt}. The tree receives the tick signal from a sequence root node. The root node functions to increase the system's robustness by ensuring all fundamental components are functioning properly before executing higher-level behaviors. Details for each behavior will follow.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/simplified_bt_inverted.png}
+	\caption{Top Level Behavior Tree Structure}
+	\label{fig:top_level_bt}
+\end{figure}
+
+The robot's collision behavior is meant to handle collisions and react to them. Collisions occur due to inadequate sensor coverage or a lack of detection capabilities. The collision behavior involves detecting a collision, getting out of the collision state, updating the map, and resetting all costmaps to generate a new path to the goal. The collision checker uses a simulated sensor and is integrated into the system supervisor. The behavior tree (BT) requests the most recent command velocities and modifies them to reverse out of the collision. The map needs to be updated with a new obstacle at the collision point and republished. The estimated collision point is simplified to be directly in front of the robot, and a square with 100\% occupancy is added to the map. The original goal is then republished to replan the global path.
+
+The battery behavior monitors the robot's battery and decides if the robot should navigate to a new goal location. The decision is based on the current battery charge and the estimated energy consumption to reach the new goal. The energy expenditure was predicted using a linear function and considering the idle consumption and energy to drive the motors. A safety factor was added to the energy estimation function to consider scenarios where the robot may need to reroute or stop. A battery package was created for simulation purposes and updates the battery charge every second. The battery package subscribes to the command velocity topic and decreases the battery charge for every message received. The consumption rates are not close to reality but were chosen for rapid testing.
+
+The path planning behavior involves generating a safe path for the robot to navigate from its current location to a goal location. The path is generated based on the robot's current location, goal location, and the environment. The path planning behavior makes use of the map data and costmaps to generate a path that avoids obstacles. The costmap is updated with the new obstacle information to ensure the path is safe. The global and local planners generate a path, and the velocity commands are sent to the robot. The robot's velocity is monitored, and if it deviates from the planned path, the path is replanned to ensure the robot stays on course.
+
+\subsection{ROSBot Adaption}
+
+The ROSBot robot requires several crucial modules to be developed for successful real-world experiments. One such module is the battery monitoring module, which is responsible for monitoring the battery level and providing updates to the rest of the system. This is crucial as it ensures the robot operates safely within its battery capacity and prevents unexpected power-off during operation. Another important module is the collision detection module, which helps the robot detect obstacles in its environment and respond accordingly. This module is essential for the robot's safety as it prevents damage to itself or other actors in the environment. The development of these modules is essential for ensuring the ROSBot's robustness and safe operation in real-world scenarios.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
