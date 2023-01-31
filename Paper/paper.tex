@@ -199,7 +199,7 @@ The top-level behavior control fallback nodes of a simplified behavior tree are 
 
 \begin{figure*}[ht]
 	\centering
-	\includegraphics[width=0.9\linewidth]{Figures/simplified_bt_inverted.png}
+	\includegraphics[width=0.9\linewidth]{Figures/top_level_bt.png}
 	\caption{Top Level Behavior Tree Structure}
 	\label{fig:top_level_bt}
 \end{figure*}
@@ -211,8 +211,10 @@ The battery behavior monitors the robot's battery and decides if the robot shoul
 The path planning behavior involves generating a safe path for the robot to navigate from its current location to a goal location. The path is generated based on the robot's current location, goal location, and the environment. The path planning behavior makes use of the map data and costmaps to generate a path that avoids obstacles. The costmap is updated with the new obstacle information to ensure the path is safe. The global and local planners generate a path, and the velocity commands are sent to the robot. The robot's velocity is monitored, and if it deviates from the planned path, the path is replanned to ensure the robot stays on course.
 
 \subsection{ROSBot Adaption}
+   
+The ROSBot 2.0 by Husarion has been selected as the test platform for real world scenarios. It is a four-wheeled robot equipped with a suite of sensors, including LiDAR, IMU, wheel encoders and range sensors. To advance the ROSBot to a higher level of autonomy the proposed system architecture has been implemented. The battery charge module and the collision detection module were required to be adapated from the simulation to function on the real robot. The collision detection module is based on the IMU data instead of a simulated bumper sensor. The battery module estimates the remaining charge by taking the battery voltage, the power consumption of every component and the movement of the robot into account thus assuring that the robot has enough charge left to navigate to a goal.
 
-The ROSBot robot requires several crucial modules to be developed for successful real-world experiments. One such module is the battery monitoring module, which is responsible for monitoring the battery level and providing updates to the rest of the system. This is crucial as it ensures the robot operates safely within its battery capacity and prevents unexpected power-off during operation. Another important module is the collision detection module, which helps the robot detect obstacles in its environment and respond accordingly. This module is essential for the robot's safety as it prevents damage to itself or other actors in the environment. The development of these modules is essential for ensuring the ROSBot's robustness and safe operation in real-world scenarios.
+% The ROSBot robot requires several crucial modules to be developed for successful real-world experiments. One such module is the battery monitoring module, which is responsible for monitoring the battery level and providing updates to the rest of the system. This is crucial as it ensures the robot operates safely within its battery capacity and prevents unexpected power-off during operation. Another important module is the collision detection module, which helps the robot detect obstacles in its environment and respond accordingly. This module is essential for the robot's safety as it prevents damage to itself or other actors in the environment. The development of these modules is essential for ensuring the ROSBot's robustness and safe operation in real-world scenarios.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
