@@ -11,7 +11,7 @@ SensorDataBackup::SensorDataBackup(const std::string & node_name) : Node(node_na
     service_pub_last_goal_ = this->create_service<std_srvs::srv::Empty>("pub_last_goal_service", std::bind(&SensorDataBackup::pub_last_goal_service_callback, this, std::placeholders::_1, std::placeholders::_2));
     
     sub_map_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>("map", rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(), std::bind(&SensorDataBackup::map_callback, this, std::placeholders::_1));
-    sub_pose = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 1, std::bind(&SensorDataBackup::pose_update_callback, this, std::placeholders::_1));
+    sub_pose = this->create_subscription<geometry_msgs::msg::PoseStamped>("robot_pose", 1, std::bind(&SensorDataBackup::pose_update_callback, this, std::placeholders::_1));
 
     sub_global_costmap = this->create_subscription<nav_msgs::msg::OccupancyGrid>("global_costmap/costmap", 1, std::bind(&SensorDataBackup::global_costmap_callback, this, std::placeholders::_1));
     service_get_collision_pose_ = this->create_service<bt_msgs::srv::GetPose>("get_collision_pose_service", std::bind(&SensorDataBackup::get_collision_pose_service_callback, this, std::placeholders::_1, std::placeholders::_2));
@@ -37,7 +37,7 @@ void SensorDataBackup::send_updated_map_callback(
     pub_map_->publish(last_map);
 
 }
-void SensorDataBackup::pose_update_callback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg)
+void SensorDataBackup::pose_update_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
 {
     if (debug)
         RCLCPP_INFO(this->get_logger(), "Received AMCL Pose");
@@ -116,7 +116,7 @@ void SensorDataBackup::get_last_pose_service_callback(
     const bt_msgs::srv::GetPose_Request::SharedPtr request,
     const bt_msgs::srv::GetPose_Response::SharedPtr response)
 {
-    response->last_robot_pose = this->vector_poses_.back().pose.pose;
+    response->last_robot_pose = this->vector_poses_.back().pose;
 }
 
 void SensorDataBackup::global_costmap_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
@@ -131,10 +131,13 @@ void SensorDataBackup::save_collision_pose_service_callback(
 {
     if(debug)
     {
-        RCLCPP_INFO(this->get_logger(), "Saving Pose with this coordinates\n x: %f \n y: %f", vector_poses_.back().pose.pose.position.x, vector_poses_.back().pose.pose.position.y);
-        RCLCPP_INFO(this->get_logger(), "Saving Pose at timestamp: %f", (vector_poses_.back().header.stamp.sec + vector_poses_.back().header.stamp.nanosec * pow(10, -9)));
+        RCLCPP_INFO(this->get_logger(), "Saving Pose with this coordinates\n x: %f \n y: %f",                        
+                                                vector_poses_.back().pose.position.x, 
+                                                vector_poses_.back().pose.position.y);
+        RCLCPP_INFO(this->get_logger(), "Saving Pose at timestamp: %f", 
+                                                (vector_poses_.back().header.stamp.sec + vector_poses_.back().header.stamp.nanosec * pow(10, -9)));
     }
-    collision_pose_ = this->vector_poses_.back().pose.pose;
+    collision_pose_ = this->vector_poses_.back().pose;
 }
 
 void SensorDataBackup::get_collision_pose_service_callback(
