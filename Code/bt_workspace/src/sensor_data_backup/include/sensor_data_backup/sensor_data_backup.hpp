@@ -10,7 +10,7 @@
 // #include "bt_msgs/srv/pub_cmd_vel.hpp"
 #include "bt_msgs/srv/get_twist_array.hpp"
 #include "std_srvs/srv/empty.hpp"
-#include "geometry_msgs/msg/pose_with_covariance_stamped.hpp"
+// #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "bt_msgs/srv/get_last_goal.hpp"
 #include "bt_msgs/srv/get_pose.hpp"
 #include "bt_msgs/srv/get_last_map.hpp"
@@ -65,7 +65,7 @@ class SensorDataBackup : public rclcpp::Node
 
         void map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg);
 
-        void pose_update_callback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr msg);
+        void pose_update_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
 
         void global_costmap_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg);
 
@@ -74,7 +74,7 @@ class SensorDataBackup : public rclcpp::Node
         // rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr sub_lidar;
         // rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom;
         // rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr sub_imu;
-        rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr sub_pose;
+        rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_pose;
         rclcpp::Subscription<nav_msgs::msg::OccupancyGrid>::SharedPtr sub_map_;
         rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr pub_map_;
         rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr sub_cmd_vel_;
@@ -100,7 +100,7 @@ class SensorDataBackup : public rclcpp::Node
         std::vector<nav_msgs::msg::OccupancyGrid> vector_map;
         geometry_msgs::msg::PoseStamped last_goal;
         std::vector<geometry_msgs::msg::Twist> vector_cmd_vel_;
-        std::vector<geometry_msgs::msg::PoseWithCovarianceStamped> vector_poses_;
+        std::vector<geometry_msgs::msg::PoseStamped> vector_poses_;
         geometry_msgs::msg::Pose collision_pose_;
 
         rclcpp::Time reset_time;
