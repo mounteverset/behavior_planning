@@ -26,18 +26,16 @@ RobotBattery::RobotBattery(const std::string & node_name) : Node(node_name)
         std::placeholders::_2));
 
     total_ToF_wattage_ = 4*20/1000; 
-    total_motor_wattage_max_ = 4*6*1.5;
+    total_motor_wattage_max_ = 4*6*2;
     total_motor_wattage_min_ = 4*6*0.25;
-    total_RBi_wattage_ = 4;
-    total_core2_wattage_ = 3;
+    total_RBi_wattage_ = 5;
+    total_core2_wattage_ = 5;
     safety_factor_ = 1.2;
-    lidar_total_ = 1.4;
+    lidar_total_ = 2.8;
     battery_SOC = 100;
 
-    // this->declare_parameter("capacity", 100.0);
-    this->declare_parameter("charge", 100.0);
 
-    // this->get_parameter("capacity", capacity_);
+    this->declare_parameter("charge", 100.0);
     this->get_parameter("charge", charge_);
 
     parameter_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&RobotBattery::parameters_callback, this, std::placeholders::_1));
@@ -90,9 +88,9 @@ void RobotBattery::cmd_vel_callback(const geometry_msgs::msg::Twist::SharedPtr m
 
 void RobotBattery::timer_callback()
 {
-    this->total_power_ = (total_ToF_wattage_ + lidar_total_ + (((total_motor_wattage_max_ + total_motor_wattage_min_)/2) * cmd_vel_x_) + total_RBi_wattage_ + total_core2_wattage_) * safety_factor_;
+    this->total_power_ = (total_ToF_wattage_ + lidar_total_ + (((total_motor_wattage_min_ + total_motor_wattage_max_)/2) * cmd_vel_x_) + total_RBi_wattage_ + total_core2_wattage_) * safety_factor_;
     if(cmd_vel_x_ == 0){
-        this->total_power_ = (total_ToF_wattage_ + lidar_total_ + total_RBi_wattage_/2 + total_core2_wattage_/2) * safety_factor_;
+        this->total_power_ = (total_ToF_wattage_ + lidar_total_+ total_motor_wattage_min_ + total_RBi_wattage_/2 + total_core2_wattage_/2) * safety_factor_;
     }
         
     battery_SOC= battery_SOC + (-(this->total_power_/this->read_voltage_)/3.5) * (1/3600.0)*100;
@@ -106,8 +104,7 @@ void RobotBattery::service_callback(
     const bt_msgs::srv::GetCharge_Response::SharedPtr response)
 {
     response->charge = charge_;
-    //response->idle_decrease_per_sec = idle_decrease_;
-    //response->drive_decrease_per_sec = drive_decrease_ * 20; // getting 20 cmd_vel msg / sec
+
 }
 
 int main(int argc, char ** argv)
