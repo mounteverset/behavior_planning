@@ -69,7 +69,7 @@ The study aims to demonstrate that the implementation of behavior planning can i
 
 \subsection{Autonomous Driving Navigation Architectures}
 
-Autonomous driving software architectures follow the "\textit{Sense - Think - Act}" paradigm \cite{murphy2000}, as shown in Figure \ref{fig:autonomous_driving_architecture}. Most architectures implement a hierarchical structure in which sensory inputs are processed to create an environmental representation, leading to a path from the current position to the destination computed by global planning. This is followed by behavioral planning, which ensures that the vehicle obeys traffic rules, and local planning, which translates motion commands while taking into account system constraints. An additional system monitoring layer monitors the execution of other components and triggers actions in case of failures \cite{zimmermann2020adaptive}. Vehicles can achieve (Society of Automotive Engineers) SAE levels of autonomy up to levels four and five \cite{bacha2008odin}. Expanding the behavior planning module can lead to higher levels of autonomy \cite{reke2020}.
+Autonomous driving software architectures follow the "\textit{Sense - Think - Act}" paradigm \cite{murphy2000}, as shown in Figure \ref{fig:autonomous_driving_architecture}. Most architectures implement a hierarchical structure in which sensory inputs are processed to create an environmental representation, leading to a path from the current position to the destination computed by global planning. This is followed by behavioral planning, which ensures that the vehicle obeys traffic rules, and local planning, which translates motion commands while taking into account system constraints. An additional system monitoring layer monitors the execution of other components and triggers actions in case of failures \cite{zimmermann2020adaptive}. Vehicles can achieve Society of Automotive Engineers (SAE) levels of autonomy up to levels four and five \cite{bacha2008odin}. Expanding the behavior planning module can lead to higher levels of autonomy \cite{reke2020}.
 
 \begin{figure}[ht]
 	\centering
@@ -117,11 +117,11 @@ In conclusion, the behavior planning module of an autonomous driving system play
 \section{Proposed Approach}
 \label{sec:ProposedApproach}
 
-In this work, the Robot Operating System 2.0 (ROS2) \cite{ros2022} framework was selected as the platform to test the hypothesis. ROS2 is a newer version of the open-source middleware, Robot Operating System (ROS) \cite{quigley2009}, that has received updates to its architecture and design for improved real-time safety, certification, and security for industrial applications. ROS2's Nav2 package, which is used for navigation and localization, has some limitations. For example, it may not handle events such as slipping wheels or orientation changes by external influences appropriately. This can lead to erratic movement of the robot, as well as incorrect planning commands. In severe cases, the robot may continue to drive despite incorrect interpretation of its surroundings, which is highly unsafe and requires manual intervention. Therefore, to achieve higher levels of autonomy, it is necessary to define requirements that address these limitations and elevate the level of safety and reliability.
+In this work, the Robot Operating System 2.0 (ROS2) \cite{ros2022} framework was selected as the platform to test the hypothesis. ROS2 is a newer version of the open-source middleware, Robot Operating System (ROS) \cite{quigley2009}, that has received updates to its architecture and design for improved real-time safety, certification, and security for industrial applications. ROS2's Nav2 package, which is used for navigation and localization, has some limitations. For example, it may not handle events such as slipping wheels or orientation changes by external influences appropriately. This can lead to erratic movement of the robot, as well as incorrect planning commands. In severe cases, the robot may continue to drive despite incorrect interpretation of its surroundings, which is highly unsafe and requires human intervention. Therefore, to achieve higher levels of autonomy, it is necessary to define requirements that address these limitations and elevate the level of safety and reliability.
 
 \subsection{Requirements}
 
-The limitations of the standard ROS and Navigation2 setup for mobile robots were identified and used to derive software requirements for improving the robot's behavior. The non-functional requirements and their descriptions are listed in Table \ref{tab:fn_req}. The functional requirements and their acceptance criteria are also listed in the same table, with prioritization based on the severity of consequences for the system. The first six functional requirements prioritize safety and robustness, while functional requirements seven to nine focus on increasing robot autonomy with lower risk potential.
+The limitations of the standard ROS2 and Navigation2 setup for mobile robots were identified and used to derive software requirements for improving the robot's behavior. The non-functional requirements and their descriptions are listed in Table \ref{tab:fn_req}. The functional requirements and their acceptance criteria are also listed in the same table, with prioritization based on the severity of consequences for the system. The first six functional requirements prioritize safety and robustness, while functional requirements seven to nine focus on increasing robot autonomy with lower risk potential.
 
 \begin{table*}[ht]
 	\centering
@@ -163,7 +163,7 @@ The limitations of the standard ROS and Navigation2 setup for mobile robots were
 
 \subsection{System Solution}
 
-This work focuses on extending the capabilities of a mobile robot system by adding an autonomous layer to the existing navigation setup. The requirements for improving the robot's behavior were derived from the limitations of the current setup and are prioritized based on their severity. The autonomy layer is designed to increase the robustness and autonomy of the whole system and includes three main components: a system supervisor, a data storage system, and a behavior planner. The system supervisor monitors the health of all components, including sensors and navigation, and provides constant execution monitoring. The data storage system stores relevant system information and data, allowing for more deliberative behaviors. The behavior planner processes information from the execution checker, the navigation system, and sensor data to make decisions on how to increase autonomy. Finally, a decision gate is needed to intelligently switch between speed commands from the navigation system and the autonomy layer. A block diagram of the proposed system is shown in Figure \ref{fig:block_diagram}.
+This work focuses on extending the capabilities of a mobile robot system by adding an autonomous layer to the existing navigation setup. The requirements for improving the robot's behavior were derived from the limitations of the current setup and are prioritized based on their severity. The autonomy layer is designed to increase the robustness and autonomy of the whole system and includes three main components: a system supervisor, a data storage system, and a behavior planner. The system supervisor monitors the health of all components, including sensors and navigation, and provides constant execution monitoring. The data storage system stores relevant system information and data, allowing for more deliberative behaviors. The behavior planner processes information from the execution checker, the navigation system, and sensor data to make decisions on how to increase autonomy. Finally, a decision gate is needed to intelligently switch between velocity commands from the navigation system and the autonomy layer. A block diagram of the proposed system is shown in Figure \ref{fig:block_diagram}.
 
 \begin{figure}[ht]
 	\centering 
@@ -191,7 +191,7 @@ The data backup component gathers data from system components and provides it to
 
 The decision gate component modifies or blocks velocity commands from Nav2. It receives messages from Nav2 and the behavior tree, and prioritizes messages from the behavior tree. The component is an added safety measure in case Nav2 is not responsive to a cancellation command.
 
-The system supervisor component uses a Watchdog design pattern to monitor the system and take corrective measures when problems are detected. The component operates partly outside the behavior tree's thread to avoid blocking its execution. The component receives messages from nodes and informs the behavior tree of problems with a node through a provided service. The behavior tree uses service calls to check component health in Condition Nodes. If a node fails, the robot slows down and tries to restart the sensor. If the restart fails twice, the robot stops. The timeout for declaring a node failed is set to one second.
+The system supervisor component uses a Watchdog design pattern to monitor the system and take corrective measures when problems are detected. The component operates partly outside the behavior tree's thread to avoid blocking its execution. The component receives messages from nodes and informs the behavior tree of problems with a node through a provided service. The behavior tree uses service calls to check component health in Condition Nodes. If a node fails, the robot slows down and tries to restart the node. If the restart fails twice, the robot stops. The timeout for declaring a node failed is set to one second.
 
 \subsection{Behavior Tree Structure}
 
@@ -199,14 +199,14 @@ The top-level behavior control fallback nodes of a simplified behavior tree are 
 
 \begin{figure*}[ht]
 	\centering
-	\includegraphics[width=0.9\linewidth]{Figures/top_level_bt.png}
+	\includegraphics[width=0.5\linewidth]{Figures/top_level_bt.png}
 	\caption{Top Level Behavior Tree Structure}
 	\label{fig:top_level_bt}
 \end{figure*}
 
 The robot's collision behavior is meant to handle collisions and react to them. Collisions occur due to inadequate sensor coverage or a lack of detection capabilities. The collision behavior involves detecting a collision, getting out of the collision state, updating the map, and resetting all costmaps to generate a new path to the goal. The collision checker uses a simulated sensor and is integrated into the system supervisor. The behavior tree (BT) requests the most recent command velocities and modifies them to reverse out of the collision. The map needs to be updated with a new obstacle at the collision point and republished. The estimated collision point is simplified to be directly in front of the robot, and a square with 100\% occupancy is added to the map. The original goal is then republished to replan the global path.
 
-The battery behavior monitors the robot's battery and decides if the robot should navigate to a new goal location. The decision is based on the current battery charge and the estimated energy consumption to reach the new goal. The energy expenditure was predicted using a linear function and considering the idle consumption and energy to drive the motors. A safety factor was added to the energy estimation function to consider scenarios where the robot may need to stop navigation.. A battery package was created for simulation purposes and updates the battery charge every second. The battery package subscribes to the command velocity topic and decreases the battery charge for every message received. The consumption rates are not close to reality but were chosen for rapid testing.
+The battery behavior monitors the robot's battery and decides if the robot should navigate to a given goal. The decision is based on the current battery charge and the estimated energy consumption to reach the new goal. The energy expenditure was predicted using a linear function and considering the idle consumption and energy to drive the motors. A safety factor was added to the energy estimation function to consider scenarios where the robot may need to stop navigation.. A battery package was created for simulation purposes and updates the battery charge every second. The battery package subscribes to the command velocity topic and decreases the battery charge for every message received. The consumption rates are not close to reality but were chosen for rapid testing.
 
 The path planning behavior involves generating a safe path for the robot to navigate from its current location to a goal location. The path is generated based on the robot's current location, goal location, and the environment. The path planning behavior makes use of the map data and costmaps to generate a path that avoids obstacles. The costmap is updated with the new obstacle information to ensure the path is safe. The global and local planners generate a path, and the velocity commands are sent to the robot. The robot's velocity is monitored, and if it deviates from the planned path, the path is replanned to ensure the robot stays on course.
 
@@ -214,7 +214,7 @@ The path planning behavior involves generating a safe path for the robot to navi
    
 The ROSBot 2.0 by Husarion has been selected as the test platform for real world scenarios. It is a four-wheeled robot equipped with a suite of sensors, including LiDAR, IMU, wheel encoders and range sensors. To advance the ROSBot to a higher level of autonomy the proposed system architecture has been implemented. The battery charge module and the collision detection module were required to be adapated from the simulation to function on the real robot. The collision detection module is based on the IMU data instead of a simulated bumper sensor.
 
-The battery module estimates the remaining charge by taking the battery voltage, the power consumption of every component and the movement of the robot into account thus assuring that the robot has enough charge left to navigate to a given goal. Following function is used to determine the current state of charge of the battery: \[Batt_{SoC}(t) = Batt_{SoC}(t-1)-\frac{\frac{P_{components}}{V_{measured}}}{Batt_{capacity}}* t_{timestep} *100\] where $Batt_{SoC}$ is the charge in percentage, $t$ is the time of calculation in hours, $t_{timestep}$ the time step in seconds and $P_{components}$ the combined power consumption of every component connected to the robot in Watt. $P_{components}$ changes depending on the speed of the robot. The calculation assumes a fully charged battery.
+The battery module estimates the remaining charge by taking the battery voltage, the power consumption of every component and the movement of the robot into account thus assuring that the robot has enough charge left to navigate to a given goal. Following function is used to determine the current state of charge of the battery: \[Batt_{SoC}(t) = Batt_{SoC}(t-1)-\frac{\frac{P_{components}}{V_{measured}}}{Batt_{capacity}}* t_{timestep} *100\] where $Batt_{SoC}$ is the charge in percentage, $t$ the time of calculation in hours, $V_{measured}$ the voltage measurements of the ROSBot, $Batt_{capacity}$ the capacity of the battery pack, $t_{timestep}$ the time step in seconds and $P_{components}$ the combined power consumption of every component connected to the robot in Watt. $P_{components}$ changes depending on the speed of the robot. The calculation assumes a fully charged battery.
 
 \section{Results and Discussion}
 \label{sec:ResultsAndDiscussion}
@@ -244,15 +244,15 @@ The efficacy of the behavior tree component in the robot was evaluated through s
 
 \subsection{Scenarios}
 
-The scenarios, derived from functional requirements, test multiple requirements as listed in tables \ref{tab:behavior_scenarios} and \ref{tab:sensor_scenarios}. To be counted as a success, all acceptance criteria for a scenario must be met. The scenarios are conducted by shutting down sensor drivers, publishing navigation goals, and simulating obstacles and battery conditions. Examples include: NoPathFound$_1$ tests recovery from inability to plan, NoPathFound$_2$ tests alternative goal navigation, Collision$_1$ tests maneuvering out of collisions, Collision$_2$ tests recovering from crashes, and Battery$_1$ tests low battery navigation.
+The scenarios, derived from functional requirements, test multiple requirements as listed in tables \ref{tab:behavior_scenarios} and \ref{tab:sensor_scenarios}. To be counted as a success, all acceptance criteria for a scenario must be met. The scenarios are conducted by shutting down sensor drivers, publishing navigation goals, and simulating obstacles and battery conditions. Examples include: NoPathFound$\_1$ tests recovery from inability to plan, NoPathFound$\_2$ tests alternative goal navigation, Collision$\_1$ tests maneuvering out of collisions, Collision$\_2$ tests recovering from crashes, and Battery$\_1$ tests low battery navigation.
 
 \begin{table}[ht]
 	\centering
 	\caption{Behavior Scenarios}
 	\label{tab:behavior_scenarios}
 	\renewcommand{\arraystretch}{1.25}
-	\resizebox{0.95\linewidth}{!}{%
-		\begin{tabular}{| m{0.11\linewidth} | m{0.19\linewidth}| m{0.4\linewidth} | m{0.3\linewidth}|} 
+	\resizebox{0.99\linewidth}{!}{%
+		\begin{tabular}{| m{0.15\linewidth} | m{0.19\linewidth}| m{0.3\linewidth} | m{0.4\linewidth}|} 
 			\hline
 			\textbf{Name} & \textbf{Requirements} & \textbf{Description} & \textbf{Success Criteria}\\ 
 			\hline	
@@ -277,12 +277,12 @@ The scenarios, derived from functional requirements, test multiple requirements 
 	\caption{Sensor Scenarios}
 	\label{tab:sensor_scenarios}
 	\renewcommand{\arraystretch}{1.25}
-	\resizebox{0.95\linewidth}{!}{%
-		\begin{tabular}{| m{0.1\linewidth}| m{0.1\linewidth} | m{0.2\linewidth}| m{0.3\linewidth} | m{0.3\textwidth}|} 
+	\resizebox{0.99\linewidth}{!}{%
+		\begin{tabular}{| m{0.12\linewidth}| m{0.1\linewidth} | m{0.22\linewidth}| m{0.5\linewidth} | m{0.08\textwidth}|} 
 			\hline
 			\textbf{Sensor Tested} & \textbf{Name} & \textbf{Requirements }& \textbf{Description} & \textbf{Success Criteria}\\ 
 			\hline
-			& Lidar$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Lidar node crashes & Reset the system\\ 
+			& Lidar$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Lidar node crashes & Reset system\\ 
 			\cline{2-5}
 			Lidar &Lidar$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
 			\cline{2-5}
@@ -294,7 +294,7 @@ The scenarios, derived from functional requirements, test multiple requirements 
 			\cline{2-5}
 			&IMU$\_$3 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s and 0.5 rad/s towards goal (1m away) & Reset system, reach goal\\
 			\hline
-			& Odom$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Odom node crashes & Reset the system\\ 
+			& Odom$\_$1 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Robot is standing still, Odom node crashes & Reset system\\ 
 			\cline{2-5}
 			Odometry &Odom$\_$2 & fn$\_$req1, fn$\_$req2, fn$\_$req3, fn$\_$req4, fn$\_$req5 & Navigating with 0.25 m/s straight towards goal (1m away) & Reset system, reach goal \\ 
 			\cline{2-5}
@@ -313,48 +313,50 @@ The results in table \ref{tab:results} show an increase in the successful handli
 	\caption{Results}
 	\label{tab:results}
 	\renewcommand{\arraystretch}{1.5}
-	\resizebox{0.95\linewidth}{!}{%
-		\begin{tabular}{| m{0.25\linewidth} | m{0.15\linewidth}| m{0.3\linewidth} | m{0.3\linewidth}|} 
+	\resizebox{0.99\linewidth}{!}{%
+		\begin{tabular}{| m{0.25\linewidth} | m{0.15\linewidth}| m{0.15\linewidth} | m{0.15\linewidth}| m{0.15\linewidth}| m{0.15\linewidth}|} 
 			\hline
-			\multirow{2}{*}{\textbf{Name}} & \multirow{2}{0.11\textwidth}{\textbf{Number of Runs}} & \multicolumn{2}{|c|}{\textbf{Percentage Successful}} \\
-			\cline{3-4}
-			& & \textbf{Without BT} & \textbf{With BT} \\
+			\multirow{2}{*}{\textbf{Name}} & \multirow{2}{0.11\textwidth}{\textbf{Number of Runs}} & \multicolumn{4}{|c|}{\textbf{Percentage Successful}} \\
+			\cline{3-6}
+			& & \multicolumn{2}{|c|}{Without BT} & \multicolumn{2}{|c|}{With BT} \\
+			\cline{3-6}
+			& & \textbf{Simulation} & \textbf{Real World} & \textbf{Simulation} & \textbf{Real World} \\		
 			\hline
-			Lidar$\_$1 & 5 & 0 & 100 \\ 
+			Lidar$\_$1 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			Lidar$\_$2 & 5 & 0 & 100 \\ 
+			Lidar$\_$2 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			Lidar$\_$3 & 5 & 0 & 100 \\ 
+			Lidar$\_$3 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			IMU$\_$1 & 5 & 0 & 100 \\ 
+			IMU$\_$1 & 5 & 0 &  0& 100 &100\\ 
 			\hline
-			IMU$\_$2 & 5 & 0 & 100 \\ 
+			IMU$\_$2 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			IMU$\_$3 & 5 & 0 & 100 \\ 
+			IMU$\_$3 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			Odom$\_$1 & 5 & 0 & 100 \\ 
+			Odom$\_$1 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			Odom$\_$2 & 5 & 0 & 100 \\ 
+			Odom$\_$2 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			Odom$\_$3 & 5 & 0 & 100 \\ 
+			Odom$\_$3 & 5 & 0 & 0 & 100 &100\\ 
 			\hline
-			NoPath Found$\_$1 & 20 & 0 & 100 \\ 
+			NoPath Found$\_$1 & 20 & 0 & 0 & 100 &100\\ 
 			\hline
-			NoPath Found$\_$2 & 20 & 0 & 55 \\ 
+			NoPath Found$\_$2 & 20 & 0 & 0 & 55 &30\\ 
 			\hline
-			Collision$\_$1 & 20 & 0 & 95 \\ 
+			Collision$\_$1 & 20 & 0 & 0 & 95 &60\\ 
 			\hline
-			Collision$\_$2 & 20 & 0 & 100 \\ 
+			Collision$\_$2 & 20 & 0 & 0 & 100 &75\\ 
 			\hline
-			Battery$\_$1 & 10 & 0 & 100 \\ 
+			Battery$\_$1 & 10 & 0 & 0 & 100 &100\\ 
 			\hline
 		\end{tabular}
 	}
 \end{table} 
 
-However, there is a lack of intelligence and autonomy when the robot stands still, and a collision is forced. The test showed potential shortcomings of the implemented collision behavior. The results show that the functional requirements (as defined in \ref{tab:fn_req}) are met in almost all cases, with the exception of fn$_req6$ and fn$_req8$. The architectural design choices meet all the non-functional requirements. The system's performance when checking the conditions of the BT is below the desired threshold of $10ms$, allowing for efficient execution of behavior tree cycles. 
+However, there is a lack of intelligence and autonomy when the robot stands still, and a collision is forced. The test showed potential shortcomings of the implemented collision behavior. The results show that the functional requirements (as defined in \ref{tab:fn_req}) are met in almost all cases, with the exception of fn$\_$req6 and fn$\_$req8. The architectural design choices meet all the non-functional requirements. The system's performance when checking the conditions of the BT is below the desired threshold of $10ms$, allowing for efficient execution of behavior tree cycles. 
 
-The system also performed well in terms of performance, with the whole system running in multiple threads, allowing the behavior tree to complete one complete execution cycle in about 5ms. Overall, the results suggest that the implemented behavior planning and system supervision system is a promising solution for autonomous navigation in complex environments.
+The system also performed well in terms of performance, with the whole system running in multiple threads, allowing the behavior tree to complete one complete execution cycle in about $5ms$. Overall, the results suggest that the implemented behavior planning and system supervision system is a promising solution for autonomous navigation in complex environments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
