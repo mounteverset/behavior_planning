@@ -32,7 +32,7 @@ public:
         if (debug)
             RCLCPP_INFO(node_->get_logger(), "Constructor BatterySufficientCheck finished.");
 
-        avrg_speed_ = 0.4;
+        avrg_speed_ = 0.2;
         safety_factor_ = 1.5;
     }
 
@@ -89,8 +89,6 @@ public:
         if(rclcpp::spin_until_future_complete(node_, charge_result) == rclcpp::FutureReturnCode::SUCCESS)
         {   
             charge = charge_result.get()->charge;
-            //idle_decrease = charge_result.get()->idle_decrease_per_sec;
-            //drive_decrease = charge_result.get()->drive_decrease_per_sec;
             return true;
         }
         else
