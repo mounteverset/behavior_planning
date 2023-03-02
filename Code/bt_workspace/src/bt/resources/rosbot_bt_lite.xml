@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence name="RootSequence">
+            <Fallback name="LidarFallback">
+                <Condition ID="LidarExecutionCheck"/>
+                <Sequence name="LidarSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="2">
+                        <Action ID="RestartLidar"/>
+                    </RetryUntilSuccessful>
+                    <Action ID="AccelToNormalSpeed"/>
+                </Sequence>
+                <Sequence name="LidarCompleteStopSequence">
+                    <Action ID="CancelNavGoal"/>
+                    <Action ID="CompleteStop"/>
+                </Sequence>
+            </Fallback>
+            <Fallback name="ImuFallback">
+                <Condition ID="ImuExecutionCheck"/>
+                <Sequence name="ImuSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="2">
+                        <Action ID="RestartImu"/>
+                    </RetryUntilSuccessful>
+                    <Action ID="AccelToNormalSpeed"/>
+                </Sequence>
+                <Sequence name="ImuCompleteStopSequence">
+                    <Action ID="CancelNavGoal"/>
+                    <Action ID="CompleteStop"/>
+                </Sequence>
+            </Fallback>
+            <Fallback name="OdomFallback">
+                <Condition ID="OdomExecutionCheck"/>
+                <Sequence name="OdomSequence">
+                    <Action ID="DecelToMinDrivingSpeed"/>
+                    <RetryUntilSuccessful num_attempts="2">
+                        <Action ID="RestartOdom"/>
+                    </RetryUntilSuccessful>
+                    <Action ID="AccelToNormalSpeed"/>
+                </Sequence>
+                <Sequence name="OdomCompleteStopSequence">
+                    <Action ID="CancelNavGoal"/>
+                    <Action ID="CompleteStop"/>
+                </Sequence>
+            </Fallback>
+            <Fallback name="CollisionFallback">
+                <Condition ID="CollisionCheck"/>
+                <Sequence name="CollisionSequence">
+                    <Action ID="CancelNavGoal"/>
+                    <Action ID="CompleteStop"/>
+                    <Sequence name="ReverseCmdVelSequence">
+                        <Condition ID="OrientationCheck"/>
+                        <Action ID="ReverseCmdVel"/>
+                        <Action ID="CompleteStop"/>
+                    </Sequence>
+                    <Sequence name="RepublishGoalSequence">
+                        <Fallback>
+                            <Condition ID="CollisionCheck"/>
+                            <Action ID="CompleteStop"/>
+                        </Fallback>
+                        <Action ID="RepublishLastGoal"/>
+                    </Sequence>
+                </Sequence>
+            </Fallback>
+            <Fallback name="BatteryFallback">
+                <Condition ID="BatterySufficientCheck"/>
+                <Sequence>
+                    <Action ID="CancelNavGoal"/>
+                    <Action ID="CompleteStop"/>
+                </Sequence>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="AccelToNormalSpeed"/>
+        <Condition ID="BatterySufficientCheck"/>
+        <Action ID="CancelNavGoal"/>
+        <Condition ID="CollisionCheck"/>
+        <Action ID="CompleteStop"/>
+        <Action ID="DecelToMinDrivingSpeed"/>
+        <Action ID="DisableCmdVelOverride"/>
+        <Action ID="EnableCmdVelOverride"/>
+        <Condition ID="GlobalPlannerExecutionCheck"/>
+        <Condition ID="ImuExecutionCheck"/>
+        <Condition ID="LidarExecutionCheck"/>
+        <Condition ID="OdomExecutionCheck"/>
+        <Condition ID="OrientationCheck"/>
+        <Condition ID="PathPossibleCheck"/>
+        <Action ID="PublishCloserGoal"/>
+        <Action ID="RepublishLastGoal"/>
+        <Condition ID="ResetOccupancyMap"/>
+        <Action ID="RestartGlobalPlanner"/>
+        <Action ID="RestartImu"/>
+        <Action ID="RestartLidar"/>
+        <Action ID="RestartOdom"/>
+        <Action ID="ReverseCmdVel"/>
+        <Condition ID="SlamExecutionCheck"/>
+        <Action ID="UpdateMapAfterCollision"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

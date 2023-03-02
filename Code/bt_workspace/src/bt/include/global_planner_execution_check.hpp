@@ -30,7 +30,7 @@ public:
                 RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
                 return BT::NodeStatus::FAILURE;
             }
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Lidar Execution Service not available, waiting again...");
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Global Planner Execution Service not available, waiting again...");
         }
 
         auto request = std::make_shared<lifecycle_msgs::srv::GetState::Request>();

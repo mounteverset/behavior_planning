@@ -24,19 +24,50 @@ SensorDataBackup::SensorDataBackup(const std::string & node_name) : Node(node_na
     
     service_send_updated_map_ = this->create_service<bt_msgs::srv::SendUpdatedMap>("send_updated_map_service", std::bind(&SensorDataBackup::send_updated_map_callback, this, std::placeholders::_1, std::placeholders::_2));
 
-    debug = true;
+    this->declare_parameter("debug", false);
+
+    debug = this->get_parameter("debug").as_bool();
+}
+
+rcl_interfaces::msg::SetParametersResult SensorDataBackup::parameters_callback(const std::vector<rclcpp::Parameter> & parameters)
+{
+    rcl_interfaces::msg::SetParametersResult result;
+
+    if (!parameters.empty()) {
+        result.successful = false;
+        result.reason = "unknown parameter";
+        return result;
+    }
+
+    for (auto & parameter : parameters) {
+        if (parameter.get_name() == "debug") 
+        {
+            debug = parameter.as_bool();
+            result.successful = true;
+            result.reason = "success";
+        }
+        else 
+        {
+            result.successful = false;
+            result.reason = "unknown parameter";
+        }
+    }
+
+    return result;
 }
 
 void SensorDataBackup::send_updated_map_callback(
     const bt_msgs::srv::SendUpdatedMap_Request::SharedPtr request,
     const bt_msgs::srv::SendUpdatedMap_Response::SharedPtr response)
 {   
+    request->placeholder;
     if(debug)
         RCLCPP_INFO(this->get_logger(), "Received a service call for saving the map.");
     last_map = request->updated_map;
     pub_map_->publish(last_map);
 
 }
+
 void SensorDataBackup::pose_update_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
 {
     if (debug)
@@ -79,6 +110,7 @@ void SensorDataBackup::pub_last_goal_service_callback(
     const std_srvs::srv::Empty_Request::SharedPtr request,
     const std_srvs::srv::Empty_Response::SharedPtr response)
 {
+    // request->placeholder;
     if(last_goal != geometry_msgs::msg::PoseStamped())
     {
         if(debug)
@@ -96,10 +128,14 @@ void SensorDataBackup::cmd_vel_service_callback(
     const bt_msgs::srv::GetTwistArray_Request::SharedPtr request,
     const bt_msgs::srv::GetTwistArray_Response::SharedPtr response)
 {
+    request->placeholder;
     // queue_to_vector(queue_cmd_vel, vec);
     if (debug)
-        RCLCPP_INFO(this->get_logger(), "Length of saved cmd_vel array: %d", vector_cmd_vel_.size());
-    response->cmd_vel_array = vector_cmd_vel_;
+        RCLCPP_INFO(this->get_logger(), "Length of saved cmd_vel array: %ld", vector_cmd_vel_.size());
+    if (vector_cmd_vel_.size() == 0)
+        response->cmd_vel_array = std::vector<geometry_msgs::msg::Twist>();
+    else
+        response->cmd_vel_array = vector_cmd_vel_;
 }
 
 
@@ -109,6 +145,7 @@ void SensorDataBackup::get_last_goal_service_callback(
             const bt_msgs::srv::GetLastGoal_Request::SharedPtr request,
             const bt_msgs::srv::GetLastGoal_Response::SharedPtr response)
 {
+    request->placeholder;
     response->last_goal_pose = this->last_goal.pose;
 }
         
@@ -116,6 +153,7 @@ void SensorDataBackup::get_last_pose_service_callback(
     const bt_msgs::srv::GetPose_Request::SharedPtr request,
     const bt_msgs::srv::GetPose_Response::SharedPtr response)
 {
+    request->placeholder;
     response->last_robot_pose = this->vector_poses_.back().pose;
 }
 
@@ -130,7 +168,8 @@ void SensorDataBackup::save_collision_pose_service_callback(
     const std_srvs::srv::Empty_Response::SharedPtr response)
 {
     if(debug)
-    {
+    {   
+        // request->placeholder;
         RCLCPP_INFO(this->get_logger(), "Saving Pose with this coordinates\n x: %f \n y: %f",                        
                                                 vector_poses_.back().pose.position.x, 
                                                 vector_poses_.back().pose.position.y);
@@ -143,7 +182,8 @@ void SensorDataBackup::save_collision_pose_service_callback(
 void SensorDataBackup::get_collision_pose_service_callback(
     const bt_msgs::srv::GetPose_Request::SharedPtr request,
     const bt_msgs::srv::GetPose_Response::SharedPtr response)
-{
+{   
+    request->placeholder;
     response->last_robot_pose = collision_pose_; 
 }
 
@@ -151,6 +191,10 @@ void SensorDataBackup::get_last_map_service_callback(
     const bt_msgs::srv::GetLastMap_Request::SharedPtr request,
     const bt_msgs::srv::GetLastMap_Response::SharedPtr response)
 {
+    if(debug)
+    {
+        RCLCPP_INFO(this->get_logger(), "Memory adress of request: %p", request.get());
+    }
     response->map = last_map;
 }
 // void SensorDataBackup::queue_to_vector(std::queue<geometry_msgs::msg::Twist>& queue, std::vector<geometry_msgs::msg::Twist> twist_array)

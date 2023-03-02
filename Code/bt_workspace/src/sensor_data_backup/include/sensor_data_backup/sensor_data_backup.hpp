@@ -16,6 +16,9 @@
 #include "bt_msgs/srv/get_last_map.hpp"
 #include "bt_msgs/srv/send_updated_map.hpp"
 
+#include "rcl_interfaces/msg/parameter.hpp"
+#include "rcl_interfaces/msg/set_parameters_result.hpp"
+
 class SensorDataBackup : public rclcpp::Node
 {
     public:
@@ -26,6 +29,8 @@ class SensorDataBackup : public rclcpp::Node
 
     private:
         bool debug;
+
+        rcl_interfaces::msg::SetParametersResult parameters_callback(const std::vector<rclcpp::Parameter> &parameters);
         
         void cmd_vel_service_callback(
                 const bt_msgs::srv::GetTwistArray_Request::SharedPtr request,

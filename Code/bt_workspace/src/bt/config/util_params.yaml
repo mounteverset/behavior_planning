@@ -1,24 +1,20 @@
 /robot_battery:
-  ros__parameters:
-    charge: 100.0
-    drive_decrease: 0.02
-    idle_decrease: 0.01
-    use_sim_time: true
+    ros__parameters:
+        charge: 100.0
+        drive_decrease: 0.02
+        idle_decrease: 0.01
+        use_sim_time: false
 
 /cmd_vel_decision_gate:
-  ros__parameters:
-    bt_override: false
-    decel_flag: false
-    use_sim_time: true
+    ros__parameters:
+        bt_override: false
+        decel_flag: false
+        use_sim_time: false
 
 /execution_checker_service:
-  ros__parameters:
-    use_sim_time: true
+    ros__parameters:
+        use_sim_time: false
 
 /sensor_data_backup:
-  ros__parameters:
-    use_sim_time: true
-
-
-
-
+    ros__parameters:
+        use_sim_time: false

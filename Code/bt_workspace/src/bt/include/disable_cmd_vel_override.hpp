@@ -15,9 +15,7 @@ class DisableCmdVelOverride : public BT::SyncActionNode
 
         param.name = "bt_override";
         param.value.type = 1;
-        param.value.bool_value = false;      
-
-        
+        param.value.bool_value = false;
 
         // param.value.bool_value = true;
 

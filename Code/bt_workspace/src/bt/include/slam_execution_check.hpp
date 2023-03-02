@@ -68,7 +68,7 @@ public:
     //     {
     //         return BT::NodeStatus::FAILURE;
     //     }
-        return BT::NodeStatus::FAILURE;
+        return BT::NodeStatus::SUCCESS;
     }
 
 

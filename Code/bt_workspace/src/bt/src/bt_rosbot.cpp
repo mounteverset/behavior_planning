@@ -54,7 +54,7 @@ int main(int argc, const char* argv[])
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT"); 
     // std::string a = std::filesystem::current_path();
     // RCLCPP_INFO(rclcpp::get_logger("root"), a.c_str()); 
-    auto tree = factory.createTreeFromFile("./src/bt/resources/save_new_map.xml");
+    auto tree = factory.createTreeFromFile("./src/bt/resources/rosbot_bt_lite.xml");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Created BT");
     RCLCPP_INFO(rclcpp::get_logger("root"), "Creating BT Publisher"); 
 
@@ -70,8 +70,32 @@ int main(int argc, const char* argv[])
 
         status = tree.tickRoot();
 
-        RCLCPP_INFO(rclcpp::get_logger("root"), "BT Status");  
-        RCLCPP_INFO(rclcpp::get_logger("root"), "%d", status); 
+        switch (status)
+        {
+            case BT::NodeStatus::FAILURE:
+            {
+                RCLCPP_ERROR(rclcpp::get_logger("root"), "BT Status: FAILURE");
+                break;
+            }
+            case BT::NodeStatus::SUCCESS:
+            {
+                RCLCPP_INFO(rclcpp::get_logger("root"), "BT Status: SUCCESS");
+                break;
+            }
+            case BT::NodeStatus::RUNNING:
+            {
+                RCLCPP_INFO(rclcpp::get_logger("root"), "BT Status: RUNNING");
+                break;
+            }
+            case BT::NodeStatus::IDLE:
+            {
+                RCLCPP_INFO(rclcpp::get_logger("root"), "BT Status: IDLE");
+                break;
+            }
+        }
+
+        // RCLCPP_INFO(rclcpp::get_logger("root"), "BT Status");  
+        // RCLCPP_INFO(rclcpp::get_logger("root"), "%d", ); 
         // std::cout << "Status: " << status << std::endl;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(200));

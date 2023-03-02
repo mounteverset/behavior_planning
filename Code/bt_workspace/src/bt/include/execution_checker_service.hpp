@@ -21,6 +21,9 @@
 // #include "tf2_conversion_helpers.hpp"
 // #include "tf2_helpers/tf2_conversion_helpers.hpp"
 
+#include "rcl_interfaces/msg/parameter.hpp"
+#include "rcl_interfaces/msg/set_parameters_result.hpp"
+
 #define MAX_ALLOWED_TIME_DIFFERENCE 1.0
 #define MAX_COLLISION_LOOKBACK_TIME 1.0
 
@@ -32,6 +35,10 @@ class ExecutionCheckerService : public rclcpp::Node
         virtual ~ExecutionCheckerService();
 
     private:
+
+        //Dynamic parameter setting
+        rcl_interfaces::msg::SetParametersResult paramCallback(const std::vector<rclcpp::Parameter> & parameters);
+        
         // Lidar Related
         void LidarExecutionCheckServiceCallback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
@@ -81,8 +88,6 @@ class ExecutionCheckerService : public rclcpp::Node
         void collision_service_callback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
             const std_srvs::srv::SetBool_Response::SharedPtr response);
-
-        
 
         rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr collision_service_;
         rclcpp::Client<std_srvs::srv::Empty>::SharedPtr save_collision_pose_client;
