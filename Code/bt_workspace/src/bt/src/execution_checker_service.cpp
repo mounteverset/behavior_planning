@@ -52,12 +52,23 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
         std::placeholders::_2));
     
 
+    //Parameters for debugging 
+    
+    // Debug Boolean Flag
+    this->declare_parameter("debug", false);
+    this->declare_parameter("debug_orientation", false);
+    this->declare_parameter("debug_distance", false);
+
+    debug = this->get_parameter("debug").as_bool();
+    debug_orientation = this->get_parameter("debug_orientation").as_bool();
+    debug_distance = this->get_parameter("debug_distance").as_bool();
+
     // topics_qos = rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(); // Transient Local Sub Settings
     sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, std::bind(&ExecutionCheckerService::lidar_callback, this, std::placeholders::_1));
     sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>("imu_broadcaster/imu", 10, std::bind(&ExecutionCheckerService::imu_callback, this, std::placeholders::_1));
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>("odometry/filtered", 10, std::bind(&ExecutionCheckerService::odom_callback, this, std::placeholders::_1));
     sub_collision_ = this->create_subscription<std_msgs::msg::Bool>("collision", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
-    //sub_rollover_ = this->create_subscription<std_msgs::msg::Bool>("rollover", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
+    // sub_rollover_ = this->create_subscription<std_msgs::msg::Bool>("rollover", 10, std::bind(&ExecutionCheckerService::collision_callback, this, std::placeholders::_1));
     sub_path_ = this->create_subscription<nav_msgs::msg::Path>("plan", 1, std::bind(&ExecutionCheckerService::goal_callback, this, std::placeholders::_1));
     //sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 1, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
     sub_pose_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>("amcl_pose", 10, std::bind(&ExecutionCheckerService::pose_update_callback, this, std::placeholders::_1));
@@ -65,9 +76,11 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
 
     save_collision_pose_client = this->create_client<std_srvs::srv::Empty>("save_collision_pose_service");
 
-    debug = false;
-    debug_orientation = false;
-    debug_distance = false;
+    // debug = false;
+    // debug_orientation = true;
+    // debug_distance = false;
+
+
     // Subtract 2 seconds from the current timestamp
     rclcpp::Time current = this->get_clock()->now();
     rclcpp::Duration two_secs = rclcpp::Duration((int32_t)2, (uint32_t)0);
@@ -83,6 +96,58 @@ ExecutionCheckerService::ExecutionCheckerService (const std::string & node_name)
 
 ExecutionCheckerService::~ExecutionCheckerService() = default;
 
+//Parameters Callback for dynamic reconfigure
+rcl_interfaces::msg::SetParametersResult ExecutionCheckerService::paramCallback(const std::vector<rclcpp::Parameter> & parameters)
+{
+    rcl_interfaces::msg::SetParametersResult result;
+
+    if(debug)
+        RCLCPP_INFO(this->get_logger(), "Received parameter change request");
+
+    for (auto parameter : parameters)
+    {
+        if(debug)
+        {
+            RCLCPP_INFO(this->get_logger(), "%s", parameter.get_name().c_str());
+            RCLCPP_INFO(this->get_logger(), "%s", parameter.value_to_string().c_str());
+            RCLCPP_INFO(this->get_logger(), "%s", parameter.get_type_name().c_str());
+        }
+        if(parameter.get_name() == "debug")
+        {
+            if(parameter.get_type() == rclcpp::ParameterType::PARAMETER_BOOL)
+            {
+                debug = parameter.as_bool();
+                result.successful =true;
+                result.reason = "success"; 
+            }
+        }
+        else if(parameter.get_name() == "debug_orientation")
+        {
+            if(parameter.get_type() == rclcpp::ParameterType::PARAMETER_BOOL)
+            {
+                debug_orientation = parameter.as_bool();
+                result.successful = true;
+                result.reason = "success"; 
+            }
+        }
+        else if(parameter.get_name() == "debug_distance")
+        {
+            if(parameter.get_type() == rclcpp::ParameterType::PARAMETER_BOOL)
+            {
+                debug_distance = parameter.as_bool();
+                result.successful = true;
+                result.reason = "success";
+            }
+        }
+        else
+        {
+            RCLCPP_WARN(this->get_logger(), "Unknown parameter %s", parameter.get_name().c_str());
+        }
+    }
+
+    return result;
+}
+
 // Service and Topic Callbacks
 
 // Lidar 
@@ -90,6 +155,12 @@ void ExecutionCheckerService::LidarExecutionCheckServiceCallback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
             const std_srvs::srv::SetBool_Response::SharedPtr response)
 {   
+    if (debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "Lidar callback");
+        RCLCPP_INFO(this->get_logger(), "%s", request->data? "true" : "false");
+    }
+
     time_difference = (this->get_clock()->now().seconds() - last_msg_received_.seconds());
 
     if(time_difference < MAX_ALLOWED_TIME_DIFFERENCE)
@@ -114,8 +185,10 @@ void ExecutionCheckerService::lidar_callback(const sensor_msgs::msg::LaserScan::
     if(debug_callback)
     {
         RCLCPP_INFO(this->get_logger(), "Received a Scan Message");
-        RCLCPP_INFO(this->get_logger(), "last_msg_received at: %f", last_msg_received_.seconds());
-        RCLCPP_INFO(this->get_logger(), "msg.header.stamp at: %f", msg->header.stamp.sec);
+        RCLCPP_INFO(this->get_logger(), "%d", msg->header.stamp.sec);
+        // RCLCPP_INFO(this->get_logger(), "%s", msg->header.stamp.toNSec());
+        // RCLCPP_INFO(this->get_logger(), "last_msg_received at: %d", last_msg_received_.seconds());
+        // RCLCPP_INFO(this->get_logger(), "msg.header.stamp at: %f", msg->header.stamp.sec);
     }
 
     last_msg_received_ = this->get_clock()->now();
@@ -139,36 +212,36 @@ void ExecutionCheckerService::imu_callback(const sensor_msgs::msg::Imu::SharedPt
     last_msg_received_imu_ = this->get_clock()->now();
     
     // Orientation Check
-    // tf2::Quaternion quat(msg->orientation.x,
-    //                     msg->orientation.y,
-    //                     msg->orientation.z,
-    //                     msg->orientation.w);
+    tf2::Quaternion quat(msg->orientation.x,
+                        msg->orientation.y,
+                        msg->orientation.z,
+                        msg->orientation.w);
     
-    // tf2::Matrix3x3 m(quat);
-    // double roll,pitch,yaw;
-    // m.getRPY(roll, pitch, yaw);
+    tf2::Matrix3x3 m(quat);
+    double roll,pitch,yaw;
+    m.getRPY(roll, pitch, yaw);
 
-    // if(debug_orientation)
-    // {
-    //     RCLCPP_INFO(this->get_logger(), "IMU Roll: %f", roll);
-    //     RCLCPP_INFO(this->get_logger(), "IMU Pitch: %f", pitch);
-    // }
+    if(debug_orientation)
+    {
+        RCLCPP_INFO(this->get_logger(), "IMU Roll: %f", roll);
+        RCLCPP_INFO(this->get_logger(), "IMU Pitch: %f", pitch);
+    }
 
-    // if(debug_orientation)
-    // {
-    //     RCLCPP_INFO(this->get_logger(), "Orientation Checker says all 4 wheels on the ground: ");
-    //     RCLCPP_INFO(this->get_logger(), all_wheels_on_the_ground ? "true" : "false");
+    if(debug_orientation)
+    {
+        RCLCPP_INFO(this->get_logger(), "Orientation Checker says all 4 wheels on the ground: ");
+        RCLCPP_INFO(this->get_logger(), all_wheels_on_the_ground ? "true" : "false");
         
-    // }
+    }
 
-    // if(roll > -0.1 && roll < 0.1 && pitch > -0.1 && pitch < 0.1) //Robot is standing parallel to the ground within some margin (~6°)
-    // {
-    //     all_wheels_on_the_ground = true;
-    // }
-    // else
-    // {
-    //     all_wheels_on_the_ground = false;
-    // }
+    if(roll > -0.1 && roll < 0.1 && pitch > -0.1 && pitch < 0.1) //Robot is standing parallel to the ground within some margin (~6°)
+    {
+        all_wheels_on_the_ground = true;
+    }
+    else
+    {
+        all_wheels_on_the_ground = false;
+    }
 
 }
 
@@ -176,6 +249,10 @@ void ExecutionCheckerService::ImuExecutionCheckServiceCallback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
             const std_srvs::srv::SetBool_Response::SharedPtr response)
 {
+    if(debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "%s", request->data ? "true" : "false");
+    }
     time_difference_imu = (this->get_clock()->now().seconds() - last_msg_received_imu_.seconds());
 
     if(time_difference_imu < MAX_ALLOWED_TIME_DIFFERENCE)
@@ -197,13 +274,23 @@ void ExecutionCheckerService::ImuExecutionCheckServiceCallback(
 // Odom
 void ExecutionCheckerService::odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg)
 {
+    if (msg->header.frame_id != "odom")
+    {
+        RCLCPP_WARN(this->get_logger(), "Received a faulty Odometry Message");
+        return;
+    }
     last_msg_received_odom_ = this->get_clock()->now();
 }
 
 void ExecutionCheckerService::OdomExecutionCheckServiceCallback(
             const std_srvs::srv::SetBool_Request::SharedPtr request,
             const std_srvs::srv::SetBool_Response::SharedPtr response)
-{
+{   
+    if(debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "%s", request->data ? "true" : "false");
+    }
+
     time_difference_odom = (this->get_clock()->now().seconds() - last_msg_received_odom_.seconds());
 
     if(time_difference_odom < MAX_ALLOWED_TIME_DIFFERENCE)
@@ -235,6 +322,10 @@ void ExecutionCheckerService::collision_service_callback(
     const std_srvs::srv::SetBool_Request::SharedPtr request,
     const std_srvs::srv::SetBool_Response::SharedPtr response)
 {
+    if(debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "%s", request->data ? "true" : "false");
+    }
     collision_time_difference = (this->get_clock()->now().seconds() - last_msg_received_collision_.seconds());
     if (collision_time_difference < MAX_COLLISION_LOOKBACK_TIME)
     {
@@ -277,6 +368,10 @@ void ExecutionCheckerService::orientation_checker_service_callback(
     //     RCLCPP_INFO(this->get_logger(), all_wheels_on_the_ground ? "true" : "false");
         
     // }
+    if(debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "%s", request->data ? "true" : "false");
+    }
     response->message = "";
     response->success = this->all_wheels_on_the_ground;
     
@@ -350,6 +445,7 @@ void ExecutionCheckerService::goal_distance_service_callback(
     const bt_msgs::srv::GetDistance_Request::SharedPtr request,
     const bt_msgs::srv::GetDistance_Response::SharedPtr response)
 {
+    request->placeholder;
     response->distance_in_meter = distance_to_goal;
 }
 
@@ -359,6 +455,10 @@ void ExecutionCheckerService::plan_possible_service_callback(
     const std_srvs::srv::SetBool_Request::SharedPtr request,
     const std_srvs::srv::SetBool_Response::SharedPtr response)
 {   
+    if(debug_callback)
+    {
+        RCLCPP_INFO(this->get_logger(), "%s", request->data ? "true" : "false");
+    }
     response->message="";
     response->success = is_global_plan_possible;    
 }   

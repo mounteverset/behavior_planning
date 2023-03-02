@@ -15,7 +15,9 @@ CmdVelDecisionGate::CmdVelDecisionGate(
     
     // service_called = false;
 
-    debug = true;
+    this->declare_parameter("debug", false);
+    
+    debug = this->get_parameter("debug").as_bool();
 
     // this->declare_parameter("bt_override", false);
 
@@ -50,7 +52,6 @@ void CmdVelDecisionGate::decel_service_callback(
     response->message = "";
     response->success = true;
 }
-
 
 /**
  * @brief 
@@ -103,8 +104,6 @@ rcl_interfaces::msg::SetParametersResult CmdVelDecisionGate::parametersCallback(
   return result;
 }
 
-
-
 /**
  * @brief Republishes the incoming navigation cmd_vel
  * Changes to speed if the decel_flag param is set to true 
@@ -150,13 +149,10 @@ void CmdVelDecisionGate::cmd_vel_nav_callback(const geometry_msgs::msg::Twist::S
     }
 } 
 
-
 void CmdVelDecisionGate::cmd_vel_bt_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
     pub_cmd_vel_->publish(*msg);
 }
-
-
 
 void CmdVelDecisionGate::add_node_to_executor(rclcpp::Node::SharedPtr node_ptr)
 {
@@ -181,17 +177,10 @@ void CmdVelDecisionGate::pub_complete_stop()
   pub_cmd_vel_->publish(stop_msg);
 }
 
-
-
- 
-
 int main(int argc, char ** argv)
 {
     rclcpp::init(argc, argv);
 
-//   auto node_handle = std::make_shared<CmdVelDecisionGate>("cmd_vel_decision_gate");
-//   node_handle->add_node_to_executor(node_handle);
-//   node_handle->spin_node();
     while(rclcpp::ok())
     {
         rclcpp::spin(std::make_shared<CmdVelDecisionGate>("cmd_vel_decision_gate"));
@@ -199,120 +188,3 @@ int main(int argc, char ** argv)
 
     return 0;
 }
-
-
-// /**
-//  * @brief 
-//  * 
-//  * @param request 
-//  * @param response 
-//  */
-// void CmdVelDecisionGate::pub_cmd_vel_service_callback(
-//     const bt_msgs::srv::PubCmdVel_Request::SharedPtr request,
-//     const bt_msgs::srv::PubCmdVel_Response::SharedPtr response)
-// {
-//     service_called = true;
-
-//     if(debug)
-//     {
-//         RCLCPP_INFO(this->get_logger(), "Received service call.");
-//         RCLCPP_INFO(this->get_logger(), "Linear.x: %f", request->cmd_vel.linear.x);
-//         RCLCPP_INFO(this->get_logger(), "Angular.z: %f", request->cmd_vel.angular.z);
-//         RCLCPP_INFO(this->get_logger(), "Publish Time in Seconds: %f", request->time_in_seconds);
-//     }
-
-//     bt_twist_msg.linear.x = request->cmd_vel.linear.x;
-//     bt_twist_msg.linear.y = request->cmd_vel.linear.y;
-//     bt_twist_msg.linear.z = 0.0;
-//     bt_twist_msg.angular.x = 0.0;
-//     bt_twist_msg.angular.y = 0.0;
-//     bt_twist_msg.angular.z = request->cmd_vel.angular.z;
-
-//     publish_duration = request->time_in_seconds;
-//     time_when_service_call_received = this->get_clock()->now();
-//     response->success = true;
-// }
-
-
-/*
-    // if(service_called 
-    //   && (this->get_clock()->now().seconds() - time_when_service_call_received.seconds() < publish_duration) 
-    //   && (last_nav_msg.linear.x > 0.0))
-    // {
-    //   if(debug)
-    //   {
-    //     RCLCPP_INFO(this->get_logger(), "Publishing received service_call.");
-    //     RCLCPP_INFO(this->get_logger(), "Time Difference Service Call to now: ");
-    //     RCLCPP_INFO(this->get_logger(), std::to_string(this->get_clock()->now().seconds() - time_when_service_call_received.seconds()));
-    //   }
-    //   pub_cmd_vel_->publish(bt_twist_msg);
-    // }
-    // else
-    // { 
-    //   // Auto Stop Behaviour if we published min_speed but did not get another cmd_vel from nav2 normally
-    //   // Otherwise the last published msg of BT would be min driving speed, hence we have to publish a stop cmd if no new msg from nav come in
-    //   if ((this->get_clock()->now().seconds() - time_when_last_nav_msgs_received.seconds()) > 1.0)
-    //     pub_complete_stop();
-      
-    //   // Reset the service call variables
-    //   service_called = false;
-    //   bt_twist_msg = geometry_msgs::msg::Twist();       
-    //   publish_duration = 0;
-    // }
-
-  }
-}
-*/
-
-/**
- * @brief 
- * Spinning the node to wait for cmd_vel_nav msgs.
- * Checking if the bt called the pub service.
- * If it was called, publish the twist msg from the service call as long as the 
- * service requested it. 
- * 
- */
-
-// void CmdVelDecisionGate::spin_node()
-// {
-//   while (rclcpp::ok())
-//   {
-//     // Check for service calls and published msgs
-//     exec_.spin_once();
-
-    // if(service_called)
-    // {      
-    //   publish_bt_cmd_vel();
-    // }  
-//   }
-// }
-
-
-/**
- * @brief Blocking the spinning of the node and publishing BT cmd_vel for as long as the pub_cmd_vel_service call specified it
- * The publish duration is used my the decel_to_min_driving_speed node of the BT
- * The reverse_cmd_vel node should only use very small publish duration as the publish duration is handled in the BT by calling this nodes service with the new cmd_vel intermittently.
- * This is so that the node can go back to spinning and is ready for the next service call.
- * While spinning the nav_cmd_vel are getting ignored as the bt_override param was set by the reverse_cmd_vel node.
- */
-// void CmdVelDecisionGate::publish_bt_cmd_vel()
-// {
-//   if(debug)
-//     RCLCPP_INFO(this->get_logger(), "Publishing BT Cmd Vel.");
-  
-//   if(last_nav_msg.linear.x == 0.0 && last_nav_msg.angular.z == 0.0)
-//   {     
-//     pub_complete_stop();
-//   }
-//   else
-//   {
-//     while (publish_duration > 0) 
-//     {
-//       pub_cmd_vel_->publish(bt_twist_msg);
-//       rclcpp::sleep_for(std::chrono::milliseconds(30));
-//       publish_duration -= 0.03;
-//     }
-//   }
-
-//   service_called = false;
-// }

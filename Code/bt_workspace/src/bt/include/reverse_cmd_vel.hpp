@@ -91,8 +91,12 @@ class ReverseCmdVel : public BT::SyncActionNode
         {   
             twist_array = result.get()->cmd_vel_array;
             if (debug)
-                RCLCPP_INFO(node_->get_logger(), "Reveived a vector of length: %d", twist_array.size());
-            return true;
+                RCLCPP_INFO(node_->get_logger(), "Reveived a vector of length: %ld", twist_array.size());
+
+            if (twist_array.size() == 0)
+                return false;
+            else
+                return true;
         }
         else
         {

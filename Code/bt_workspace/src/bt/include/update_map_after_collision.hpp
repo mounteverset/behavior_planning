@@ -210,9 +210,9 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
         // then it should modify the costmap by adding a 5x5 square at the location of the crash  
         if(debug)
             RCLCPP_INFO(node_->get_logger(), "Adding occupation to costmap vector."); 
-        for (size_t i = y_px -2; i < y_px +2; i++)
+        for (int i = y_px -2; i < y_px +2; i++)
         {
-            for (size_t j = x_px -2; j < x_px +2; j++)
+            for (int j = x_px -2; j < x_px +2; j++)
             {
                 costmap_2d.at(i).at(j) = 100; 
             }
@@ -272,7 +272,7 @@ class UpdateMapAfterCollision : public BT::SyncActionNode
             if(debug)
             {
                 RCLCPP_INFO(node_->get_logger(), "Map Data not compatible. Error while converting.");
-                RCLCPP_INFO(node_->get_logger(), "Expected Array of size %d. Got array of size %d", map.info.height * map.info.width, data.size());
+                RCLCPP_INFO(node_->get_logger(), "Expected Array of size %d. Got array of size %ld", map.info.height * map.info.width, data.size());
             }
 
         }
